@@ -1,0 +1,36 @@
+<!-- (c) 2008, 2009 by Martin Willisegger	-->					
+<!-- -->
+<!-- Project    : NagiosQL -->
+<!-- Component  : admin mainpage template -->
+<!-- Website    : http://www.nagiosql.org -->
+<!-- Date       : $LastChangedDate: 2009-04-28 15:02:27 +0200 (Di, 28. Apr 2009) $ -->
+<!-- Author     : $LastChangedBy: rouven $ -->
+<!-- Version    : 3.0.3 -->
+<!-- Revision   : $LastChangedRevision: 708 $ -->
+<!-- SVN-ID     : $Id: mainpages.tpl.htm 708 2009-04-28 13:02:27Z rouven $ -->
+<!-- BEGIN header -->
+    <td class="main">
+      <h1>{TITLE}</h1>
+<!-- END header -->
+<!-- BEGIN main -->
+      {DESC}
+      <br><br>
+<!-- BEGIN statistics -->	  
+      <h2>{STATISTICS}</h2>
+      <table width="300" border="0" class="admintable">
+        <tr>
+          <th>{TYPE}</th>
+          <th style="text-align: center">{ACTIVE}</th>
+          <th style="text-align: center">{INACTIVE}</th>
+        </tr>
+<!-- BEGIN statisticrow -->	
+        <tr>
+          <td class="tdlb">{NAME}</td>
+          <td class="tdmb">{ACT_COUNT}</td>
+          <td class="tdmb">{INACT_COUNT}</td>
+        </tr>
+<!-- END statisticrow -->	
+      </table>
+<!-- END statistics -->	
+  	</td>
+<!-- END main -->

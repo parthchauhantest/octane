@@ -1,0 +1,75 @@
+2.31
+=====================
+- LLC not LCC/Update to proper version number -JO
+
+2.3
+=====================
+- Fix to warn if whitespace is entered in Group ID -SW
+
+2.2
+=====================
+- Fixed bug which prevented editing of groups that starting with the same string -SW
+
+2.1
+=====================
+- Fixed bug with empty auth_users printing lots of commas in bpi.conf
+- Added additional commands to be used with the api_tool.php script. Use -h to see usage for available commands. 
+- Fixed issue where BPI groups states were being calculated twice for every tab load. 
+
+
+
+2.0 Enterprise Edition
+====================
+-  each group has list of authorized contacts   
+-  auto-generate hostgroups and servicegroups
+-  fixed bug for when a single service is "warning," the group is only at warning, not critical N/A with percentages
+-  added hosts checks to selectable options 
+-  created an XML dump with all group states and status texts for subsystem group checks 
+-  using AJAX calls to refresh group status every 30-X amount of seconds 
+-  Added switchable option for "Ignore 'handled' problems"
+-  Added a sanity check for orpaned groups 
+-  Added error log 
+-  created sortability by service, status, or group priority 
+-  created option for a threshold percentage
+-  add in the pseudo states for acknowledged, and scheduled downtime and factored those in as a switchable option to the group logic.  
+-  user level filtering for Nagios XI  
+-  More informational feedback in status text.  Add message as to "why" a group has it's problem state.
+-  Information boxes for return messages (success | failure) of command submissions
+-  Help box overlay to replace question marks
+-  Add a "handled" icon to hosts/services with handled problems
+-  Created a new BPI check plugin with performance data and improved readability of plugin output.  
+-  Add auth checks on cmds controller for add/edit/fix permissions 
+-  Add safety net for read-only users so that they don't get the CONFIG ERROR message about missing hosts and services 
+-  allowed user to specifiy location of all BPI files.  Made it safe so that a component upgrade doesn't overwrite it. 
+-  Only admins can create, modify, or delete BPI groups.  
+-  authorized users for BPI groups will only see their authorized hosts/services in the group even if other members are assigned 
+-  Hostgroup and service group BPI pages are enterprise-only features
+-  Added backend API for admin-level users to access BPI group XML from web interface at: nagiosbpi/bpi_display.php?cmd=getbpixml
+
+1.3.1 7/19/2011
+=====================
+- Bug fixes for group state check
+- Fixed bug with host states and css color 
+- Fixed bug where hosts didn't preload into the "Edit" forms 
+
+
+1.3  7/18/2011
+=====================
+- added support for hosts as BPI group members 
+- updated status parsing functions, removed 'ereg' functions
+- Added version number and support URL 
+
+
+1.2
+=====================
+- Fixed a bug with the check_bpi.php file. Suppressed any error output from the command-line check in Nagios 
+
+1.1
+======================
+- Fixed bugs with the fix_config tool, so errors in configuration file can be corrected easily.
+- Cleaner error output and setup instructions
+- check_bpi.php *should* work now for Core and XI.  
+
+1.0
+======================
+- Fixed a bug in the host/service detail urls 11/30/2010 

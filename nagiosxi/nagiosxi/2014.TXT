@@ -1,0 +1,36 @@
+=======================
+NAGIOS XI 2014 FEATURES
+=======================
+
+- Nagios Core 4.0 & Ndoutils 2.0 -Scott,Eric
+- NCPA -Nick
+- MTRG Upgrade -Nick
+- Switch Router SNMP v3/ delete configs -Scott,Nick
+- Enhanced Graph Explorer (with Stacked Performance Graphs) -Jake
+- RDP/SSH thingy -Ethan
+- Global Annoucement Component ??-Sam
+- MOTD
+- Sanity checker -Nick
+- Smart Wizards (SNMP, WMI, etc)
+
+- TODO full IPv6 support?
+
+
+TESTING
+=======
+- Deadpool - Ethan
+- birdseye3 -Jake
+- 2 MongoDB Wizards (Server & Database) -Jake
+- NPUSH -Yancy, Nick
+
+
+DONE
+====
+- HelpSystem -Scott
+- Added ability to archive snapshots -Scott
+- Add Gauges Dashlets -Scott
+- Add Mass Downtime Deletion ability -Scott
+- Added ability to delete and rename archived snapshots -Jake
+- NagiosNA integration ( Wizards, Product Integration) -Nick,Jake
+- Scheduled Backups Component -Jake
+- Nagios Reactor Component -Jake

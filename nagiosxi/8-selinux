@@ -1,0 +1,22 @@
+#!/bin/sh -e
+
+# Was previous step completed?
+if [ ! -f installed.firewall ]; then
+	echo "Firewall was not configured - run previous script" >&2
+	exit 1
+fi
+
+# Was this step already completed?
+if [ -f installed.selinux ]; then
+	echo "SELinux already configured - skipping."
+	exit 0
+fi
+
+if selinuxenabled; then
+	setenforce 0
+	cp -r nagiosxi/selinux /etc/selinux/config
+fi
+
+echo "SELinux Disabled"
+touch installed.selinux
+

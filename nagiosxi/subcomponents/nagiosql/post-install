@@ -1,0 +1,40 @@
+#!/bin/sh -e
+
+. ../../xi-sys.cfg
+
+echo "NAGIOSQL-POST"
+
+# Post-install modifications
+
+# Copy over configuration
+cp -f mods/config/settings.php /var/www/html/nagiosql/config/
+
+# Copy over custom css
+cp -f mods/config/main.css /var/www/html/nagiosql/config/
+
+# Copy over custom templates
+#cp -f mods/templates/main.tpl.htm /var/www/html/nagiosql/templates
+
+# Copy over new language file
+cp -f mods/locale/en_GB.mo /var/www/html/nagiosql/config/locale/en_GB/LC_MESSAGES/
+
+# Copy over custom images
+cp -r mods/images/* /var/www/html/nagiosql/images/
+
+cp -f mods/css/tabview.css /var/www/html/nagiosql/functions/yui/build/tabview/assets/skins/sam/
+
+# Make nagiosql config directory
+if [ ! -d /etc/nagiosql ]; then
+	mkdir /etc/nagiosql
+	mkdir /etc/nagiosql/backup
+	mkdir /etc/nagiosql/backup/hosts
+	mkdir /etc/nagiosql/backup/services
+fi
+
+# Apache config
+cp -r mods/httpd.nagiosql.conf "$httpdconfdir/nagiosql.conf"
+
+# Set directory and file permissions
+chown -R "$apacheuser:$nagiosgroup" /etc/nagiosql
+chmod -R 6775 /etc/nagiosql
+

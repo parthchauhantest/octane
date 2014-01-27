@@ -1,0 +1,23 @@
+#!/bin/sh -e
+
+pkgname="nsca-2.9.1"
+
+echo "Installing NSCA..."
+
+# Delete the old archive
+rm -rf "$pkgname"
+
+# Extract archive
+tar -xzf "$pkgname.tar.gz"
+
+# Make and install 
+(
+	cd "./$pkgname"
+	./configure
+	make all
+	cp src/nsca /usr/local/nagios/bin
+	cp src/send_nsca /usr/local/nagios/libexec
+	#cp sample-config/nsca.cfg /usr/local/nagios/etc
+	#cp sample-config/send_nsca.cfg /usr/local/nagios/etc
+	#cp sample-config/nsca.xinetd /etc/xinetd.d/nsca
+)

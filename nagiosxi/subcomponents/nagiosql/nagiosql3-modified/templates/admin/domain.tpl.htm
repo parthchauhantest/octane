@@ -1,0 +1,231 @@
+<!-- (c) 2008, 2009 by Martin Willisegger	-->					
+<!-- -->
+<!-- Project    : NagiosQL -->
+<!-- Component  : domain administration template -->
+<!-- Website    : http://www.nagiosql.org -->
+<!-- Date       : $LastChangedDate: 2009-04-28 15:02:27 +0200 (Di, 28. Apr 2009) $ -->
+<!-- Author     : $LastChangedBy: rouven $ -->
+<!-- Version    : 3.0.3 -->
+<!-- Revision   : $LastChangedRevision: 708 $ -->
+<!-- SVN-ID     : $Id: domain.tpl.htm 708 2009-04-28 13:02:27Z rouven $ -->
+<!-- BEGIN header -->
+    <td class="main">
+      <h1>{TITLE}</h1>
+      <div class="dbmessage">{ERRMESSAGE}</div>
+<!-- END header -->
+<!-- BEGIN datainsert -->
+<form name="frmDomainInsert" method="post" action="{ACTION_INSERT}">
+  <script language="JavaScript" type="text/JavaScript">
+    <!--
+    // Eingabe abbrechen
+    function abort() {
+      this.location.href = "{ACTION_INSERT}";
+    }
+    // Formular absenden
+    function LockButton() {
+      if (checkForm() == false) {
+        return false;
+      } else {
+        document.frmDomainInsert.submit();
+        document.frmDomainInsert.subForm.disabled = true;
+      }
+    }
+    // Formulareingaben ueberpruefen
+    function checkForm() {
+      // Sind alle Mussfelder ausgefuellt?
+	  var fields1 = "tfDomain,tfAlias,tfServername,tfBasedir,tfHostconfigdir,tfServiceconfigdir,tfBackupdir,tfHostbackupdir,tfServicebackupdir,tfNagiosBaseDir";
+	  var fields2 = "tfUsername,tfPassword";
+	  var msg1    = "{FILL_ALLFIELDS}";
+	  var msg2    = "{FILL_ILLEGALCHARS}";
+	  var header  = "{LANG_FORMCHECK}";
+	  var form    = document.frmDomainInsert;
+	  var check   = false;
+	  check = checkfields(fields1,form,myFocusObject);
+	  if (check == false) {
+	  	msginit(msg1,header,1);
+		return false;
+	  }	
+	  if (form.selMethod.value == 2) {
+	  	var check2  = false;
+	  	check2 = checkfields(fields2,form,myFocusObject);
+		if (check2 == false) {
+		  msginit(msg1,header,1);
+		  return false;
+		}	
+	  }  
+	  // Kommen unerlaubte Zeichen vor?
+	  if (form.tfDomain.value.match(/[^\w\.-]/)) {
+	  	msginit(msg2+" {LANG_DOMAIN}",header,1);
+	  	form.tfDomain.focus()
+		return false;
+	  }
+	}
+	// Versteckte Felder Ein- bzw. Ausblenden
+	function showFields(key) {
+		if (key == 1) {
+			document.getElementById('user').className 	= "elementHide";
+			document.getElementById('passwd').className = "elementHide";
+		} else {
+			document.getElementById('user').className 	= "elementShow";
+			document.getElementById('passwd').className = "elementShow";
+		}
+	
+	}
+    //-->
+  </script>
+  <table border="0"  class="inserttable">
+    <tr>
+      <td width="210">{LANG_DOMAIN}*</td>
+      <td colspan="2" valign="baseline"><input name="tfDomain" type="text" id="tfDomain" tabindex="1" value="{DAT_DOMAIN}" style="width:350px" {DOMAIN_DISABLE}  class="{LOCKCLASS}" >&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('domain','domain','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" >  
+        <input name="hidDomain" type="hidden" id="hidDomain" value="{DAT_DOMAIN}"></td>
+      </tr>
+    <tr>
+      <td>{LANG_DESCRIPTION}*</td>
+      <td colspan="2"><input name="tfAlias" type="text" id="tfAlias" tabindex="2" value="{DAT_ALIAS}" style="width:350px"  class="inpmust"></td>
+    </tr>
+    <tr>
+      <td>{LANG_SERVER_NAME}*</td>
+      <td colspan="2"><input name="tfServername" type="text" id="tfServername" tabindex="3" value="{DAT_SERVER}" {SERVER_DISABLE} style="width:350px"  class="inpmust" ></td>
+      </tr>
+    <tr>
+      <td>{LANG_METHOD}</td>
+      <td colspan="2">
+        <select name="selMethod" id="selMethod" tabindex="4" {METHOD_DISABLE} onchange="showFields(this.value)">
+          <option value="1" {FILE_SELECTED}>Fileaccess</option>
+          <option value="2" {FTP_SELECTED}>FTP</option>
+        </select>	  </td>
+    </tr>
+    <tr id="user" class="{CLASS_NAME}">
+      <td>{LANG_USERNAME}*</td>
+      <td colspan="2"><input name="tfUsername" type="text" id="tfUsername" tabindex="5" value="{DAT_USER}" style="width:350px" class="inpmust" ></td>
+    </tr>
+    <tr id="passwd" class="{CLASS_NAME}">
+      <td>{LANG_PASSWORD}*</td>
+      <td colspan="2"><input name="tfPassword" type="password" id="tfPassword" tabindex="6" value="{DAT_PASSWORD}" style="width:350px"  class="inpmust"></td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+      <td><strong>{LANG_CONFIGURATION_DIRECTORIES}</strong></td>
+      <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+      <td>{LANG_BASE_DIRECTORY}*</td>
+      <td colspan="2"><input name="tfBasedir" type="text" id="tfBasedir" tabindex="7" value="{DAT_BASEDIR}"  style="width:350px"  class="inpmust">&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('domain','basedir','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+    </tr>
+    <tr>
+      <td>{LANG_HOST_DIRECTORY}*</td>
+      <td colspan="2"><input name="tfHostconfigdir" type="text" id="tfHostconfigdir" tabindex="8" value="{DAT_HOSTCONFIG}"  style="width:350px"  class="inpmust" >&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('domain','hostdir','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+    </tr>
+    <tr>
+      <td>{LANG_SERVICE_DIRECTORY}*</td>
+      <td colspan="2"><input name="tfServiceconfigdir" type="text" id="tfServiceconfigdir" tabindex="9" value="{DAT_SERVICECONFIG}"  style="width:350px"  class="inpmust" >&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('domain','servicedir','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+    </tr>
+    <tr>
+      <td>{LANG_BACKUP_DIRECTORY}*</td>
+      <td colspan="2"><input name="tfBackupdir" type="text" id="tfBackupdir" tabindex="10" value="{DAT_BACKUPDIR}"  style="width:350px"  class="inpmust" >&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('domain','backupdir','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+    </tr>
+    <tr>
+      <td>{LANG_HOST_BACKUP_DIRECTORY}*</td>
+      <td colspan="2"><input name="tfHostbackupdir" type="text" id="tfHostbackupdir" tabindex="11" value="{DAT_HOSTBACKUP}"  style="width:350px"  class="inpmust" >&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('domain','backuphostdir','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+    </tr>
+    <tr>
+      <td>{LANG_SERVICE_BACKUP_DIRECTORY}*</td>
+      <td colspan="2"><input name="tfServicebackupdir" type="text" id="tfServicebackupdir" tabindex="12" value="{DAT_SERVICEBACKUP}"  style="width:350px"  class="inpmust" >&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('domain','backupservicedir','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+    </tr>
+    <tr>
+      <td>{LANG_NAGIOS_BASEDIR}*</td>
+      <td colspan="2"><input name="tfNagiosBaseDir" type="text" id="tfNagiosBaseDir" tabindex="13" value="{DAT_NAGIOSBASEDIR}"  style="width:350px" class="inpmust"  >&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('domain','nagiosbasedir','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+    </tr>
+    <tr>
+      <td>{LANG_IMPORT_DIRECTORY}</td>
+      <td colspan="2"><input name="tfImportdir" type="text" id="tfImportdir" tabindex="14" value="{DAT_IMPORTDIR}"  style="width:350px" >&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('domain','importdir','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+      <td>{LANG_NAGIOS_COMMAND_FILE}</td>
+      <td colspan="2"><input name="tfCommandfile" type="text" id="tfCommandfile" tabindex="15" value="{DAT_COMMANDFILE}"  style="width:350px" >&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('domain','commandfile','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+    </tr>
+    <tr>
+      <td>{LANG_NAGIOS_BINARY_FILE}</td>
+      <td colspan="2"><input name="tfBinary" type="text" id="tfBinary" tabindex="16" value="{DAT_BINARYFILE}"  style="width:350px" >&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('domain','binary','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+    </tr>
+    <tr>
+      <td>{LANG_NAGIOS_PROCESS_FILE}</td>
+      <td colspan="2"><input name="tfPidfile" type="text" id="tfPidfile" tabindex="17" value="{DAT_PIDFILE}"  style="width:350px" >&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('domain','pidfile','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+      <td>{LANG_NAGIOS_VERSION}</td>
+      <td colspan="2">
+        <select name="selVersion" id="selVersion" tabindex="17">
+          <option value="1" {VER_SELECTED_1}>2.x</option>
+          <option value="2" {VER_SELECTED_2}>2.9</option>
+          <option value="3" {VER_SELECTED_3}>3.0 +</option>
+        </select>
+      &nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('domain','version','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+      <td>{LANG_ACCESS_KEY_HOLES}</td>
+      <td colspan="2"><input name="chbKey1" type="checkbox" class="checkbox" id="chbKey1" value="1" {KEY1_CHECKED} {KEY_DISABLE} >
+        1&nbsp;
+        <input name="chbKey2" type="checkbox" class="checkbox" id="chbKey2" value="1" {KEY2_CHECKED} {KEY_DISABLE} >
+        2&nbsp;
+        <input name="chbKey3" type="checkbox" class="checkbox" id="chbKey3" value="1" {KEY3_CHECKED} {KEY_DISABLE} >
+        3&nbsp;
+        <input name="chbKey4" type="checkbox" class="checkbox" id="chbKey4" value="1" {KEY4_CHECKED} {KEY_DISABLE} >
+        4&nbsp;
+        <input name="chbKey5" type="checkbox" class="checkbox" id="chbKey5" value="1" {KEY5_CHECKED} {KEY_DISABLE} >
+        5&nbsp;
+        <input name="chbKey6" type="checkbox" class="checkbox" id="chbKey6" value="1" {KEY6_CHECKED} {KEY_DISABLE} >
+        6&nbsp;
+        <input name="chbKey7" type="checkbox" class="checkbox" id="chbKey7" value="1" {KEY7_CHECKED} {KEY_DISABLE} >
+        7&nbsp;
+        <input name="chbKey8" type="checkbox" class="checkbox" id="chbKey8" value="1" {KEY8_CHECKED} {KEY_DISABLE} >
+        8&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('common','accesskeys','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+    </tr>
+    <tr>
+      <td width="210">{LANG_ACTIVE}<br><img src="{IMAGE_PATH}pixel.gif" alt="" width="210" height="1"></td>
+      <td width="120"><input name="chbActive" type="checkbox" class="checkbox" id="chbActive" value="1" {ACT_CHECKED} {ACT_DISABLE}>
+        <input name="modus" type="hidden" id="modus" value="{MODUS}">
+        <input name="hidId" type="hidden" id="hidId" value="{DAT_ID}">
+        <input name="hidLimit" type="hidden" id="hidLimit" value="{LIMIT}">
+        <br>
+        <img src="{IMAGE_PATH}pixel.gif" alt="" width="120" height="1"><br></td>
+      <td width="470"><img src="{IMAGE_PATH}pixel.gif" alt="" width="220" height="1"></td>
+      </tr>
+    <tr>
+      <td colspan="3">&nbsp;</td>
+    </tr>
+    <tr>
+      <td colspan="3">{LANG_ACCESSDESCRIPTION}</td>
+    </tr>
+    <tr>
+      <td colspan="3">&nbsp;</td>
+      </tr>
+    <tr>
+      <td colspan="2"><input name="subForm" type="button" id="subForm" value="{LANG_SAVE}" onClick="LockButton()">
+      &nbsp;<input name="subAbort" type="button" id="subAbort" onClick="abort()" value="{LANG_ABORT}"></td>
+      <td>* {LANG_REQUIRED}</td>
+      </tr>
+  </table>
+</form>
+<div id="msgcontainer">
+</div>
+<div id="infodialog">
+    <div id="dialogcontent" class="bd"></div>
+</div>
+<br>
+<!-- END datainsert -->

@@ -1,0 +1,5 @@
+
+$(document).ready(function(){var item='<a href="#" onclick="wizard_add_row(this);return false">Add Row</a> | <a href="#" onclick="wizard_del_row(this);return false" title="Deletes all unused rows">Delete Row</a>';$(item).insertAfter('.adddeleterow');});function wizard_add_row(clickedelement){var table=$(clickedelement).prev()[0];var $tr=$(table).find("tbody tr:last").clone();$tr.find("input,select").attr("name",function(){var parts=this.name.match(/(\d+)/g);var newname=this.name.replace(/[\d]+/g,++parts);switch(this.type){case"text":this.value="";break;case"checkbox":this.checked=true;break;case"select-one":this.selectedIndex=0;break;}
+return newname;});$(table).find("tbody tr:last").after($tr);}
+function wizard_del_row(clickedelement){try{var table=$(clickedelement).prev().prev()[0];var row_count=table.rows.length;if(row_count<=2){return;}
+table.deleteRow(row_count-1);}catch(e){alert(e);}}

@@ -1,0 +1,10 @@
+#!/bin/sh -e
+
+#echo "*************************"
+#echo "THIS IS A MANUAL PROCESS!"
+#echo "*************************"
+
+#echo "REMEMBER TO CONFIGURE SENDMAIL TO ALLOW OUTBOUND EMAIL!"
+
+echo "Step completed OK"
+

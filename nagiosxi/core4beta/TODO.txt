@@ -1,0 +1,12 @@
+TODO Prep for Core 4
+=========
+-   External Commands in Monitoring Engine Process dashlet uses last_command_check which is deprecated. 
+    I believe we can just remove that from the dashlet now -SW
+
+-   failure_prediction_enabled should be taken out of all host/service and templace configs (and in CCM/DB)
+
+-   Verify livestatus works with Core 4 (add warning to upgrade if livestatus is detected in nagios.cfg)
+-   Issues found with previously installed mod_gearman (nagios daemon will not load)
+
+
+

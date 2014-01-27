@@ -1,0 +1,48 @@
+div.helpsystem_icon{
+    float: right;
+    text-align:center;
+    padding-left:5px;
+}
+
+.helpsystem_title{
+    position:relative;
+    top:-30px;
+    width:80%;
+    font-size:14px;
+    font-weight:bold;
+}
+
+#helpsystem_thumbnails{
+    float: left;
+}
+
+.helpsystem_thumbnail{
+    float: left;
+    text-align:center;
+    padding:2px;
+    margin:2px;
+    width:120px;
+    height:140px;
+}
+
+#helpsystem_video{
+    display:none;
+    text-align:center;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+#helpsystem_video iframe{
+    margin:0 auto;
+}
+
+#helpsystem_video p{
+    font-weight:bold;
+}
+#helpsystem_video div{
+    position: absolute; bottom: 0;
+}
+
+#helpsystem_resources{
+    float: left;
+}

@@ -1,0 +1,42 @@
+v1.92 - 11/15/2013
+==================
+Fix for capacity planning scheduled reports -JO
+
+v1.9 - 9/23/2013
+================
+Updated to use same layout as instantly genreated reports using PDF icon -JO
+Updated to use the user's set language when creating and sending reports -JO
+
+v1.8 - 8/19/2013
+================
+Updated dynamic reports made with wkhtmltopdf to include user-defined report title, page numbers, and standard report date -JO
+
+7/25/2013
+=========
+Fix to work with hostname nagiosxi -SW
+
+3/26/2013
+=========
+Fix for no-certificate check -SW
+
+3/7/2013
+=========
+Updates to licensing items -SW
+
+1/23/2012
+=========
+Added version checking for the executive summary -NS
+
+10/15/2012
+=========
+Added PDF attachment for executive summary -SW
+
+10/15/2012 - SW
+=========
+Fixed bug where you were taken to a session timedout screen -SW
+
+10/2/2012 - MG
+=========
+- Added logging functionality to log component events to nagiosxi/var/scheduledreporting.log
+- Fixed issue where multiple reports weren't all being sent
+- Fixed issue with jquery page bounce on front-end

@@ -1,0 +1,18 @@
+#!/bin/sh -e
+
+. ../../xi-sys.cfg
+
+pkgdir="nagiosql3-modified"
+
+# Make and install 
+(
+	cd "./$pkgdir"
+
+	destdir="/var/www/html/nagiosql"
+	cp -r * "$destdir"
+	chown -R "$apacheuser:$apachegroup" "$destdir"
+)
+
+# Post-install modifications
+./post-install
+

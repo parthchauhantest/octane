@@ -1,0 +1,27 @@
+*** checks.c.orig	2011-01-20 21:03:24.000000000 -0600
+--- checks.c	2011-01-20 21:04:00.000000000 -0600
+***************
+*** 3814,3824 ****
+  		if(hst->should_be_scheduled==TRUE){
+  			schedule_host_check(hst,hst->next_check,CHECK_OPTION_NONE);
+  		        }
+- 
+- 		/* update host status */
+- 		update_host_status(hst,FALSE);
+  	        }
+  
+  	/* run async checks of all hosts we added above */
+  	/* don't run a check if one is already executing or we can get by with a cached state */
+  	for(hostlist_item=check_hostlist;hostlist_item!=NULL;hostlist_item=hostlist_item->next){
+--- 3814,3824 ----
+  		if(hst->should_be_scheduled==TRUE){
+  			schedule_host_check(hst,hst->next_check,CHECK_OPTION_NONE);
+  		        }
+  	        }
+  
++ 	/* update host status - Applied in Nagios Core 3.3.1 */
++ 	update_host_status(hst,FALSE);
++ 
+  	/* run async checks of all hosts we added above */
+  	/* don't run a check if one is already executing or we can get by with a cached state */
+  	for(hostlist_item=check_hostlist;hostlist_item!=NULL;hostlist_item=hostlist_item->next){

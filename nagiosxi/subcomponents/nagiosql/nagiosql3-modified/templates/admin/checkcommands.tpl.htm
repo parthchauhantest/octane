@@ -1,0 +1,104 @@
+<!-- (c) 2008, 2009 by Martin Willisegger	-->					
+<!-- -->
+<!-- Project    : NagiosQL -->
+<!-- Component  : command administration template -->
+<!-- Website    : http://www.nagiosql.org -->
+<!-- Date       : $LastChangedDate: 2009-04-28 15:02:27 +0200 (Di, 28. Apr 2009) $ -->
+<!-- Author     : $LastChangedBy: rouven $ -->
+<!-- Version    : 3.0.3 -->
+<!-- Revision   : $LastChangedRevision: 708 $ -->
+<!-- SVN-ID     : $Id: checkcommands.tpl.htm 708 2009-04-28 13:02:27Z rouven $ -->
+<!-- BEGIN header -->
+    <td class="main">
+      <h1>{TITLE}</h1>
+<!-- END header -->
+<!-- BEGIN datainsert -->
+<form name="frmDetail" method="post" action="{ACTION_INSERT}">
+  <script language="JavaScript" type="text/JavaScript">
+    <!--
+    // Eingabe abbrechen
+    function abort() {
+      this.location.href = "{ACTION_INSERT}?limit={LIMIT}";
+    }
+    // Formular absenden
+    function LockButton() {
+      if (checkForm() == false) {
+        return false;
+      } else {
+        document.frmDetail.submit();
+        document.frmDetail.subForm.disabled = true;
+      }
+    }
+    // Formulareingaben ueberpruefen
+    function checkForm() {
+      // Sind alle Mussfelder ausgefuellt?
+	  var fields1 = "tfName,tfCommand";
+	  var msg1    = "{FILL_ALLFIELDS}";
+	  var msg2    = "{FILL_ILLEGALCHARS}";
+	  var header  = "{LANG_FORMCHECK}";
+	  var form    = document.frmDetail;
+	  var check   = false;
+	  check = checkfields(fields1,form,myFocusObject);
+	  if (check == false) {
+	  	msginit(msg1,header,1);
+		return false;
+	  }	
+	  // Kommen unerlaubte Zeichen vor?
+	  //if (form.tfName.value.match(/[^a-zA-Z0-9_-]/)) {
+	  //	msginit(msg2+" {LANG_COMMAND}",header,1);
+	  //	form.tfDomain.focus()
+	  //	return false;
+	  //}
+	}
+    //-->
+  </script>
+  <table border="0"  class="inserttable">
+    <tr>
+      <td>{LANG_COMMAND}*</td>
+      <td colspan="2"><input name="tfName" type="text" id="tfName" value="{DAT_COMMAND_NAME}" style="width:200px;" class="inpmust">&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('command','command_name','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+    </tr>
+    <tr>
+      <td>{LANG_COMMAND_LINE}*</td>
+      <td colspan="2"><input name="tfCommand" type="text" id="tfCommand" value="{DAT_COMMAND_LINE}" style="width:650px;" class="inpmust">&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('command','command_line','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+    </tr>
+    <tr>
+      <td>{LANG_COMMAND_TYPE}</td>
+      <td colspan="2">
+        <select name="selCommandType" id="selCommandType" style="width:205px">
+        	<option value="0">{NO_TYPE}</option>
+            <option value="1" {CHECK_TYPE_SELECTED}>{CHECK_TYPE}</option>
+            <option value="2" {MISC_TYPE_SELECTED}>{MISC_TYPE}</option>
+        </select>&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('command','command_type','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" >
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">&nbsp;</td>
+      </tr>
+    <tr>
+      <td>{LANG_ACTIVE}</td>
+      <td colspan="2"><input name="chbActive" type="checkbox" class="checkbox" id="chbActive" value="1" {ACT_CHECKED} {ACT_DISABLED}>
+        <input name="hidActive" type="hidden" id="hidActive" value="{ACTIVE}">
+	    <input name="modus" type="hidden" id="modus" value="{MODUS}">
+        <input name="hidId" type="hidden" id="hidId" value="{DAT_ID}">
+        <input name="hidLimit" type="hidden" id="hidLimit" value="{LIMIT}">
+      </td>
+    </tr>
+    <tr>
+      <td width="120">&nbsp;</td>
+      <td width="180">&nbsp;</td>
+      <td width="500">&nbsp;</td>
+    </tr>
+    <tr>
+      <td colspan="2" valign="bottom"><input name="subForm" type="button" id="subForm" value="{LANG_SAVE}" onClick="LockButton()">&nbsp;
+      <input name="subAbort" type="button" id="subAbort" onClick="abort()" value="{LANG_ABORT}"></td>
+      <td>* {LANG_REQUIRED}</td>
+    </tr>
+  </table>
+</form>
+{CHECK_MUST_DATA}
+<br>
+<div id="msgcontainer"></div>
+<div id="infodialog">
+    <div id="dialogcontent" class="bd"></div>
+</div>
+<!-- END datainsert -->

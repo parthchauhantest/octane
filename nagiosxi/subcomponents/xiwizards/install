@@ -1,0 +1,15 @@
+#!/bin/sh -e
+
+echo "Installing/updating XI wizards..."
+
+# Install/update each wizard
+for f in `ls -1 wizards/*.zip`; do
+	echo "Installing '$f'"
+	
+	../../nagiosxi/basedir/tools/install_configwizard.php --file=$f --restart=false --refresh=1
+
+done
+
+# Things are okay
+echo "Wizards installed/updated OK"
+

@@ -1,0 +1,59 @@
+--- cgiauth-orig.c	2012-01-25 16:26:32.000000000 -0600
++++ cgiauth.c	2012-01-25 16:27:55.000000000 -0600
+@@ -226,13 +226,22 @@
+ 
+ 	/* CHANGED in 2.0 - user must be authorized for ALL hosts in a hostgroup, not just one */
+ 	/* see if user is authorized for all hosts in the hostgroup */
+-	for(temp_hostsmember=hg->members;temp_hostsmember!=NULL;temp_hostsmember=temp_hostsmember->next){
+-		temp_host=find_host(temp_hostsmember->host_name);
+-		if(is_authorized_for_host(temp_host,authinfo)==FALSE)
++	/*
++	for(temp_hostsmember = hg->members; temp_hostsmember != NULL; temp_hostsmember = temp_hostsmember->next) {
++		temp_host = find_host(temp_hostsmember->host_name);
++		if(is_authorized_for_host(temp_host, authinfo) == FALSE)
+ 			return FALSE;
+-	        }
++		}
++	*/
++	/* Reverted for 3.3.2 - must only be a member of one hostgroup */
++	for(temp_hostsmember = hg->members; temp_hostsmember != NULL; temp_hostsmember = temp_hostsmember->next) {
++		temp_host = find_host(temp_hostsmember->host_name);
++		if(is_authorized_for_host(temp_host, authinfo) == TRUE)
++			return TRUE;
++		}
+ 
+-	return TRUE;
++	/*return TRUE;*/
++	return FALSE;
+         }
+ 
+ 
+@@ -246,13 +255,22 @@
+ 		return FALSE;
+ 
+ 	/* see if user is authorized for all services in the servicegroup */
+-	for(temp_servicesmember=sg->members;temp_servicesmember!=NULL;temp_servicesmember=temp_servicesmember->next){
+-		temp_service=find_service(temp_servicesmember->host_name,temp_servicesmember->service_description);
+-		if(is_authorized_for_service(temp_service,authinfo)==FALSE)
++	/*
++	for(temp_servicesmember = sg->members; temp_servicesmember != NULL; temp_servicesmember = temp_servicesmember->next) {
++		temp_service = find_service(temp_servicesmember->host_name, temp_servicesmember->service_description);
++		if(is_authorized_for_service(temp_service, authinfo) == FALSE)
+ 			return FALSE;
+-	        }
+-
+-	return TRUE;
++		}
++	*/
++	/* Reverted for 3.3.2 - must only be a member of one hostgroup */
++	for(temp_servicesmember = sg->members; temp_servicesmember != NULL; temp_servicesmember = temp_servicesmember->next) {
++		temp_service = find_service(temp_servicesmember->host_name, temp_servicesmember->service_description);
++		if(is_authorized_for_service(temp_service, authinfo) == TRUE)
++			return TRUE;
++		}
++		
++	/*return TRUE*/;
++	return FALSE;
+         }
+ 
+ /* check if current user is restricted to read only */

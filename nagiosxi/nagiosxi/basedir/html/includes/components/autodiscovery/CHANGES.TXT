@@ -1,0 +1,30 @@
+2013-01-18
+==========
+- Fixed security vulnerability where read-only users could access auto-discovery directly - MG
+- Fixed security vulnerability where shell commands could be passed to the address field - MG
+
+2013-01-18
+==========
+- Fixed issue where XML entities were being unescaped, causing 0 devices to show up - NS
+- Fixed issue where throbber would spin indefiniately under certain circumstances - NS
+
+2012-09-17
+==========
+- Fix for Netmask smaller than /30 -SW
+
+2012-07-01
+==========
+- Added support for scheduled autodiscovery jobs (requires re-running setup.sh) - EG
+- Show os detection only if user chooses advanced options, topology detection (no fully supported yet) on by default - EG
+- Added enterprise feature checks - EG
+
+
+2012-03-26
+==========
+- Added OS detection (requires Nagios XI 2011R2.3 or later) - EG
+- Added detection of single IP address in scan job and automatically added netmask - EG
+
+
+2012-02-29
+==========
+- Changed "process job" link to direct to stage 2 of wizard, which allows for configuring options - EG

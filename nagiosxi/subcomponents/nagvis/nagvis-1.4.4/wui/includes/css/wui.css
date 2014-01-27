@@ -1,0 +1,221 @@
+
+/*****************************************************************************
+ *
+ * wui.css - CSS definitions for WUI
+ *
+ * Copyright (c) 2004-2008 NagVis Project (Contact: lars@vertical-visions.de)
+ *
+ * License:
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ *****************************************************************************/
+ 
+/**
+ * @author	Lars Michelsen <lars@vertical-visions.de>
+ */
+
+table { 
+	background-color: #F5F5F5; 
+	width: 100%;
+}
+
+.main {
+	margin: 0;
+	padding: 0;
+	background-color: white;
+}
+
+.submit {
+	font-weight: bold;
+	color: #314455;
+	vertical-align: middle;
+	
+	border: 1px solid #314455;
+	background-color: #DADADA;
+}
+
+.focus {
+	cursor: crosshair !important;
+}
+
+.focusOff {
+	cursor: default;
+}
+
+/*
+ * WUI tables/form
+ */
+
+table.mytable {
+	background-color: #F5F5F5;
+	border-collapse:collapse;
+	margin-top: 0px;
+	padding: 1px;
+	width: 100%;
+}
+
+table.mytable td, table.mytable th {
+	border: 1px #a4a4a4 solid;
+	padding: 1px;
+	
+	font-size: 10px;
+	color: #314455;
+}
+
+/* title */
+table.mytable th {
+	background-color: #eee;
+	
+	text-align: center;
+	font-size: 12px;
+}
+
+/* cat */
+table.mytable th.cat {
+	font-size: 12px;
+}
+
+/* td common */
+table.mytable td {
+	color: #2B5377;
+}
+
+/* Child rows */
+table.mytable tr.child-row td.tdlabel {
+	padding-left: 20px;
+}
+
+/* td labels */
+table.mytable td.tdlabel {
+	padding-left: 10px;
+	background-color: #eee;
+	width: 50%;
+} 
+
+table.mytable td.tdfield input, table.mytable td.tdfield select {
+	background-color: #E4EEF6; 
+	border: 1px solid #284279;
+	width: 100%;
+}
+
+/*
+ * WUI INFOBOX
+ */
+
+table.infobox {
+	background-color: #F5F5F5; 
+	border-collapse:collapse;
+	padding: 1px;
+	width: 100%;
+}
+
+table.infobox td, table.infobox th {
+	border: 1px #a4a4a4 solid;
+	padding: 0px;
+	
+	font-size: 10px;
+	color: #314455;
+}
+
+table.infobox th {
+	text-align: center;
+	background-color: #eee;
+}
+
+table.infobox a:link,
+table.infobox a:visited,
+table.infobox a:active {
+	color: #44B0CC;
+	text-decoration: none;
+}
+
+table.infobox a:hover {
+	color: #7EA238;
+	text-decoration: none;
+}
+
+/* display inherited settings in gray font */
+table.infobox tr.inherited th, table.infobox tr.inherited td {
+	color: #a4a4a4;
+}
+
+ul.nav {
+	margin: 0;
+	padding: 0;
+	height: 34px;
+	width: 300px;
+}
+
+ul.nav li {
+	float: left;
+  list-style-type: none;
+	border-right: 1px #a4a4a4 solid;
+}
+
+ul.nav li a {
+	float: left;
+  margin: 0;
+  background-repeat: no-repeat;
+  background-position: 5px 50%;
+}
+
+ul.nav li a span {
+  padding: 0 .4em 0 42px;
+  display: inline;
+  line-height: 34px;
+	vertical-align: middle;
+}
+
+
+/*
+ * popupWindow css
+ */
+
+div#popupWindow {
+	z-index: 2000;
+}
+
+#popupWindow table {
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	border-collapse:collapse;
+}
+
+#popupWindow table tr th, 
+#popupWindow table tr td {
+	background-color: #eee;
+	border: 1px #a4a4a4 solid;
+	
+	font-size: 10px;
+	color: #314455;
+}
+
+#popupWindow table tr th#dragbar {
+	text-align: left;
+	padding-left: 5px;
+	cursor: pointer;
+}
+
+#popupWindow table tbody tr th.control {
+	padding: 0;
+	margin: 0;
+	width: 15px;
+	text-align: center;
+	color: #314455;
+	font-weight: bold;
+	text-decoration: none;
+	cursor: pointer;
+}

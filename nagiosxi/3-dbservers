@@ -1,0 +1,35 @@
+#!/bin/sh -e
+
+# Was previous step completed?
+if [ ! -f installed.usersgroups ]; then
+	echo "Users/groups were not configured - run previous script" >&2
+	exit 1
+fi
+
+# Was this step already completed?
+if [ -f installed.dbservers ]; then
+	echo "Database servers already initialized - skipping."
+	exit 0
+fi
+
+##########################################
+# INITIALIZE POSTGRES
+##########################################
+
+./init-postgres
+if [ ! -f installed.postgresql ]; then
+	exit 1
+fi
+
+##########################################
+# INITIALIZE MYSQL
+##########################################
+
+./init-mysql
+if [ ! -f installed.mysql ]; then
+	exit 1
+fi
+
+echo "Database servers initialized OK"
+touch installed.dbservers
+

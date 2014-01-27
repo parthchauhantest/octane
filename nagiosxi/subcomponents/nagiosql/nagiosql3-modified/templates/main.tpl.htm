@@ -1,0 +1,126 @@
+<!-- (c) 2008, 2009 by Martin Willisegger	-->					
+<!-- -->
+<!-- Project    : NagiosQL -->
+<!-- Component  : main template -->
+<!-- Website    : http://www.nagiosql.org -->
+<!-- Date       : $LastChangedDate: 2009-04-28 15:02:27 +0200 (Di, 28. Apr 2009) $ -->
+<!-- Author     : $LastChangedBy: rouven $ -->
+<!-- Version    : 3.0.3 -->
+<!-- Revision   : $LastChangedRevision: 708 $ -->
+<!-- SVN-ID     : $Id: main.tpl.htm 708 2009-04-28 13:02:27Z rouven $ -->
+<!-- BEGIN header -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+	<title>{PAGETITLE}</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="description" content="{META_DESCRIPTION}">
+	<meta name="keywords" content="{META_KEYWORDS}">
+	<meta name="robots" content="{ROBOTS}">
+	<meta name="author" content="{AUTHOR}">
+	<meta name="content-language" content="{LANGUAGE}">
+	<meta name="publisher" content="{PUBLISHER}">{SPECIALMETA}
+    <link rel="SHORTCUT ICON" href="{BASE_PATH}favicon.ico">
+    <!-- YUI Components -->
+    <!--<link href="{BASE_PATH}functions/yui/build/fonts/fonts-min.css" rel="stylesheet" type="text/css"> -->
+    <link href="{BASE_PATH}functions/yui/build/button/assets/skins/sam/button.css" rel="stylesheet" type="text/css">
+    <link href="{BASE_PATH}functions/yui/build/container/assets/skins/sam/container.css" rel="stylesheet" type="text/css">
+    <link href="{BASE_PATH}functions/yui/build/calendar/assets/skins/sam/calendar.css" rel="stylesheet" type="text/css">
+    <!-- CSS Include -->
+    <link href="{BASE_PATH}config/main.css" rel="stylesheet" type="text/css">
+    <link href="{BASE_PATH}functions/yui/build/tabview/assets/skins/sam/tabview.css" rel="stylesheet" type="text/css">
+    <!-- YUI Scripts -->
+    <script language="JavaScript" type="text/JavaScript" src="{BASE_PATH}functions/yui/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+    <script language="JavaScript" type="text/JavaScript" src="{BASE_PATH}functions/yui/build/element/element-beta-min.js"></script>
+    <script language="JavaScript" type="text/JavaScript" src="{BASE_PATH}functions/yui/build/button/button-min.js"></script>
+    <script language="JavaScript" type="text/JavaScript" src="{BASE_PATH}functions/yui/build/connection/connection-min.js"></script>
+    <script language="JavaScript" type="text/JavaScript" src="{BASE_PATH}functions/yui/build/utilities/utilities.js"></script>
+    <script language="JavaScript" type="text/JavaScript" src="{BASE_PATH}functions/yui/build/container/container-min.js"></script>
+	<script language="JavaScript" type="text/JavaScript" src="{BASE_PATH}functions/yui/build/calendar/calendar-min.js"></script>	
+    <script language="JavaScript" type="text/JavaScript" src="{BASE_PATH}functions/yui/build/tabview/tabview-min.js"></script>
+    <script language="JavaScript" type="text/JavaScript" src="{BASE_PATH}functions/common.js"></script>
+    <script type="text/javascript" language="javascript">
+  function apply_config(){
+	var origurl=this.location.href;
+	this.location.href="/nagiosxi/includes/components/nagioscorecfg/applyconfig.php?return="+origurl;
+	}
+      <!--
+	  function doChangeDomain() {
+	  	document.frmDomChange.submit();
+	  }
+	  //-->
+	</script>
+	<script type="text/javascript">
+	function lookup(inputString) {
+	  if(inputString.length == 0) {
+	  	// Hide the suggestion box.
+	    $('#suggestions').hide();
+	  } else {
+	  	$.post("searchhosts.php", {strQueryString: ""+inputString+""}, function(data){
+		  	if(data.length >0) {
+		    	$('#suggestions').show();
+		      $('#autoSuggestionsList').html(data);
+		    }
+	    });
+	  }
+	}
+	function fill(thisValue) {
+		$('#inputString').val(thisValue);
+		setTimeout("$('#suggestions').hide();", 200);
+	}
+</script>
+  </head>
+  <body  class="yui-skin-sam">
+  
+  
+  <div style="width: 100%;" class="header">
+
+  <div class="headerparts">
+  <div class="headerleft"><!--{ADMIN}{MONITOR}--><h1>Nagios Core Config Manager</h1></div>
+  <div class="headermiddle">&nbsp;</div>
+  <div class="headerright">&nbsp;</div>
+  </div>
+
+  <div class="infoparts">
+  <div class="infoleft">{POSITION}</div>
+  <div class="inforight">
+  <form name="frmDomChange" action="" method="post">
+        <table cellpadding="0" cellspacing="0" border="0" align="right" width="350">
+          <tr>
+			<!-- END header -->  
+			<!-- BEGIN dselect -->         
+			<!-- XI MOD - removed domain option -->
+            <!--
+			<td class="inforight2">{DOMAIN_INFO}&nbsp;&nbsp;</td>
+			//-->
+			
+			<!-- XI MOD - removed domain option -->
+			<!--
+            <td class="inforight2">    
+              <select name="selDomain" onChange="doChangeDomain();">
+		        <option value="{DOMAIN_VALUE}" {DOMAIN_SELECTED}>{DOMAIN_TEXT}</option>
+              </select>  
+              </td>
+			  //-->
+				<!-- END dselect -->               
+				<!-- BEGIN header2 -->                
+            <td class="inforight2">&nbsp;&nbsp;{LOGIN_INFO}&nbsp;{LOGOUT_INFO}</td>
+          </tr>
+        </table>
+        </form>
+      </div><!-- inforight -->
+	</div><!-- infoparts-->
+	
+  </div><!--header-->
+  
+  
+  <table>
+    <tr>
+<!-- END header2 -->
+<!-- BEGIN footer -->
+    </tr>
+  </table>
+  <p class="version">{VERSION_INFO}</p>
+  </body>
+</html>
+<!-- END footer -->

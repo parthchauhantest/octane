@@ -1,0 +1,866 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class fpdf_multicelltag</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name"><img src="../media/images/Class_logo.png"
+														alt=" Class"
+														title=" Class"
+														style="vertical-align: middle"> fpdf_multicelltag</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+													<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">MultiCellTag Class  The intern functions are prefaced with mt_, not be be overwritten</p>
+	<ul class="tags">
+				<li><span class="field">author:</span> andy@interpid.eu</li>
+				<li><span class="field">version:</span> 1.4</li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_class.multicelltag.php.html">/class.multicelltag.php</a> (line <span class="field"><a href="../__filesource/fsource_Tag Based Multicell__class.multicelltag.php.html#a62">62</a></span>)
+		</p>
+		
+				
+		<pre>FPDF
+   |
+   --fpdf_multicelltag</pre>
+	
+			</div>
+</div>
+
+
+
+	<a name="sec-var-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variable Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
+							| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<div class="var-summary">
+																																																																								<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">boolean</span>
+					<a href="#$wt_bDoubleTags" title="details" class="var-name">$wt_bDoubleTags</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">string</span>
+					<a href="#$wt_Current_Tag" title="details" class="var-name">$wt_Current_Tag</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">struct</span>
+					<a href="#$wt_DataExtraInfo" title="details" class="var-name">$wt_DataExtraInfo</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">struct</span>
+					<a href="#$wt_DataInfo" title="details" class="var-name">$wt_DataInfo</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">struct</span>
+					<a href="#$wt_FontInfo" title="details" class="var-name">$wt_FontInfo</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">integer</span>
+					<a href="#$wt_TagWidthMax" title="details" class="var-name">$wt_TagWidthMax</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">struct</span>
+					<a href="#$wt_TempData" title="details" class="var-name">$wt_TempData</a>
+				</div>
+											</div>
+		</div>
+	</div>
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																																																																																								<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">void</span>
+										<a href="#afterAddPage" title="details" class="method-name">afterAddPage</a>
+										()
+									</div>
+																<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">void</span>
+										<a href="#beforeAddPage" title="details" class="method-name">beforeAddPage</a>
+										()
+									</div>
+																<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">void</span>
+										<a href="#mt_ApplyStyle" title="details" class="method-name">mt_ApplyStyle</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$tag</span>)
+									</div>
+																<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">struct</span>
+										<a href="#mt_DivideByTags" title="details" class="method-name">mt_DivideByTags</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$pStr</span>, [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$return</span> = <span class="var-default">false</span>])
+									</div>
+																<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">array</span>
+										<a href="#mt_MakeLine" title="details" class="method-name">mt_MakeLine</a>
+											(<span class="var-type">numeric</span>&nbsp;<span class="var-name">$w</span>)
+									</div>
+																<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">void</span>
+										<a href="#mt_PrintLine" title="details" class="method-name">mt_PrintLine</a>
+											(<span class="var-type">numeric</span>&nbsp;<span class="var-name">$w</span>, <span class="var-type">numeric</span>&nbsp;<span class="var-name">$h</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$aTxt</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$align</span> = <span class="var-default">'J'</span>])
+									</div>
+																<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">void</span>
+										<a href="#mt_Reset_Datas" title="details" class="method-name">mt_Reset_Datas</a>
+											(<span class="var-type">none</span>&nbsp;<span class="var-name">0</span>)
+									</div>
+																<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">void</span>
+										<a href="#mt_SaveCurrentStyle" title="details" class="method-name">mt_SaveCurrentStyle</a>
+											(<span class="var-type">none</span>&nbsp;<span class="var-name">0</span>)
+									</div>
+																<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">array</span>
+										<a href="#mt_StringToLines" title="details" class="method-name">mt_StringToLines</a>
+											([<span class="var-type">numeric</span>&nbsp;<span class="var-name">$w</span> = <span class="var-default">0</span>], <span class="var-type">string</span>&nbsp;<span class="var-name">$pStr</span>)
+									</div>
+																<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">void</span>
+										<a href="#MultiCellTag" title="details" class="method-name">MultiCellTag</a>
+											(<span class="var-type">numeric</span>&nbsp;<span class="var-name">$w</span>, <span class="var-type">numeric</span>&nbsp;<span class="var-name">$h</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$pData</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$border</span> = <span class="var-default">0</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$align</span> = <span class="var-default">'J'</span>], [<span class="var-type">numeric</span>&nbsp;<span class="var-name">$fill</span> = <span class="var-default">0</span>], [<span class="var-type">numeric</span>&nbsp;<span class="var-name">$pad_left</span> = <span class="var-default">0</span>], [<span class="var-type">numeric</span>&nbsp;<span class="var-name">$pad_top</span> = <span class="var-default">0</span>], [<span class="var-type">numeric</span>&nbsp;<span class="var-name">$pad_right</span> = <span class="var-default">0</span>], [<span class="var-type">numeric</span>&nbsp;<span class="var-name">$pad_bottom</span> = <span class="var-default">0</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$pDataIsString</span> = <span class="var-default">true</span>])
+									</div>
+																<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">void</span>
+										<a href="#MultiCellTagSec" title="details" class="method-name">MultiCellTagSec</a>
+											(<span class="var-type">numeric</span>&nbsp;<span class="var-name">$w</span>, <span class="var-type">numeric</span>&nbsp;<span class="var-name">$h</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$pData</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$border</span> = <span class="var-default">0</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$align</span> = <span class="var-default">'J'</span>], [<span class="var-type">numeric</span>&nbsp;<span class="var-name">$fill</span> = <span class="var-default">0</span>], [<span class="var-type">numeric</span>&nbsp;<span class="var-name">$pad_left</span> = <span class="var-default">0</span>], [<span class="var-type">numeric</span>&nbsp;<span class="var-name">$pad_top</span> = <span class="var-default">0</span>], [<span class="var-type">numeric</span>&nbsp;<span class="var-name">$pad_right</span> = <span class="var-default">0</span>], [<span class="var-type">numeric</span>&nbsp;<span class="var-name">$pad_bottom</span> = <span class="var-default">0</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$pDataIsString</span> = <span class="var-default">true</span>])
+									</div>
+																<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">void</span>
+										<a href="#SetStyle" title="details" class="method-name">SetStyle</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$tag</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$family</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$style</span>, <span class="var-type">numeric</span>&nbsp;<span class="var-name">$size</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">$color</span>)
+									</div>
+																<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">void</span>
+										<a href="#setTagWidthMax" title="details" class="method-name">setTagWidthMax</a>
+											([<span class="var-type">numeric</span>&nbsp;<span class="var-name">$iWidth</span> = <span class="var-default">10</span>])
+									</div>
+											</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			
+<a name="var$wt_bDoubleTags" id="$wt_bDoubleTags"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">boolean</span>
+			<span class="var-name">$wt_bDoubleTags</span>
+			 = <span class="var-default"> false</span>			(line <span class="line-number"><a href="../__filesource/fsource_Tag Based Multicell__class.multicelltag.php.html#a119">119</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">== true if a tag was more times defined.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$wt_Current_Tag" id="$wt_Current_Tag"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$wt_Current_Tag</span>
+			 = <span class="var-default"> ''</span>			(line <span class="line-number"><a href="../__filesource/fsource_Tag Based Multicell__class.multicelltag.php.html#a78">78</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The current active tag</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$wt_DataExtraInfo" id="$wt_DataExtraInfo"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">struct</span>
+			<span class="var-name">$wt_DataExtraInfo</span>
+						(line <span class="line-number"><a href="../__filesource/fsource_Tag Based Multicell__class.multicelltag.php.html#a102">102</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Data Extra Info</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$wt_DataInfo" id="$wt_DataInfo"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">struct</span>
+			<span class="var-name">$wt_DataInfo</span>
+						(line <span class="line-number"><a href="../__filesource/fsource_Tag Based Multicell__class.multicelltag.php.html#a94">94</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Parsed string data info</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$wt_FontInfo" id="$wt_FontInfo"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">struct</span>
+			<span class="var-name">$wt_FontInfo</span>
+						(line <span class="line-number"><a href="../__filesource/fsource_Tag Based Multicell__class.multicelltag.php.html#a86">86</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Tags Font Information</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$wt_TagWidthMax" id="$wt_TagWidthMax"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">integer</span>
+			<span class="var-name">$wt_TagWidthMax</span>
+			 = <span class="var-default"> 10</span>			(line <span class="line-number"><a href="../__filesource/fsource_Tag Based Multicell__class.multicelltag.php.html#a70">70</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Valid Tag Maximum Width</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$wt_TempData" id="$wt_TempData"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">struct</span>
+			<span class="var-name">$wt_TempData</span>
+						(line <span class="line-number"><a href="../__filesource/fsource_Tag Based Multicell__class.multicelltag.php.html#a110">110</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Temporary Info</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+						
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+														<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+<a name="methodafterAddPage" id="afterAddPage"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">afterAddPage</span> (line <span class="line-number"><a href="../__filesource/fsource_Tag Based Multicell__class.multicelltag.php.html#a947">947</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Function executed AFTER a new page is added for pre - actions on the current page.</p>
+<p class="description"><p>Usually overwritted.</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			afterAddPage
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodbeforeAddPage" id="beforeAddPage"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">beforeAddPage</span> (line <span class="line-number"><a href="../__filesource/fsource_Tag Based Multicell__class.multicelltag.php.html#a934">934</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Function executed BEFORE a new page is added for further actions on the current page.</p>
+<p class="description"><p>Usually overwritted.</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			beforeAddPage
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodmt_ApplyStyle" id="mt_ApplyStyle"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">mt_ApplyStyle</span> (line <span class="line-number"><a href="../__filesource/fsource_Tag Based Multicell__class.multicelltag.php.html#a194">194</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets current tag to specified style <ul><li>if the tag name is not in the tag list then de &quot;DEFAULT&quot; tag is saved.</li></ul></p>
+<p class="description"><p>This includes a fist call of the function mt_SaveCurrentStyle()</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			mt_ApplyStyle
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$tag</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$tag</span><span class="var-description">: - tag name</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodmt_DivideByTags" id="mt_DivideByTags"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">mt_DivideByTags</span> (line <span class="line-number"><a href="../__filesource/fsource_Tag Based Multicell__class.multicelltag.php.html#a763">763</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This method divides the string into the tags and puts the result into wt_DataInfo variable.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> or void</li>
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">struct</span>
+		<span class="method-name">
+			mt_DivideByTags
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$pStr</span>, [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$return</span> = <span class="var-default">false</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$pStr</span><span class="var-description">: - string to be parsed</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$return</span><span class="var-description">: - ==TRUE if the result is returned or not</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodmt_MakeLine" id="mt_MakeLine"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">mt_MakeLine</span> (line <span class="line-number"><a href="../__filesource/fsource_Tag Based Multicell__class.multicelltag.php.html#a247">247</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Divides $this-&gt;wt_DataInfo and returnes a line from this variable</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> - array() -&gt; contains informations to draw a line</li>
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			mt_MakeLine
+		</span>
+					(<span class="var-type">numeric</span>&nbsp;<span class="var-name">$w</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">numeric</span>
+				<span class="var-name">$w</span><span class="var-description">: - the width of the text</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodmt_PrintLine" id="mt_PrintLine"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">mt_PrintLine</span> (line <span class="line-number"><a href="../__filesource/fsource_Tag Based Multicell__class.multicelltag.php.html#a826">826</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Draws a Tag Based formatted line returned from mt_MakeLine function into the pdf document</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			mt_PrintLine
+		</span>
+					(<span class="var-type">numeric</span>&nbsp;<span class="var-name">$w</span>, <span class="var-type">numeric</span>&nbsp;<span class="var-name">$h</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$aTxt</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$align</span> = <span class="var-default">'J'</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">numeric</span>
+				<span class="var-name">$w</span><span class="var-description">: - width of the text</span>			</li>
+					<li>
+				<span class="var-type">numeric</span>
+				<span class="var-name">$h</span><span class="var-description">: - height of a line</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$aTxt</span><span class="var-description">: - text to be draw</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$align</span><span class="var-description">: - align of the text</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodmt_Reset_Datas" id="mt_Reset_Datas"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">mt_Reset_Datas</span> (line <span class="line-number"><a href="../__filesource/fsource_Tag Based Multicell__class.multicelltag.php.html#a141">141</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Resets the current class internal variables to default values</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			mt_Reset_Datas
+		</span>
+					(<span class="var-type">none</span>&nbsp;<span class="var-name">0</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">none</span>
+				<span class="var-name">0</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodmt_SaveCurrentStyle" id="mt_SaveCurrentStyle"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">mt_SaveCurrentStyle</span> (line <span class="line-number"><a href="../__filesource/fsource_Tag Based Multicell__class.multicelltag.php.html#a231">231</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Save the current settings as a tag default style under the DEFAUTLT tag name</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			mt_SaveCurrentStyle
+		</span>
+					(<span class="var-type">none</span>&nbsp;<span class="var-name">0</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">none</span>
+				<span class="var-name">0</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodmt_StringToLines" id="mt_StringToLines"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">mt_StringToLines</span> (line <span class="line-number"><a href="../__filesource/fsource_Tag Based Multicell__class.multicelltag.php.html#a787">787</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This method parses the current text and return an array that contains the text information for  each line that will be drawed.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> - contains parsed text information.</li>
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			mt_StringToLines
+		</span>
+					([<span class="var-type">numeric</span>&nbsp;<span class="var-name">$w</span> = <span class="var-default">0</span>], <span class="var-type">string</span>&nbsp;<span class="var-name">$pStr</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">numeric</span>
+				<span class="var-name">$w</span><span class="var-description">: - width of the line</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$pStr</span><span class="var-description">: - String to be parsed</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodMultiCellTag" id="MultiCellTag"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">MultiCellTag</span> (line <span class="line-number"><a href="../__filesource/fsource_Tag Based Multicell__class.multicelltag.php.html#a515">515</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Draws a MultiCell with TAG recognition parameters</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			MultiCellTag
+		</span>
+					(<span class="var-type">numeric</span>&nbsp;<span class="var-name">$w</span>, <span class="var-type">numeric</span>&nbsp;<span class="var-name">$h</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$pData</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$border</span> = <span class="var-default">0</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$align</span> = <span class="var-default">'J'</span>], [<span class="var-type">numeric</span>&nbsp;<span class="var-name">$fill</span> = <span class="var-default">0</span>], [<span class="var-type">numeric</span>&nbsp;<span class="var-name">$pad_left</span> = <span class="var-default">0</span>], [<span class="var-type">numeric</span>&nbsp;<span class="var-name">$pad_top</span> = <span class="var-default">0</span>], [<span class="var-type">numeric</span>&nbsp;<span class="var-name">$pad_right</span> = <span class="var-default">0</span>], [<span class="var-type">numeric</span>&nbsp;<span class="var-name">$pad_bottom</span> = <span class="var-default">0</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$pDataIsString</span> = <span class="var-default">true</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">numeric</span>
+				<span class="var-name">$w</span><span class="var-description">: - with of the cell</span>			</li>
+					<li>
+				<span class="var-type">numeric</span>
+				<span class="var-name">$h</span><span class="var-description">: - height of the lines in the cell</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$pData</span><span class="var-description">: - string or formatted data to be putted in the multicell</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$align</span><span class="var-description">: - Sets the text alignment                  Possible values:                          L: left                          R: right                          C: center                          J: justified</span>			</li>
+					<li>
+				<span class="var-type">numeric</span>
+				<span class="var-name">$fill</span><span class="var-description">: - Indicates if the cell background must be painted (1) or transparent (0). Default value: 0.</span>			</li>
+					<li>
+				<span class="var-type">numeric</span>
+				<span class="var-name">$pad_left</span><span class="var-description">: - Left pad</span>			</li>
+					<li>
+				<span class="var-type">numeric</span>
+				<span class="var-name">$pad_top</span><span class="var-description">: - Top pad</span>			</li>
+					<li>
+				<span class="var-type">numeric</span>
+				<span class="var-name">$pad_right</span><span class="var-description">: - Right pad</span>			</li>
+					<li>
+				<span class="var-type">numeric</span>
+				<span class="var-name">$pad_bottom</span><span class="var-description">: - Bottom pad</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$pDataIsString</span><span class="var-description">: <ul><li>true if $pData is a string</li><li>false if $pData is an array containing lines formatted with $this-&gt;mt_MakeLine($w) function
+                             (the false option is used in relation with mt_StringToLines, to avoid double formatting of a string</li></ul></span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$border</span><span class="var-description">: or numeric $border                  Indicates if borders must be drawn around the cell block. The value can be either a number: <ol><li>= no border</li><li>= frame border</li></ol>                 or a string containing some or all of the following characters (in any order):                          L: left                          T: top                          R: right                          B: bottom</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodMultiCellTagSec" id="MultiCellTagSec"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">MultiCellTagSec</span> (line <span class="line-number"><a href="../__filesource/fsource_Tag Based Multicell__class.multicelltag.php.html#a582">582</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Draws a MultiCell with TAG recognition parameters</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			MultiCellTagSec
+		</span>
+					(<span class="var-type">numeric</span>&nbsp;<span class="var-name">$w</span>, <span class="var-type">numeric</span>&nbsp;<span class="var-name">$h</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$pData</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$border</span> = <span class="var-default">0</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$align</span> = <span class="var-default">'J'</span>], [<span class="var-type">numeric</span>&nbsp;<span class="var-name">$fill</span> = <span class="var-default">0</span>], [<span class="var-type">numeric</span>&nbsp;<span class="var-name">$pad_left</span> = <span class="var-default">0</span>], [<span class="var-type">numeric</span>&nbsp;<span class="var-name">$pad_top</span> = <span class="var-default">0</span>], [<span class="var-type">numeric</span>&nbsp;<span class="var-name">$pad_right</span> = <span class="var-default">0</span>], [<span class="var-type">numeric</span>&nbsp;<span class="var-name">$pad_bottom</span> = <span class="var-default">0</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$pDataIsString</span> = <span class="var-default">true</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">numeric</span>
+				<span class="var-name">$w</span><span class="var-description">: - with of the cell</span>			</li>
+					<li>
+				<span class="var-type">numeric</span>
+				<span class="var-name">$h</span><span class="var-description">: - height of the lines in the cell</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$pData</span><span class="var-description">: - string or formatted data to be putted in the multicell</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$align</span><span class="var-description">: - Sets the text alignment                  Possible values:                          L: left                          R: right                          C: center                          J: justified</span>			</li>
+					<li>
+				<span class="var-type">numeric</span>
+				<span class="var-name">$fill</span><span class="var-description">: - Indicates if the cell background must be painted (1) or transparent (0). Default value: 0.</span>			</li>
+					<li>
+				<span class="var-type">numeric</span>
+				<span class="var-name">$pad_left</span><span class="var-description">: - Left pad</span>			</li>
+					<li>
+				<span class="var-type">numeric</span>
+				<span class="var-name">$pad_top</span><span class="var-description">: - Top pad</span>			</li>
+					<li>
+				<span class="var-type">numeric</span>
+				<span class="var-name">$pad_right</span><span class="var-description">: - Right pad</span>			</li>
+					<li>
+				<span class="var-type">numeric</span>
+				<span class="var-name">$pad_bottom</span><span class="var-description">: - Bottom pad</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$pDataIsString</span><span class="var-description">: <ul><li>true if $pData is a string</li><li>false if $pData is an array containing lines formatted with $this-&gt;mt_MakeLine($w) function
+                             (the false option is used in relation with mt_StringToLines, to avoid double formatting of a string</li></ul></span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$border</span><span class="var-description">: or numeric $border                  Indicates if borders must be drawn around the cell block. The value can be either a number: <ol><li>= no border</li><li>= frame border</li></ol>                 or a string containing some or all of the following characters (in any order):                          L: left                          T: top                          R: right                          B: bottom</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodSetStyle" id="SetStyle"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">SetStyle</span> (line <span class="line-number"><a href="../__filesource/fsource_Tag Based Multicell__class.multicelltag.php.html#a168">168</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets current tag to specified style</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			SetStyle
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$tag</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$family</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$style</span>, <span class="var-type">numeric</span>&nbsp;<span class="var-name">$size</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">$color</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$tag</span><span class="var-description">: - tag name</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$family</span><span class="var-description">: - text font family name</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$style</span><span class="var-description">: - text font style</span>			</li>
+					<li>
+				<span class="var-type">numeric</span>
+				<span class="var-name">$size</span><span class="var-description">: - text font size</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$color</span><span class="var-description">: - text color</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodsetTagWidthMax" id="setTagWidthMax"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">setTagWidthMax</span> (line <span class="line-number"><a href="../__filesource/fsource_Tag Based Multicell__class.multicelltag.php.html#a129">129</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets the Tags Maximum width</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setTagWidthMax
+		</span>
+					([<span class="var-type">numeric</span>&nbsp;<span class="var-name">$iWidth</span> = <span class="var-default">10</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">numeric</span>
+				<span class="var-name">$iWidth</span><span class="var-description">: - the width of the tags</span>			</li>
+				</ul>
+		
+			
+	</div>
+						
+		</div>
+	</div>
+
+	
+	<p class="notes" id="credit">
+		Documentation generated on Wed, 04 Feb 2009 22:01:33 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.0a2</a>
+	</p>
+	</div></body>
+</html>

@@ -1,0 +1,55 @@
+CCM 2.0
+===============================
+- Massive rework to be modified to allow integration into XI help system -SW
+
+CCM 0.6
+===============================
+- Added support for XI 2012 audit logging
+- Moved Bulk Modifications to separate XI component for 2012 Enterprise edition
+- Updated CSS border-radius to use CSS3 format
+- Fixed bug with $ARGx$ not being able to accept single quotes
+- Updated config info to pull information from XI's config.inc.php file automatically
+- Minor CSS fixes
+- Fixed bug with escalations and dependency form validation
+- Fixed bug with escalation and dependency description
+
+
+CCM 0.5 6/12/2012
+===============================
+- Fixed First notification delay being populated with the notification interval form value
+- Clarified plugin documentation feature and separated from the command definiton part of the page
+- Config name filter now a session variable until cleared, fixes issue with paging by Config Name filtered searches
+- Added confirm prompt for multiple deletions
+- Object name form validation for illegal characters
+- Bulk disabling objects now returns an error if there are dependent relationships
+- Added Apply Configuration button at the end of Bulk Modification tool
+- Fixed single quote issues with host/service command arguments
+- Fixed bug with Host Management page - "time definition and a time range" error
+- Hide "Test Command" button if no check command is selected, reveal upon selection 
+- Word wrapped "assigned members" area on overlays. Fixes issue where names get cut off if they're too long
+- Re-ordered some items on the check settings page	
+- Various cleanup to form formatting on several pages	
+- Fixed "mn" or "min" as a label	
+- Fixed issue with Bulk modification tool where leaving the field empty set all values to 0 instead of 'null'. 
+- Fixed issue where search entries are too sticky, caused unpredictable results 
+- Added sortable table columns: Object name, Config name, service_description, active, id
+- Added Bulk Modification of Contact groups
+- Fixed width for "actions" table data
+- CSS Updates and updated icons
+- Updated JQuery library to 1.7.2
+
+
+CCM 0.4
+================================
+- Fixed form input bugs with initial_state, flap_detection_options, notification_options ,stalking_options
+- Lists for Config Name filter and Bulk Modification Services are now sorted correctly
+- Overlay boxes that list host and service names in a select list can now display much longer names
+- Fixed CSS issue when single config files are out of day
+- Object searches by type will now persist through page changes until cleared by the user
+- Fixed issue with bulk modification tool when changing a single config option
+- Various CSS fixes
+- Optimized some SQL queries
+
+CCM 0.3 04/13/2012
+================================
+- Public beta released

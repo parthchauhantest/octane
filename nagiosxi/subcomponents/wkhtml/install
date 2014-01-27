@@ -1,0 +1,29 @@
+#!/usr/bin/env python
+
+import os, platform, tarfile, shutil
+
+# Determine correct architecture
+if platform.machine() == 'x86_64':
+    arch = 'amd64'
+else:
+    arch = 'i386'
+
+# Assemble wkversion number
+wkversion = "wkhtmltopdf-0.10.0_rc2-static-%s.tar.bz2" % arch
+assets    = "http://assets.nagios.com/downloads/nagiosxi/components/"
+
+# Create entire URL from wkversion and assets glued together
+url = assets + wkversion
+
+retcode = os.system("wget %s" % url)
+
+# Create tarfile object with download file and set to extract as bz2
+tarname = tarfile.open( wkversion , 'r:bz2' )
+# Extract all files to /usr/bin/
+tarname.extractall()
+tarname.close()
+
+# Rename and move file that was extracted
+extractname = "wkhtmltopdf-%s" % arch
+shutil.move( extractname , '/usr/bin/wkhtmltopdf' )
+

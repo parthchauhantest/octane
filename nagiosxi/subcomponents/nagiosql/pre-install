@@ -1,0 +1,21 @@
+#!/bin/sh -e
+
+. ../../xi-sys.cfg
+
+#mysqlpass="nagiosxi"
+
+echo "NAGIOSQL-PRE"
+
+# Pre-install modifications
+
+# See if database already exists
+echo "NOTE: If prompted, enter the MySQL root password"
+if mysql nagiosql -u root -p"$mysqlpass" -e 'SELECT COUNT(*) FROM tbl_host' &>/dev/null; then
+	echo "NagiosQL database already exists - skipping creation..."
+else
+	# Run SQL to create database and add user
+	mysql -u root -p"$mysqlpass" < mods/create_db.sql
+	mysql -u root -p"$mysqlpass" nagiosql < mods/schema.sql
+	mysql -u root -p"$mysqlpass" nagiosql < mods/load_db.sql
+fi
+

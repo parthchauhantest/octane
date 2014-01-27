@@ -1,0 +1,38 @@
+CCM TODO:
+
+[FEATURES]:
+		
+		
+[GENERAL TODO]
+
+
+
+
+[MAIN PAGE]
+
+
+[FORM PAGE]
+
+
+[BUGS]
+- See BUGS.txt
+
+
+[LATER REVISIONS]	
+ 
+- New Icons
+- Build New Menu System
+- Add "purge object" functionality??
+- Add logout support for Nagios Xi and NagiosQL that destroy's session.  
+- Move functions that are common to XI into their own optional include 
+
+CORE RELEASE
+
+
+
+MISC ERRORS:
+
+
+
+
+

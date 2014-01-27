@@ -1,0 +1,10 @@
+install LWP
+install HTTP::Cookies
+install HTTP::Request::Common
+install Time::HiRes
+install Getopt::Long
+install Error
+install Crypt::SSLeay
+install XML::Simple
+install XML::Parser
+

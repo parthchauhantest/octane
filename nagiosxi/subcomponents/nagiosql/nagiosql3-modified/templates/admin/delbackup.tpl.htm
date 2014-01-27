@@ -1,0 +1,71 @@
+<!-- (c) 2008, 2009 by Martin Willisegger	-->					
+<!-- -->
+<!-- Project    : NagiosQL -->
+<!-- Component  : backup file deletion template -->
+<!-- Website    : http://www.nagiosql.org -->
+<!-- Date       : $LastChangedDate: 2009-04-28 15:02:27 +0200 (Di, 28. Apr 2009) $ -->
+<!-- Author     : $LastChangedBy: rouven $ -->
+<!-- Version    : 3.0.3 -->
+<!-- Revision   : $LastChangedRevision: 708 $ -->
+<!-- SVN-ID     : $Id: delbackup.tpl.htm 708 2009-04-28 13:02:27Z rouven $ -->
+<!-- BEGIN header -->
+<td class="main">
+      <h1>{TITLE}</h1>
+<!-- END header -->
+<!-- BEGIN main -->
+<p class="dbmessage">{ERRORMESSAGE}</p>
+<form name="frmImport" method="post" action="{ACTION_INSERT}">
+  <script language="JavaScript" type="text/JavaScript">
+    <!--
+    // Eingabe abbrechen
+    function abort() {
+      this.location.href = "{ACTION_INSERT}";
+    }
+    // Formular absenden
+    function LockButton() {
+        document.frmImport.submit();
+        document.frmImport.subForm.disabled = true;
+    }
+	function del(key) {
+	  if (key == "search") {
+		document.frmImport.txtSearch.value = "";
+		document.frmImport.submit();
+	  }
+	}
+    //-->
+  </script>
+  <table border="0" class="admintable">
+    <tr>
+      <td style="width:150px">{LANG_SEARCH_STRING}:</td>
+      <td style="width:130px"><input type="text" name="txtSearch" value="{DAT_SEARCH}" style="width:120px" ></td>
+      <td><img src="{IMAGE_PATH}lupe.gif" width="18" height="18" alt="{LANG_SEARCH}" title="{LANG_SEARCH}" style="cursor: hand; cursor:pointer;" onClick="document.frmImport.submit()">&nbsp;<img src="{IMAGE_PATH}del.png" width="18" height="18" alt="{LANG_DELETE}" title="{LANG_DELETE}" onClick="del('search')" style="cursor: hand; cursor:pointer;"></td>
+    </tr>
+  </table>
+  <table border="0"  class="inserttable">
+    <tr>
+      <td valign="top">{BACKUPFILE}*</td>
+      <td rowspan="2"><select name="selImportFile[]" size="10" multiple id="selImportFile">
+<!-- BEGIN filelist -->
+          <option value="{DAT_BACKUPFILE}">{DAT_BACKUPFILE}</option>
+<!-- END filelist -->
+        </select></td>
+    </tr>
+    <tr>
+      <td valign="top"><small>{CTRL_INFO}</small></td>
+    </tr>
+    <tr>
+      <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+      <td style="width:150px">&nbsp;</td>
+      <td style="width:400px">&nbsp;</td>
+    </tr>
+    <tr>
+      <td><input name="subForm" type="button" id="subForm" value="{MAKE}" onClick="LockButton()">&nbsp;
+        <input name="subAbort" type="button" id="subAbort" onClick="abort()" value="{ABORT}"></td>
+      <td>&nbsp;&nbsp;&nbsp;&nbsp;{MUST_DATA}</td>
+    </tr>
+  </table>
+</form>
+<p class="greenmessage">{SUCCESS}<span class="dbmessage">{FAILED}&nbsp;</span></p></td>
+<!-- END main -->

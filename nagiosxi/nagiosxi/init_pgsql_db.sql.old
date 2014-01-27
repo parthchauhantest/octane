@@ -1,0 +1,203 @@
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = off;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET escape_string_warning = off;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Name: if_command_id_seq; Type: SEQUENCE SET; Schema: public; Owner: nagiosxi
+--
+
+SELECT pg_catalog.setval('if_command_id_seq', 20, false);
+
+
+--
+-- Name: if_meta_id_seq; Type: SEQUENCE SET; Schema: public; Owner: nagiosxi
+--
+
+SELECT pg_catalog.setval('if_meta_id_seq', 16, false);
+
+
+--
+-- Name: if_option_id_seq; Type: SEQUENCE SET; Schema: public; Owner: nagiosxi
+--
+
+SELECT pg_catalog.setval('if_option_id_seq', 25, false);
+
+
+--
+-- Name: if_sysstat_id_seq; Type: SEQUENCE SET; Schema: public; Owner: nagiosxi
+--
+
+SELECT pg_catalog.setval('if_sysstat_id_seq', 15, false);
+
+
+--
+-- Name: if_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: nagiosxi
+--
+
+SELECT pg_catalog.setval('if_user_id_seq', 14, false);
+
+
+--
+-- Name: if_usermeta_id_seq; Type: SEQUENCE SET; Schema: public; Owner: nagiosxi
+--
+
+SELECT pg_catalog.setval('if_usermeta_id_seq', 142, false);
+
+
+--
+-- Name: xi_commands_command_id_seq; Type: SEQUENCE SET; Schema: public; Owner: nagiosxi
+--
+
+SELECT pg_catalog.setval('xi_commands_command_id_seq', 33, true);
+
+
+--
+-- Name: xi_meta_meta_id_seq; Type: SEQUENCE SET; Schema: public; Owner: nagiosxi
+--
+
+SELECT pg_catalog.setval('xi_meta_meta_id_seq', 21, true);
+
+
+--
+-- Name: xi_options_option_id_seq; Type: SEQUENCE SET; Schema: public; Owner: nagiosxi
+--
+
+SELECT pg_catalog.setval('xi_options_option_id_seq', 33, true);
+
+
+--
+-- Name: xi_sysstat_sysstat_id_seq; Type: SEQUENCE SET; Schema: public; Owner: nagiosxi
+--
+
+SELECT pg_catalog.setval('xi_sysstat_sysstat_id_seq', 28, true);
+
+
+--
+-- Name: xi_usermeta_usermeta_id_seq; Type: SEQUENCE SET; Schema: public; Owner: nagiosxi
+--
+
+SELECT pg_catalog.setval('xi_usermeta_usermeta_id_seq', 170, true);
+
+
+--
+-- Name: xi_users_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: nagiosxi
+--
+
+SELECT pg_catalog.setval('xi_users_user_id_seq', 25, true);
+
+
+--
+-- Data for Name: xi_commands; Type: TABLE DATA; Schema: public; Owner: nagiosxi
+--
+
+INSERT INTO xi_commands VALUES (30, 0, 18, 0, 12, 'a:1:{i:0;s:0:"";}', '2009-10-11 20:24:45.436035', '2009-10-11 20:24:45.436035', 0, 0, 0, '2009-10-11 20:26:54.355454', 2, 0, 'Stopping nagios: .done.');
+INSERT INTO xi_commands VALUES (31, 0, 18, 0, 11, 'a:1:{i:0;s:0:"";}', '2009-10-11 20:27:07.769516', '2009-10-11 20:27:07.769516', 0, 0, 0, '2009-10-11 20:27:08.654145', 2, 0, 'Starting nagios: done.');
+INSERT INTO xi_commands VALUES (32, 0, 18, 0, 12, 'a:1:{i:0;s:0:"";}', '2009-10-11 20:27:41.491185', '2009-10-11 20:27:41.491185', 0, 0, 0, '2009-10-11 20:27:41.791149', 2, 0, 'Stopping nagios: done.');
+INSERT INTO xi_commands VALUES (33, 0, 18, 0, 11, 'a:1:{i:0;s:0:"";}', '2009-10-11 20:29:00.631919', '2009-10-11 20:29:00.631919', 0, 0, 0, '2009-10-11 20:29:03.382217', 2, 0, 'Starting nagios: done.');
+
+
+--
+-- Data for Name: xi_meta; Type: TABLE DATA; Schema: public; Owner: nagiosxi
+--
+
+INSERT INTO xi_meta VALUES (16, 0, 0, 'last_nom_nagioscore_checkpoint', '1255274343');
+INSERT INTO xi_meta VALUES (17, 0, 0, 'last_nom_nagioscore_checkpoint_result', 'Config test passed.  Checkpoint created.');
+INSERT INTO xi_meta VALUES (19, 0, 0, 'last_ndoutils_repair', '1255304105');
+INSERT INTO xi_meta VALUES (21, 0, 0, 'last_db_repair', '1255304105');
+INSERT INTO xi_meta VALUES (18, 0, 0, 'last_ndoutils_optimization', '1255308905');
+INSERT INTO xi_meta VALUES (20, 0, 0, 'last_db_optimization', '1255308905');
+
+
+--
+-- Data for Name: xi_options; Type: TABLE DATA; Schema: public; Owner: nagiosxi
+--
+
+INSERT INTO xi_options VALUES (25, 'subsystem_ticket', '95n2sn26');
+INSERT INTO xi_options VALUES (26, 'admin_name', 'Nagios XI Admin Postgres');
+INSERT INTO xi_options VALUES (27, 'admin_email', 'nagios@nagios.com');
+INSERT INTO xi_options VALUES (28, 'url', 'http://dev2/nagiosxi/');
+INSERT INTO xi_options VALUES (29, 'default_language', 'en');
+INSERT INTO xi_options VALUES (30, 'default_theme', 'none');
+INSERT INTO xi_options VALUES (31, 'auto_update_check', '0');
+INSERT INTO xi_options VALUES (32, 'default_date_format', '1');
+INSERT INTO xi_options VALUES (33, 'default_number_format', '1');
+
+
+--
+-- Data for Name: xi_sysstat; Type: TABLE DATA; Schema: public; Owner: nagiosxi
+--
+
+INSERT INTO xi_sysstat VALUES (28, 'dbmaint', 'a:1:{s:10:"last_check";i:1255311007;}', '2009-10-11 20:30:07.633561');
+INSERT INTO xi_sysstat VALUES (17, 'cmdsubsys', 'a:1:{s:10:"last_check";i:1255311146;}', '2009-10-11 20:32:26.881841');
+INSERT INTO xi_sysstat VALUES (15, 'feedprocessor', 'a:1:{s:10:"last_check";i:1255311147;}', '2009-10-11 20:32:28.016679');
+INSERT INTO xi_sysstat VALUES (16, 'reportengine', 'a:1:{s:10:"last_check";i:1255311147;}', '2009-10-11 20:32:27.899665');
+INSERT INTO xi_sysstat VALUES (25, 'nom', 'a:1:{s:10:"last_check";i:1255311125;}', '2009-10-11 20:32:05.999012');
+INSERT INTO xi_sysstat VALUES (18, 'cleaner', 'a:1:{s:10:"last_check";i:1255311126;}', '2009-10-11 20:32:06.742114');
+INSERT INTO xi_sysstat VALUES (19, 'dbbackend', 'a:5:{s:12:"last_checkin";s:19:"2009-10-11 20:32:05";s:15:"bytes_processed";s:6:"208770";s:17:"entries_processed";s:4:"1410";s:12:"connect_time";s:19:"2009-10-11 20:29:02";s:15:"disconnect_time";s:19:"0000-00-00 00:00:00";}', '2009-10-11 20:32:17.377262');
+INSERT INTO xi_sysstat VALUES (20, 'daemons', 'a:3:{s:10:"nagioscore";a:4:{s:6:"daemon";s:6:"nagios";s:6:"output";s:32:"nagios (pid 32440) is running...";s:11:"return_code";i:0;s:6:"status";i:0;}s:3:"pnp";a:4:{s:6:"daemon";s:4:"npcd";s:6:"output";s:13:"NPCD running.";s:11:"return_code";i:0;s:6:"status";i:0;}s:8:"ndoutils";a:4:{s:6:"daemon";s:6:"ndo2db";s:6:"output";s:32:"ndo2db (pid 21485) is running...";s:11:"return_code";i:0;s:6:"status";i:0;}}', '2009-10-11 20:32:17.517502');
+INSERT INTO xi_sysstat VALUES (21, 'nagioscore', 'a:9:{s:15:"hostcheckevents";a:3:{s:4:"1min";s:2:"11";s:4:"5min";s:2:"20";s:5:"15min";s:2:"29";}s:18:"servicecheckevents";a:3:{s:4:"1min";s:2:"19";s:4:"5min";s:2:"45";s:5:"15min";s:2:"58";}s:11:"timedevents";a:3:{s:4:"1min";s:2:"83";s:4:"5min";s:3:"194";s:5:"15min";s:3:"253";}s:16:"activehostchecks";a:3:{s:4:"1min";s:1:"2";s:4:"5min";s:2:"11";s:5:"15min";s:2:"20";}s:17:"passivehostchecks";a:3:{s:4:"1min";s:1:"0";s:4:"5min";s:1:"0";s:5:"15min";s:1:"0";}s:19:"activeservicechecks";a:3:{s:4:"1min";s:1:"5";s:4:"5min";s:2:"57";s:5:"15min";s:2:"83";}s:20:"passiveservicechecks";a:3:{s:4:"1min";s:1:"0";s:4:"5min";s:1:"0";s:5:"15min";s:1:"0";}s:19:"activehostcheckperf";a:6:{s:11:"min_latency";s:5:"0.011";s:11:"max_latency";s:5:"2.735";s:11:"avg_latency";s:16:"0.61776923076923";s:18:"min_execution_time";s:7:"0.01323";s:18:"max_execution_time";s:7:"3.53709";s:18:"avg_execution_time";s:16:"0.55507307692308";}s:22:"activeservicecheckperf";a:6:{s:11:"min_latency";s:5:"0.024";s:11:"max_latency";s:5:"0.475";s:11:"avg_latency";s:16:"0.14224242424242";s:18:"min_execution_time";s:7:"0.01048";s:18:"max_execution_time";s:5:"9.676";s:18:"avg_execution_time";s:15:"1.0179481818182";}}', '2009-10-11 20:32:17.576841');
+INSERT INTO xi_sysstat VALUES (22, 'load', 'a:3:{s:5:"load1";s:4:"3.06";s:5:"load5";s:4:"2.15";s:6:"load15";s:4:"1.55";}', '2009-10-11 20:32:18.440703');
+INSERT INTO xi_sysstat VALUES (23, 'memory', 'a:6:{s:5:"total";s:3:"501";s:4:"used";s:3:"465";s:4:"free";s:2:"36";s:6:"shared";s:1:"0";s:7:"buffers";s:2:"14";s:6:"cached";s:3:"171";}', '2009-10-11 20:32:18.49369');
+INSERT INTO xi_sysstat VALUES (24, 'swap', 'a:3:{s:5:"total";s:4:"1043";s:4:"used";s:2:"58";s:4:"free";s:3:"984";}', '2009-10-11 20:32:18.51822');
+INSERT INTO xi_sysstat VALUES (26, 'iostat', 'a:6:{s:4:"user";s:5:"35.80";s:4:"nice";s:4:"5.60";s:6:"system";s:5:"10.00";s:6:"iowait";s:5:"10.60";s:5:"steal";s:4:"0.00";s:4:"idle";s:5:"38.00";}', '2009-10-11 20:32:23.538518');
+INSERT INTO xi_sysstat VALUES (27, 'sysstat', 'a:1:{s:10:"last_check";i:1255311137;}', '2009-10-11 20:32:23.551627');
+
+
+--
+-- Data for Name: xi_usermeta; Type: TABLE DATA; Schema: public; Owner: nagiosxi
+--
+
+INSERT INTO xi_usermeta VALUES (145, 18, 'cached_instance_perms', 'NULL', 1);
+INSERT INTO xi_usermeta VALUES (146, 18, 'object_perm_methods', 'a:1:{i:1;i:1;}', 1);
+INSERT INTO xi_usermeta VALUES (147, 18, 'cached_object_perms', 'a:1:{i:1;a:51:{i:115;i:13;i:108;i:13;i:107;i:13;i:90;i:13;i:89;i:13;i:88;i:13;i:87;i:13;i:86;i:13;i:75;i:13;i:67;i:13;i:66;i:13;i:63;i:13;i:1;i:13;i:62;i:13;i:91;i:13;i:120;i:13;i:136;i:13;i:126;i:13;i:118;i:13;i:116;i:13;i:114;i:13;i:112;i:13;i:111;i:13;i:109;i:13;i:105;i:13;i:104;i:13;i:102;i:13;i:101;i:13;i:99;i:13;i:98;i:13;i:96;i:13;i:95;i:13;i:93;i:13;i:92;i:13;i:84;i:13;i:83;i:13;i:82;i:13;i:80;i:13;i:79;i:13;i:78;i:13;i:77;i:13;i:76;i:13;i:10;i:13;i:9;i:13;i:8;i:13;i:7;i:13;i:5;i:13;i:4;i:13;i:3;i:13;i:121;i:13;i:122;i:13;}}', 1);
+INSERT INTO xi_usermeta VALUES (148, 18, 'last_perm_cache_time', '1255274891', 1);
+INSERT INTO xi_usermeta VALUES (152, 19, 'lastlogintime', '1255275162', 1);
+INSERT INTO xi_usermeta VALUES (153, 19, 'timesloggedin', '1', 1);
+INSERT INTO xi_usermeta VALUES (154, 19, 'dashboards', 'a:1:{i:0;a:4:{s:2:"id";s:4:"home";s:5:"title";s:9:"Home Page";s:4:"opts";N;s:8:"dashlets";a:0:{}}}', 0);
+INSERT INTO xi_usermeta VALUES (149, 18, 'userlevel', '255', 1);
+INSERT INTO xi_usermeta VALUES (159, 24, 'name', 'Ethan Galstad', 1);
+INSERT INTO xi_usermeta VALUES (158, 24, 'forcepasswordchange', '1', 1);
+INSERT INTO xi_usermeta VALUES (160, 24, 'language', 'en', 1);
+INSERT INTO xi_usermeta VALUES (161, 24, 'theme', 'none', 1);
+INSERT INTO xi_usermeta VALUES (162, 24, 'date_format', '1', 1);
+INSERT INTO xi_usermeta VALUES (163, 24, 'number_format', '2', 1);
+INSERT INTO xi_usermeta VALUES (157, 24, 'userlevel', '255', 1);
+INSERT INTO xi_usermeta VALUES (164, 25, 'userlevel', '255', 1);
+INSERT INTO xi_usermeta VALUES (165, 25, 'forcepasswordchange', '1', 1);
+INSERT INTO xi_usermeta VALUES (166, 25, 'name', 'Someone', 1);
+INSERT INTO xi_usermeta VALUES (167, 25, 'language', 'en', 1);
+INSERT INTO xi_usermeta VALUES (168, 25, 'theme', 'none', 1);
+INSERT INTO xi_usermeta VALUES (169, 25, 'date_format', '1', 1);
+INSERT INTO xi_usermeta VALUES (170, 25, 'number_format', '2', 1);
+INSERT INTO xi_usermeta VALUES (150, 18, 'user_management_options', 'a:4:{s:6:"sortby";s:8:"username";s:9:"sortorder";s:3:"asc";s:7:"records";s:2:"10";s:6:"search";s:0:"";}', 0);
+INSERT INTO xi_usermeta VALUES (142, 18, 'lastlogintime', '1255306052', 1);
+INSERT INTO xi_usermeta VALUES (143, 18, 'timesloggedin', '7', 1);
+INSERT INTO xi_usermeta VALUES (144, 18, 'dashboards', 'a:1:{i:0;a:4:{s:2:"id";s:4:"home";s:5:"title";s:9:"Home Page";s:4:"opts";N;s:8:"dashlets";a:2:{i:0;a:5:{s:2:"id";s:8:"8nudur4r";s:4:"name";s:23:"xicore_component_status";s:5:"title";s:21:"Core Component Status";s:4:"opts";a:3:{s:3:"top";i:50;s:4:"left";i:83;s:6:"zindex";s:1:"3";}s:4:"args";a:0:{}}i:1;a:5:{s:2:"id";s:8:"t70nntm8";s:4:"name";s:19:"xicore_server_stats";s:5:"title";s:12:"Server Stats";s:4:"opts";a:3:{s:3:"top";i:49;s:4:"left";i:383;s:6:"zindex";s:1:"3";}s:4:"args";a:0:{}}}}}', 0);
+
+
+--
+-- Data for Name: xi_users; Type: TABLE DATA; Schema: public; Owner: nagiosxi
+--
+
+INSERT INTO xi_users VALUES (19, 'ethan', '40be4e59b9a2a2b5dffb918c0e86b3d7', 'Ethan Galstad', 'egalstad@nagios.com', '5oc7b7qfn6sjq5gv4p7uf2mhungntgc28n8isvuj3q4qtjp0ctspuj8rang57r6c', 1);
+INSERT INTO xi_users VALUES (20, 'test', '40be4e59b9a2a2b5dffb918c0e86b3d7', 'Ethan Galstad', 'egalstad@nagios.com', '8287485u8eff7ao58gan45i8atgvlvbsui3vo6uvhdcnn2qsh4jk65pg0adl7lh5', 1);
+INSERT INTO xi_users VALUES (21, 'test2', '40be4e59b9a2a2b5dffb918c0e86b3d7', 'Ethan Galstad', 'egalstad@nagios.com', 'f6cat0q28mq23i6ebm497b5q3unl6voj53sv3mu9ao8cadoi4rq85s25ompulffp', 1);
+INSERT INTO xi_users VALUES (18, 'nagiosadmin', '40be4e59b9a2a2b5dffb918c0e86b3d7', 'Nagios Admin', 'egalstad@nagios.com', '1234', 1);
+INSERT INTO xi_users VALUES (22, 'test3', '40be4e59b9a2a2b5dffb918c0e86b3d7', 'Ethan Galstad', 'egalstad@nagios.com', 'slq5gencidlu9vfb339vi4rtpfkkdtcai7c2i3b2duvlreute7qv8lr02dkfa0mp', 1);
+INSERT INTO xi_users VALUES (23, 'test5', '40be4e59b9a2a2b5dffb918c0e86b3d7', 'Ethan Galstad', 'egalstad@nagios.com', 'uat20de3e0r28dks4v8q2amnka24r6lqejpcv7cb76dciu9juedtl4k7bla7pv05', 1);
+INSERT INTO xi_users VALUES (24, 'test6', '40be4e59b9a2a2b5dffb918c0e86b3d7', 'Ethan Galstad', 'egalstad@nagios.com', 'nrsc2tmqscek9tjdieqehg3n9chglgsdbmodjc5dni0tdj9vu3bfid4opj7e33oc', 1);
+INSERT INTO xi_users VALUES (25, 'test7', '40be4e59b9a2a2b5dffb918c0e86b3d7', 'Someone', 'egalstad@nagios.com', '2fm50r8fhed0mf2vqa7a6qcp7daroavqmjskc44rher6sq3n2au848u9k94dg057', 1);
+
+
+--
+-- PostgreSQL database dump complete
+--
+

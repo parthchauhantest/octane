@@ -1,0 +1,113 @@
+#!/bin/sh -e
+
+. ./xi-sys.cfg
+
+# Was previous step completed?
+if [ ! -f installed.subcomponents ]; then
+	echo "Subcomponents were not installed - run previous script" >&2
+	exit 1
+fi
+
+# Was this step already completed?
+if [ -f installed.nagiosxi ]; then
+	echo "Nagios XI base files already installed - skipping."
+	exit 0
+fi
+
+
+##########################################
+# CREATE MAIN PRODUCT DIRECTORIES
+##########################################
+
+echo "Installing Nagios XI base files..."
+
+echo "Creating product directory..."
+if [ ! -d "$proddir" ]; then
+	eval "$mkdirbin" -p "$proddir"
+fi
+
+# Copy over XI files
+cp -r ./nagiosxi/basedir/* "$proddir"
+
+# Init script
+cp ./nagiosxi/nagiosxi.init /etc/init.d/nagiosxi
+
+# Logrotate entry
+cp ./nagiosxi/logrotate.nagiosxi /etc/logrotate.d/nagiosxi
+
+# Change ownership on directories and files
+eval "$chownbin" -R "$nagiosuser:$nagiosgroup" "$proddir"
+
+# Set permissions on temp directory
+chown -R "$apacheuser:$nagiosgroup" "$proddir/tmp"
+chmod -R 6775 "$proddir/tmp"
+
+# Set permissions on component etc directory
+chown -R "$apacheuser:$nagiosgroup" "$proddir/etc/components"
+chmod -R 6775 "$proddir/etc/components"
+
+# Set permissions on component var directory
+chown -R "$apacheuser:$nagiosgroup" "$proddir/var/components"
+chmod -R 6775 "$proddir/var/components"
+
+# Add main Apache conf file
+cp nagiosxi/httpd.nagiosxi.conf "$httpdconfdir/nagiosxi.conf"
+
+# Create Apache authentication credential file
+# This is needed by Nagios Core  and PNP
+eval "$htpasswdbin" -c -b "$proddir/etc/htpasswd.users" "$nagioswebuser" "$nagioswebpwd"
+
+# Set permissions on htpasswd file
+chown -R "$nagiosuser:$apachegroup" "$proddir/etc/htpasswd.users"
+
+# Fix permissions on config files
+chown -R "$apacheuser:$nagiosgroup" /usr/local/nagios/etc/*.cfg
+#chown "$apacheuser:$nagiosgroup" /usr/local/nagios/etc/hosts/*.cfg
+#chown "$apacheuser:$nagiosgroup" /usr/local/nagios/etc/services/*.cfg
+
+# Set SNMP MIB directory perms
+chgrp -R "$nagiosgroup" /usr/share/snmp/mibs
+chmod g+ws /usr/share/snmp/mibs
+
+# Set PNP template directory perms
+chgrp -R "$nagiosgroup" /usr/local/nagios/share/pnp
+chmod g+ws /usr/local/nagios/share/pnp/templates
+chmod g+ws /usr/local/nagios/share/pnp/templates.dist
+
+# Restart Apache to apply perms
+service httpd reload
+
+# Make latest config perm reset utility
+./build-perms-bin
+
+# Install system config file
+cp xi-sys.cfg /usr/local/nagiosxi/var/
+
+# Initialize database
+if ! ./init-xidb; then
+	echo "ERROR: Nagios XI database was not setup properly - exiting." >&2
+	exit 1
+fi
+
+# Install wizards - wait for 2012
+#(
+#	cd ./subcomponents/xiwizards
+#	./install
+#)
+
+# Install components - wait for 2012
+#(
+#	cd ./subcomponents/xicomponents
+#	./install
+#)
+
+# Install dashlets - wait for 2012
+#(
+#	cd ./subcomponents/xidashlets
+#	./install
+#)
+
+# Things are okay
+echo "Nagios XI base files installed OK"
+touch installed.nagiosxi
+

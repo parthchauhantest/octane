@@ -1,0 +1,11 @@
+--- ndoutils-1.4b9/src/ndomod.c	2010-10-10 05:07:32.000000000 -0500
++++ ndoutils-patched/ndomod.c	2010-10-10 05:05:00.000000000 -0500
+@@ -2813,7 +2813,7 @@
+ 			 ,NDO_DATA_SERVICE
+ 			 ,(es[1]==NULL)?"":es[1]
+ 			 ,NDO_DATA_CONTACTNAME
+-			 ,(es[5]==NULL)?"":es[5]
++			 ,(es[7]==NULL)?"":es[7]
+ 			 ,NDO_DATA_NOTIFICATIONREASON
+ 			 ,cnotdata->reason_type
+ 			 ,NDO_DATA_STATE

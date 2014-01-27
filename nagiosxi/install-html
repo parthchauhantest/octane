@@ -1,0 +1,85 @@
+#!/bin/sh -e
+
+. ./xi-sys.cfg
+
+##########################################
+# COPY OVER NEW XI HTML FILES
+##########################################
+
+# Save old config.inc file
+if [ -f "$proddir/html/config.inc.php" ]; then
+	cp -f "$proddir/html/config.inc.php" "$proddir/html/config.inc.saved"
+fi
+
+# Copy over XI files
+echo "Copying over new XI directory..."
+cp -r ./nagiosxi/basedir/* "$proddir"
+
+# Copy over config.inc.file
+#if [ ! -f $proddir/html/config.inc.php ]; then
+#	echo "Copying config.inc.php..."
+#	cp ./nagiosxi/basedir/html/config.inc.dist $proddir/html/config.inc.php
+#else
+#	echo "Skipping config.inc.php..."
+#fi
+
+# Restore original config.inc file, but save a copy of the new one
+if [ -f "$proddir/html/config.inc.saved" ]; then
+	cp -f "$proddir/html/config.inc.php" "$proddir/html/config.inc.dist"
+	cp -f "$proddir/html/config.inc.saved" "$proddir/html/config.inc.php"
+fi
+
+# Change ownership on directories and files
+eval "$chownbin" -R "$nagiosuser:$nagiosgroup" "$proddir"
+chmod g+s "$proddir/tmp"
+
+# Change perms to prevent others from reading/executing files
+chmod -R o-rwx "$proddir"/html/*
+chmod -R o-rwx "$proddir"/scripts/*
+chmod -R o-rwx "$proddir"/tools/*
+
+# Tmp directory has additional perms
+chmod -R ug+rwx  "$proddir/tmp"
+
+# Fix perms on zip files in tmp directory
+set +e
+eval "$chownbin" "$nagiosuser:$nagiosgroup" "$proddir/tmp/*.zip"
+chmod ug+w "$proddir"/tmp/*.zip
+set -e
+# Set permissions on component etc directory
+eval "$chownbin" -R "$apacheuser:$nagiosgroup" "$proddir/etc/components"
+find "$proddir/etc/components/" -type d -exec chmod 6775 {} \;
+
+# Set permissions on component var directory
+eval "$chownbin" -R  "$apacheuser:$nagiosgroup" "$proddir/var/components"
+find "$proddir/var/components/" -type d -exec chmod 6775 {} \;
+
+# Make sure config perms script/program are setuid root
+  ## - this needs to be here unless there is a way to setuid = root with SVN propset.  Breaks Apply Config - MG
+chown "root:$nagiosgroup" ${proddir}/scripts/reset_config_perms
+chown "root:$nagiosgroup" ${proddir}/scripts/reset_config_perms.sh
+chmod 4755 ${proddir}/scripts/reset_config_perms.sh
+chmod 4755 ${proddir}/scripts/reset_config_perms
+
+# Fix perms on PNP graph template permissions
+chown "nagios:$nagiosgroup" /usr/local/nagios/share/pnp/templates
+chmod g+ws /usr/local/nagios/share/pnp/templates
+chown ".$nagiosgroup" /usr/local/nagios/share/pnp/templates/*.php
+chmod g+w /usr/local/nagios/share/pnp/templates/*.php
+
+# Fix perms on SNMP MIBS
+chown -R "root:$nagiosgroup" /usr/share/snmp/mibs
+chmod g+ws /usr/share/snmp/mibs
+chmod g+w /usr/share/snmp/mibs/*.txt
+
+echo "Updating NagiosQL..."
+# Update NagiosQL 
+(
+	cd ./subcomponents/nagiosql
+	./upgrade
+)
+
+
+# Make latest config perm reset utility (does setuid root install)
+./build-perms-bin
+

@@ -1,0 +1,39 @@
+#!/bin/sh -e
+
+pkgname="ndoutils-1.5.1"
+
+echo "UPGRADING NDOUTILS..."
+
+# Delete the old directory
+rm -rf "$pkgname"
+
+# Extract archive
+tar -xzf "$pkgname.tar.gz"
+
+# Apply our patches
+./apply-patches "$pkgname"
+
+# Make and install NDOUtils
+(
+	cd "./$pkgname"
+	./configure
+	make
+	make install-init
+	# Copy 3.x module
+	cp -f src/ndomod-3x.o /usr/local/nagios/bin/ndomod.o
+	# Copy 3.x daemon
+	cp -f src/ndo2db-3x /usr/local/nagios/bin/ndo2db
+	# Copy utilities
+	cp -f src/file2sock /usr/local/nagios/bin/
+	cp -f src/log2ndo /usr/local/nagios/bin/
+	cp -f src/sockdebug /usr/local/nagios/bin/
+)
+
+# Post-upgrade stuff
+./post-upgrade "$pkgname"
+
+# Delete the directory (source files not needed anymore)
+rm -rf "$pkgname"
+
+echo "NDOUTILS UPGRADED!"
+

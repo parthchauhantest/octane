@@ -1,0 +1,20 @@
+#!/bin/sh -e
+
+# Was previous step completed?
+if [ ! -f installed.selinux ]; then
+	echo "SELinux was not configured - run previous script" >&2
+	exit 1
+fi
+
+# Was this step already completed?
+if [ -f installed.dbbackups ]; then
+	echo "Database backups already configured - skipping."
+	exit 0
+fi
+
+mkdir -p /store/backups/mysql /store/backups/postgresql /root/scripts
+cp nagiosxi/automysqlbackup nagiosxi/autopostgresqlbackup /root/scripts
+
+echo "Database backups configured OK"
+touch installed.dbbackups
+

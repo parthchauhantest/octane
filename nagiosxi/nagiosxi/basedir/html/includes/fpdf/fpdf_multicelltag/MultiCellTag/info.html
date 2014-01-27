@@ -1,0 +1,150 @@
+<html>
+
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+<title>FPDF Add On - Tag-based MultiCell</title>
+<link href="info.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h2>Tag-based MultiCell(FPDF Add On)</h2>
+<h4 class="title1">Informations:</h4>
+<blockquote>
+Author: <A HREF="mailto:andy@interpid.eu?subject=Tag Based Multicell (Fpdf Add On)">Bintintan Andrei, Interpid Team</A>
+<br>
+License: Valid only with written agreement from the Author
+</blockquote>
+<h4 class="title1">Description:</h4>
+<blockquote>
+This <a href="http://www.fpdf.org">FPDF</a> Add On Class allows creation of <i><b>TAG based formatted text areas</b></i> with line breaks. They can be automatic
+(as soon as the text reaches the right border of the cell) or explicit (via the \n character). <br>
+The use of
+tags allows to change the font, the style (bold, italic, underline), the size, and the color of characters and many other features.<br>
+</blockquote>
+<h4 class="title1">Features:</h4>
+<blockquote>
+    <li>Text can be aligned, centered or justified<br>
+    <li>Different Font, Sizes, Styles, Colors can be used<br>
+    <li>The cell block can be framed and the background painted<br>
+    <li>Links can be used in any tag<br>
+    <li>TAB spaces (\t) can be used<br>
+    <li>Variable Y relative positions can be used for Subscript or Superscript<br>
+    <li>Cell padding (left, right, top, bottom)<br>
+    <li>Controlled Tag Sizes can be used<br>
+</blockquote>
+<br>
+<h4 class="title1">Methods:</h4>
+<blockquote>
+<li><tt>SetStyle(<b>string</b> tag, <b>string</b> family, <b>string</b> style, <b>int</b> size, <b>string</b> color)</tt><br>
+<br>
+<blockquote>
+Sets the current settings for the specified tag name. The names "ttags" and "pparg" are reserved for tab spaces. Don't use
+empty tag names.<br>
+<br>
+<u>tag</u>: name of the tag<br>
+<u>family</u>: family of the font<br>
+<u>style</u>: N (normal) or com.bination of B, I, U<br>
+<u>size</u>: size<br>
+<u>color</u>: color (comma-separated RGB components)<br>
+</blockquote>
+<br>
+<li><tt>MultiCellTag(<b>float</b> w, <b>float</b> h, <b>string</b> txt [, <b>mixed</b> border [, <b>string</b> align [, <b>int</b> fill [, <b>int</b> pad_left [, <b>int</b> pad_top [, <b>int</b> pad_right [, <b>int</b> pad_bottom ]]]]]]])</tt><br>
+<br>
+<blockquote>
+Outputs the tag-based MultiCell. \n = new line, \t = tab space. All parameters are and
+behave the same as the MultiCell function.<br>
+<br>
+<u>w</u>: width of cells. If 0, they extend up to the right margin of the page;<br>
+<u>h</u>: height of the cell lines;<br>
+<u>txt</u>: string to print;<br>
+<u>border</u>: Indicates if borders must be drawn around the cell block. Can be 0(no border) or 1(full border) or a combination of L(left) R(right) T (top) B(bottom) characters. Default is 1;<br>
+<u>align</u>: Sets the text alignment. Possible values are: L, C, R, J. Default is J;<br>
+<u>fill</u>: Indicates if the cell background must be painted (1) or transparent (0). Default is 0;<br>
+<u>pad_left</u>: Indicates the Cell Pad Left Space. Default is 0;<br>
+<u>pad_top</u>: Indicates the Cell Pad Top Space. Default is 0;<br>
+<u>pad_right</u>: Indicates the Cell Pad Right Space. Default is 0;<br>
+<u>pad_bottom</u>: Indicates the Cell Pad Bottom Space. Default is 0;<br>
+</blockquote>
+</blockquote>
+
+<h4 class="title1">Example:</h4>
+<blockquote>
+<b>Source Code:</b>
+<div class='codediv'>
+<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php
+<br />
+<br /></span><span style="color: #FF8000">//define&nbsp;the&nbsp;Paragraph&nbsp;String&nbsp;~~&nbsp;Required&nbsp;by&nbsp;Multicell&nbsp;Class
+<br /></span><span style="color: #0000BB">define</span><span style="color: #007700">(</span><span style="color: #DD0000">'PARAGRAPH_STRING'</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'~~~'</span><span style="color: #007700">);
+<br />
+<br /></span><span style="color: #FF8000">//Tag&nbsp;Based&nbsp;Multicell&nbsp;Class
+<br /></span><span style="color: #007700">require_once(</span><span style="color: #DD0000">"class.multicelltag.php"</span><span style="color: #007700">);
+<br />
+<br /></span><span style="color: #FF8000">//Class&nbsp;Extention&nbsp;for&nbsp;header&nbsp;and&nbsp;footer
+<br /></span><span style="color: #007700">require_once(</span><span style="color: #DD0000">"header_footer.inc"</span><span style="color: #007700">);
+<br />
+<br /></span><span style="color: #0000BB">$pdf&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">pdf_usage</span><span style="color: #007700">();
+<br />
+<br /></span><span style="color: #0000BB">$pdf</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Open</span><span style="color: #007700">();
+<br /></span><span style="color: #0000BB">$pdf</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">SetMargins</span><span style="color: #007700">(</span><span style="color: #0000BB">20</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">20</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">20</span><span style="color: #007700">);
+<br /></span><span style="color: #0000BB">$pdf</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">AddPage</span><span style="color: #007700">();
+<br /></span><span style="color: #0000BB">$pdf</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">AliasNbPages</span><span style="color: #007700">();&nbsp;
+<br />
+<br />
+<br /></span><span style="color: #0000BB">$pdf</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">SetFont</span><span style="color: #007700">(</span><span style="color: #DD0000">'arial'</span><span style="color: #007700">,</span><span style="color: #DD0000">''</span><span style="color: #007700">,</span><span style="color: #0000BB">11</span><span style="color: #007700">);
+<br /></span><span style="color: #0000BB">$pdf</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">SetTextColor</span><span style="color: #007700">(</span><span style="color: #0000BB">200</span><span style="color: #007700">,</span><span style="color: #0000BB">10</span><span style="color: #007700">,</span><span style="color: #0000BB">10</span><span style="color: #007700">);
+<br /></span><span style="color: #0000BB">$pdf</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">SetFillColor</span><span style="color: #007700">(</span><span style="color: #0000BB">254</span><span style="color: #007700">,</span><span style="color: #0000BB">255</span><span style="color: #007700">,</span><span style="color: #0000BB">245</span><span style="color: #007700">);
+<br />
+<br /></span><span style="color: #0000BB">$pdf</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">SetStyle</span><span style="color: #007700">(</span><span style="color: #DD0000">"p"</span><span style="color: #007700">,</span><span style="color: #DD0000">"times"</span><span style="color: #007700">,</span><span style="color: #DD0000">""</span><span style="color: #007700">,</span><span style="color: #0000BB">11</span><span style="color: #007700">,</span><span style="color: #DD0000">"130,0,30"</span><span style="color: #007700">);
+<br /></span><span style="color: #0000BB">$pdf</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">SetStyle</span><span style="color: #007700">(</span><span style="color: #DD0000">"pb"</span><span style="color: #007700">,</span><span style="color: #DD0000">"times"</span><span style="color: #007700">,</span><span style="color: #DD0000">"B"</span><span style="color: #007700">,</span><span style="color: #0000BB">11</span><span style="color: #007700">,</span><span style="color: #DD0000">"130,0,30"</span><span style="color: #007700">);
+<br /></span><span style="color: #0000BB">$pdf</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">SetStyle</span><span style="color: #007700">(</span><span style="color: #DD0000">"t1"</span><span style="color: #007700">,</span><span style="color: #DD0000">"arial"</span><span style="color: #007700">,</span><span style="color: #DD0000">""</span><span style="color: #007700">,</span><span style="color: #0000BB">11</span><span style="color: #007700">,</span><span style="color: #DD0000">"80,80,260"</span><span style="color: #007700">);
+<br /></span><span style="color: #0000BB">$pdf</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">SetStyle</span><span style="color: #007700">(</span><span style="color: #DD0000">"t3"</span><span style="color: #007700">,</span><span style="color: #DD0000">"times"</span><span style="color: #007700">,</span><span style="color: #DD0000">"B"</span><span style="color: #007700">,</span><span style="color: #0000BB">14</span><span style="color: #007700">,</span><span style="color: #DD0000">"203,0,48"</span><span style="color: #007700">);
+<br /></span><span style="color: #0000BB">$pdf</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">SetStyle</span><span style="color: #007700">(</span><span style="color: #DD0000">"t4"</span><span style="color: #007700">,</span><span style="color: #DD0000">"arial"</span><span style="color: #007700">,</span><span style="color: #DD0000">"BI"</span><span style="color: #007700">,</span><span style="color: #0000BB">11</span><span style="color: #007700">,</span><span style="color: #DD0000">"0,151,200"</span><span style="color: #007700">);
+<br /></span><span style="color: #0000BB">$pdf</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">SetStyle</span><span style="color: #007700">(</span><span style="color: #DD0000">"hh"</span><span style="color: #007700">,</span><span style="color: #DD0000">"times"</span><span style="color: #007700">,</span><span style="color: #DD0000">"B"</span><span style="color: #007700">,</span><span style="color: #0000BB">11</span><span style="color: #007700">,</span><span style="color: #DD0000">"255,189,12"</span><span style="color: #007700">);
+<br /></span><span style="color: #0000BB">$pdf</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">SetStyle</span><span style="color: #007700">(</span><span style="color: #DD0000">"ss"</span><span style="color: #007700">,</span><span style="color: #DD0000">"arial"</span><span style="color: #007700">,</span><span style="color: #DD0000">""</span><span style="color: #007700">,</span><span style="color: #0000BB">7</span><span style="color: #007700">,</span><span style="color: #DD0000">"203,0,48"</span><span style="color: #007700">);
+<br /></span><span style="color: #0000BB">$pdf</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">SetStyle</span><span style="color: #007700">(</span><span style="color: #DD0000">"font"</span><span style="color: #007700">,</span><span style="color: #DD0000">"helvetica"</span><span style="color: #007700">,</span><span style="color: #DD0000">""</span><span style="color: #007700">,</span><span style="color: #0000BB">10</span><span style="color: #007700">,</span><span style="color: #DD0000">"0,0,255"</span><span style="color: #007700">);
+<br /></span><span style="color: #0000BB">$pdf</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">SetStyle</span><span style="color: #007700">(</span><span style="color: #DD0000">"style"</span><span style="color: #007700">,</span><span style="color: #DD0000">"helvetica"</span><span style="color: #007700">,</span><span style="color: #DD0000">"BI"</span><span style="color: #007700">,</span><span style="color: #0000BB">10</span><span style="color: #007700">,</span><span style="color: #DD0000">"0,0,220"</span><span style="color: #007700">);
+<br /></span><span style="color: #0000BB">$pdf</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">SetStyle</span><span style="color: #007700">(</span><span style="color: #DD0000">"size"</span><span style="color: #007700">,</span><span style="color: #DD0000">"times"</span><span style="color: #007700">,</span><span style="color: #DD0000">"BI"</span><span style="color: #007700">,</span><span style="color: #0000BB">13</span><span style="color: #007700">,</span><span style="color: #DD0000">"0,0,120"</span><span style="color: #007700">);
+<br /></span><span style="color: #0000BB">$pdf</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">SetStyle</span><span style="color: #007700">(</span><span style="color: #DD0000">"color"</span><span style="color: #007700">,</span><span style="color: #DD0000">"times"</span><span style="color: #007700">,</span><span style="color: #DD0000">"BI"</span><span style="color: #007700">,</span><span style="color: #0000BB">13</span><span style="color: #007700">,</span><span style="color: #DD0000">"0,255,255"</span><span style="color: #007700">);
+<br />
+<br /></span><span style="color: #0000BB">$txt1&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #DD0000">"Created&nbsp;by&nbsp;&lt;t1&nbsp;href='mailto:andy@interpid.eu?subject=Tag&nbsp;Based&nbsp;Multicell&nbsp;(Fpdf&nbsp;Add&nbsp;On)'&gt;Bintintan&nbsp;Andrei,&nbsp;Interpid&nbsp;Team&lt;/t1&gt;"</span><span style="color: #007700">;
+<br /></span><span style="color: #0000BB">$txt2&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #DD0000">"&lt;p&gt;&lt;t3&gt;Description&lt;/t3&gt;
+<br />
+<br />\tThis&nbsp;method&nbsp;allows&nbsp;printing&nbsp;of&nbsp;&lt;t4&gt;&lt;TAG&gt;&lt;/t4&gt;&nbsp;formatted&nbsp;text&nbsp;with&nbsp;line&nbsp;breaks.&nbsp;They&nbsp;can&nbsp;be&nbsp;automatic&nbsp;(as&nbsp;soon&nbsp;as&nbsp;the&nbsp;text&nbsp;reaches&nbsp;the&nbsp;right&nbsp;border&nbsp;of&nbsp;the&nbsp;cell)&nbsp;or&nbsp;explicit&nbsp;(via&nbsp;the&nbsp;&lt;pb&gt;\\n&lt;/pb&gt;&nbsp;character).&lt;/p&gt;
+<br />
+<br />&lt;t3&gt;Features:&lt;/t3&gt;
+<br />&lt;p&gt;\t-&nbsp;Text&nbsp;can&nbsp;be&nbsp;&lt;hh&gt;aligned&lt;/hh&gt;,&nbsp;&lt;hh&gt;cente~~~red&lt;/hh&gt;&nbsp;or&nbsp;&lt;hh&gt;justified&lt;/hh&gt;
+<br />\t-&nbsp;Different&nbsp;&lt;font&gt;Font&lt;/font&gt;,&nbsp;&lt;size&gt;Sizes&lt;/size&gt;,&nbsp;&lt;style&gt;Styles&lt;/style&gt;,&nbsp;&lt;color&gt;Colors&lt;/color&gt;&nbsp;can&nbsp;be&nbsp;used&nbsp;
+<br />\t-&nbsp;The&nbsp;cell&nbsp;block&nbsp;can&nbsp;be&nbsp;framed&nbsp;and&nbsp;the&nbsp;background&nbsp;painted
+<br />\t-&nbsp;&lt;style&nbsp;href='www.fpdf.org'&gt;Links&lt;/style&gt;&nbsp;can&nbsp;be&nbsp;used&nbsp;in&nbsp;any&nbsp;tag
+<br />\t-&nbsp;&lt;t4&gt;TAB&lt;/t4&gt;&nbsp;spaces&nbsp;(&lt;pb&gt;\\t&lt;/pb&gt;)&nbsp;can&nbsp;be&nbsp;used
+<br />\t-&nbsp;Variable&nbsp;Y&nbsp;relative&nbsp;positions&nbsp;can&nbsp;be&nbsp;used&nbsp;for&nbsp;&lt;ss&nbsp;ypos='-0.8'&gt;Subscript&lt;/ss&gt;&nbsp;or&nbsp;&lt;ss&nbsp;ypos='1.1'&gt;Superscript&lt;/ss&gt;
+<br />\t-&nbsp;Cell&nbsp;padding&nbsp;(left,&nbsp;right,&nbsp;top,&nbsp;bottom)
+<br />\t-&nbsp;Controlled&nbsp;Tag&nbsp;Sizes&nbsp;can&nbsp;be&nbsp;used&lt;/p&gt;
+<br />
+<br />\t&lt;size&nbsp;size='50'&nbsp;&gt;Paragraph&nbsp;Example:~~~&lt;/size&gt;&lt;font&gt;&nbsp;-&nbsp;Paragraph&nbsp;1&lt;/font&gt;
+<br />\t&lt;p&nbsp;size='60'&nbsp;&gt;&nbsp;~~~&lt;/p&gt;&lt;font&gt;&nbsp;-&nbsp;Paragraph&nbsp;2&lt;/font&gt;
+<br />\t&lt;p&nbsp;size='60'&nbsp;&gt;&nbsp;~~~&lt;/p&gt;&nbsp;-&nbsp;Paragraph&nbsp;2
+<br />\t&lt;p&nbsp;size='70'&nbsp;&gt;Sample&nbsp;text~~~&lt;/p&gt;&lt;p&gt;&nbsp;-&nbsp;Paragraph&nbsp;3&lt;/p&gt;
+<br />\t&lt;p&nbsp;size='50'&nbsp;&gt;Sample&nbsp;text~~~&lt;/p&gt;&nbsp;-&nbsp;Paragraph&nbsp;1
+<br />\t&lt;p&nbsp;size='60'&nbsp;&gt;&nbsp;~~~&lt;/p&gt;&lt;t4&gt;&nbsp;-&nbsp;Paragraph&nbsp;2&lt;/t4&gt;
+<br />
+<br />&lt;t3&gt;Observations:&lt;/t3&gt;
+<br />&lt;p&gt;
+<br />\t-&nbsp;If&nbsp;no&nbsp;&lt;t4&gt;&lt;TAG&gt;&lt;/t4&gt;&nbsp;is&nbsp;specified&nbsp;then&nbsp;the&nbsp;FPDF&nbsp;current&nbsp;settings(font,&nbsp;style,&nbsp;size,&nbsp;color)&nbsp;are&nbsp;used
+<br />\t-&nbsp;The&nbsp;&lt;t4&gt;ttags&lt;/t4&gt;&nbsp;tag&nbsp;name&nbsp;is&nbsp;reserved&nbsp;for&nbsp;the&nbsp;TAB&nbsp;SPACES
+<br />&lt;/p&gt;"</span><span style="color: #007700">;
+<br />
+<br /></span><span style="color: #0000BB">$pdf</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">MultiCellTag</span><span style="color: #007700">(</span><span style="color: #0000BB">150</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">5</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$txt1</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">1</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"L"</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">1</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">5</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">5</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">5</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">5</span><span style="color: #007700">);&nbsp;</span><span style="color: #0000BB">$pdf</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Ln</span><span style="color: #007700">(</span><span style="color: #0000BB">10</span><span style="color: #007700">);
+<br /></span><span style="color: #0000BB">$pdf</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">MultiCellTag</span><span style="color: #007700">(</span><span style="color: #0000BB">0</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">5</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$txt2</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">1</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"J"</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">1</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">3</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">3</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">3</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">3</span><span style="color: #007700">);&nbsp;</span><span style="color: #0000BB">$pdf</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Ln</span><span style="color: #007700">(</span><span style="color: #0000BB">10</span><span style="color: #007700">);
+<br />
+<br /></span><span style="color: #0000BB">$pdf</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Output</span><span style="color: #007700">();
+<br />
+<br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code></div>
+<br>
+<b>View the result <a target="_blank" href="tag_multicell_example.pdf">here</a></b>
+</blockquote>
+</body>
+</html>

@@ -1,0 +1,36 @@
+#!/bin/sh -e
+
+pkgname="pnp-latest"
+
+echo "Installing PNP..."
+
+# Delete the old archive
+rm -rf "$pkgname"
+
+# Extract archive
+tar -xzf "$pkgname.tar.gz"
+
+# Make and install 
+(
+	cd "./$pkgname"
+	./configure
+	make all
+	make install
+	make install-config
+	make install-init
+)
+
+# Post-install modifications
+./post-install
+
+# Do a simple sanity check to make sure some key files exist...
+for f in /usr/local/nagios/bin/npcd /usr/local/nagios/libexec/process_perfdata.pl /usr/local/nagios/etc/pnp/process_perfdata.cfg ; do
+	if [ ! -f "$f" ]; then
+		echo "ERROR: PNP install appears to have failed - exiting.  Missing file = $f"
+		exit 1
+	fi
+done
+
+# Things are okay
+echo "PNP installed OK"
+

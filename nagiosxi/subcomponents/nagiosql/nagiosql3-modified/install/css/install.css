@@ -1,0 +1,370 @@
+@charset "utf-8";
+/**********************************************
+/*  CSS for Installation Wizard  **************
+
+/**********************************************
+/*
+/* NagiosQL
+/*
+/**********************************************
+/*
+/* (c) 2008, 2009 by Martin Willisegger
+/*
+/* Project  : NagiosQL
+/* Component: Installer CSS
+/* Website  : http://www.nagiosql.org
+/* Date     : $LastChangedDate: 2009-05-14 10:49:01 +0200 (Do, 14. Mai 2009) $
+/* Author   : $LastChangedBy: rouven $
+/* Version  : 3.0.3
+/* Revision : $LastChangedRevision: 715 $
+/* SVN-ID   : $Id: install.css 715 2009-05-14 08:49:01Z rouven $
+/*
+/**********************************************/
+
+/**********************************************/
+/* Body CSS
+/**********************************************/
+body {
+  background: #7fadd4 url(../images/body_background.png) repeat-x fixed left top;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  padding: 10px;
+  }
+
+/**********************************************/
+/* Page Common CSS
+/**********************************************/
+
+#page {
+  border: 5px solid #053056;
+  background: #FFFFFF;
+  }
+
+#page_margins {
+  min-width: 740px;
+  max-width: 80em;
+  margin: 0 auto;
+  border: 0px #889 solid;
+  text-align:left;
+  }
+
+#header, #main, #footer {
+  clear:both;
+  }
+
+#header {
+  background: #FFFFFF url(../images/background.png) repeat-x left top;
+  position: relative;
+  padding: 5px;
+  text-align: center;
+  height: 120px;
+  }
+
+#main {
+  background: #fff;
+  padding:10px 0;
+  }
+
+#footer {
+  color:#666;
+  background: #f9f9f9;
+  padding: 15px;
+  text-align: center;
+  border-top: 5px #efefef solid;
+  }
+
+/**********************************************/
+/* Page Custom CSS
+/**********************************************/
+
+#header-logo {
+  background: transparent;
+  position: absolute;
+  text-align: center;
+  top: 30px;
+  left: 70px;
+  }
+
+#documentation {
+  position:absolute;
+  left: 320px;
+  text-align:right;
+  top: 56px;
+  }
+
+/**********************************************/
+/* Step Rows
+/**********************************************/
+
+/* Installer Menu */
+
+#installmenu {
+  width: 20%;
+  z-index: 3;
+  float: left;
+  }
+
+  #installmenu_content {
+    padding: 10px 10px 10px 20px;
+    z-index: 4;
+    }
+
+    .step1_active {
+      background: url(../images/step1_active.png) no-repeat;
+      height: 75px;
+      width: 150px;
+      color: #FFFFFF;
+      text-align: center;
+      font-weight: bold;
+      padding: 0px 0 0 0;
+      }
+	  
+	 .step1_active a,
+ 	 .step1_active a:hover,
+	 .step3_active a,
+ 	 .step3_active a:hover,
+	 .step2_active a,
+ 	 .step2_active a:hover {
+		color: #FFFFFF;
+		}
+
+    .step1_deactive {
+      background: url(../images/step1_deactive.png) no-repeat;
+      height: 75px;
+      width: 150px;
+      color: #FFFFFF;
+      text-align: center;
+      font-weight: bold;
+      padding: 0px 0 0 0;
+      }
+
+    .step2_active {
+      background: url(../images/step2_active.png) no-repeat;
+      height: 75px;
+      width: 150px;
+      color: #FFFFFF;
+      text-align: center;
+      font-weight: bold;
+      padding: 0px 0 0 0;
+      }
+
+    .step2_deactive {
+      background: url(../images/step2_deactive.png) no-repeat;
+      height: 75px;
+      width: 150px;
+      color: #FFFFFF;
+      text-align: center;
+      font-weight: bold;
+      padding: 0px 0 0 0;
+      }
+
+      .step3_active {
+      background: url(../images/step3_active.png) no-repeat;
+      height: 75px;
+      width: 150px;
+      color: #FFFFFF;
+      text-align: center;
+      font-weight: bold;
+      padding: 0px 0 0 0;
+      }
+
+    .step3_deactive {
+      background: url(../images/step3_deactive.png) no-repeat;
+      height: 75px;
+      width: 150px;
+      color: #FFFFFF;
+      text-align: center;
+      font-weight: bold;
+      padding: 0px 0 0 0;
+      }
+
+
+#installmain {
+  margin-left: 20%;
+  margin-right: 0;
+  z-index: 1;
+  }
+
+  #installmain_content {
+    padding: 10px 20px 10px 10px;
+    z-index: 2;
+    }
+	
+#install-next {
+	float: right;
+	text-align: center;
+	}
+	
+#install-back {
+	float: left;
+	text-align: center;
+	}
+	
+#install-center {
+	text-align: center;
+	}
+	
+#install-button-index {
+	text-align:center;
+	position:relative;
+	}
+	
+	.button-index {
+		overflow: auto;
+		width: 40%;
+		text-align: center;
+		margin: 0 auto;
+		padding: 0px;
+		}
+			
+	.button-install {
+		float: left;
+		width: 100px;
+		padding: 5px;
+		width: 45%;
+		float: left;
+		}
+
+	.button-update {
+		float: left;
+		width:100px;
+		padding: 5px;
+		width: 45%;
+		float: right;
+		}
+		
+	.button-skip {
+		width:100px;
+		text-align: center;
+		display: block;
+		padding: 5px;
+		}
+/* Index */
+
+#indexmain {
+  z-index: 1;
+  }
+
+  #indexmain_content {
+    padding: 10px 20px 10px 10px;
+    z-index: 2;
+    }
+
+
+#installmain_content,
+#installmenu_content,
+#indexmain_content {
+  position: relative;
+  }
+
+/* Hyperlinks */
+
+A {
+  text-decoration: none;
+  font-weight: bold;
+  color: #0c4271;
+  }
+
+A:hover {
+  text-decoration: underline;
+  font-weight: bold;
+  color: #0c4271;
+  }
+
+/* Headlines */
+
+h1,h2,h3 {
+  color: #0c4271;
+  }
+
+h1 {
+  text-align: center;
+  font-size: 22px;
+  }
+
+h2 {
+  font-size: 14px;
+  color: #1962a2;
+  }
+
+h3 {
+  font-size: 14px;
+  font-style:italic;
+  }
+
+/* Index Headlines */
+.index-install {
+  padding: 10px 0 0 28px;
+  height: 25px;
+  background: url(../images/index-install.png) no-repeat left top;
+  margin: 10px 0 0 0;
+}
+
+.index-update {
+  padding: 10px 0 0 28px;
+  height: 25px;
+  background: url(../images/index-update.png) no-repeat left top;
+}
+
+/* Specials */
+
+.attention {
+  color: #CC0000;
+  font-weight: bold;
+  }
+
+
+.red {
+  font-weight:bold;
+  color:#FF0000
+  }
+.green {
+  font-weight:bold;
+  color:#006600;
+  }
+
+.yellow {
+  font-weight:bold;
+  color:#f2d409;
+  }
+
+.steps {
+  text-align: center;
+  }
+
+.clear {
+	overflow: hidden;
+	width: 100%;
+	}
+
+.clearfix {
+  display: block;
+  }
+
+#ie_clearing {
+  display:none;
+  }
+
+/* Required fields validation */
+
+input.disabled {
+  border: 1px solid #F2F2F2;
+  background-color: #F2F2F2;
+}
+
+input.validation-failed, textarea.validation-failed {
+  border: 1px solid #FF3300;
+  color : #FF3300;
+}
+input.validation-passed, textarea.validation-passed {
+  border: 1px solid #00CC00;
+  color : #000;
+}
+
+.validation-advice {
+  margin: 5px 0;
+  padding: 5px;
+  background-color: #FF3300;
+  color : #FFF;
+  font-weight: bold;
+}

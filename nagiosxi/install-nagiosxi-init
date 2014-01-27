@@ -1,0 +1,13 @@
+#!/bin/sh -e
+
+# New init file / service
+echo "Installing new init service..."
+cp ./nagiosxi/nagiosxi.init /etc/init.d/nagiosxi
+
+chkconfig --add nagiosxi
+chkconfig --level 35 nagiosxi on
+chkconfig --level 01246 nagiosxi off
+
+# Start 'em up!
+service nagiosxi start
+

@@ -1,0 +1,579 @@
+@charset "utf-8";
+/*/////////////////////////////////////////////////////////////////////////////
+//
+// NagiosQL
+//
+///////////////////////////////////////////////////////////////////////////////
+//
+// (c) 2008, 2009 by Martin Willisegger
+//
+// Project   : NagiosQL
+// Component : CSS Main definition
+// Website   : http://www.nagiosql.org
+// Date      : $LastChangedDate: 2009-04-28 15:02:27 +0200 (Di, 28. Apr 2009) $
+// Author    : $LastChangedBy: rouven $
+// Version   : 3.0.3
+// Revision  : $LastChangedRevision: 708 $
+// SVN-ID    : $Id: main.css 708 2009-04-28 13:02:27Z rouven $
+//
+/////////////////////////////////////////////////////////////////////////////*/
+body {
+	font-family: verdana, Arial, Helvetica, sans-serif;
+	background-color: #FFFFFF;
+	margin: 0px;
+	padding: 0px;
+	font-size: 12px;
+}
+
+#login {
+	text-align: center;
+	margin:0pt auto;
+	max-width:80em;
+	min-width:740px;
+	}
+
+		#login-form {
+			background: transparent;
+			position: relative;
+			width: 75%;
+			margin:0pt auto;
+			text-align: left;
+			padding: 5px;
+			}
+			
+.header {
+	/*background: #FFFFFF url(../images/bg_top.png) repeat-x right top;*/
+	}
+		
+		.headerleft {
+			vertical-align: bottom;
+			text-align: left;
+			padding-left: 10px;
+		}
+		
+		.top-link {
+			/*color: #FFFFFF;*/
+			font-size: 10pt;
+			text-decoration: none;
+			font-weight: bold;
+			
+			font-size: 16pt;
+			font-weight: bold;
+			}
+		
+		.headermiddle {
+
+			vertical-align: bottom;
+			height: 40px;
+			width: 200px;
+		}
+		
+		.headerright {
+
+			text-align: right;
+			vertical-align: bottom;
+			padding-right: 20px;
+		}
+		
+		.infoleft {
+			vertical-align: middle;
+			text-align: left;
+			font-size: 10px ;
+			padding-left: 20px;
+			display: none;
+		}
+		.inforight {
+			/*width:200px;*/
+			vertical-align: middle;
+			text-align: right;
+			font-size: 10px;
+			padding: 4px 20px 4px 4px;
+		}
+		.inforight2 {
+			vertical-align: middle;
+			text-align: right;
+			font-size: 10px;
+		}
+			
+/********************/
+/**  Formatierungen */
+/********************/
+h1,h2,h3 {
+	color: black;
+	margin-top: 0px;
+	}
+
+h1 {
+	font-size: 16pt;
+	font-weight: bold;
+	}
+	
+.infoleft h1{
+	font-size: 13pt;
+	font-weight: bold;
+	}
+	
+td.main h1{
+	font-size: 13pt;
+	font-weight: bold;
+	}
+	
+h2 {
+	font-size: 13pt;
+	font-weight: bold;
+	}
+	
+h3 {
+	font-size: 14px;
+	font-style:italic;
+	}
+
+
+
+.imagelink {
+	background-color: #FFFFFF;
+	border: none #FFFFFF;
+}
+
+/********************/
+/**  Menu  **********/
+/********************/
+
+td.menutd{
+	border: 1px solid red;
+	}
+
+.menutable {
+	margin: 0px;
+	padding: 0px;
+	border: none;
+	text-align:left;
+	
+}
+.menutable a {
+	text-decoration: none;
+	/*color: #666666;*/
+	color: gray;
+}
+.menutable a:hover {
+	color: #FF00FF;
+}
+
+.menutable .menuaktiv {
+	color: #FF0000;
+	font-size: 12px;
+	font-weight: bold;
+	padding-left: 20px;
+	height: 20px;
+	/*background: url(../images/bg_menu_aktiv.png) repeat-x left top; */
+	vertical-align: bottom;
+	width: 140px;
+}
+
+
+
+.menutable .menuaktiv a {
+	color: #00396a;
+}
+.menutable .menuaktiv a:hover {
+	color: #00396a;
+}
+
+.menutable .menuinaktiv:hover {
+	/*color: #FFFFFF;*/
+/*	background: #B9FFB9 url(../images/menu_bg.png) repeat-x left top; */
+}
+
+.menutable .menuinaktiv {
+	/*color: #FFFFFF;*/
+	border: 1px solid gray;
+	font-size: 12px;
+	font-weight: bold;
+	padding-left: 20px;
+	height: 20px;
+	/*background: url(../images/bg_menu_inaktiv.png) repeat-x left top; */
+	vertical-align: bottom;
+	width: 140px;
+	-moz-border-radius-bottomleft:3px;
+	-moz-border-radius-bottomright:3px;
+	-moz-border-radius-topleft:3px;
+	-moz-border-radius-topright:3px;
+
+}
+
+.menutable .menuinaktiv a {
+	/*color: #d6d6d6;*/
+	color: gray;
+}
+.menutable .menuinaktiv a:hover {
+	/*color: #FFFFFF;*/
+}
+
+.menutable .menusub {
+	font-size: 11px;
+	/*color: #666666;*/
+	color: #fa8700;
+	text-decoration: none;
+	vertical-align: top;
+	height: 5px;
+	padding-left: 30px;
+	/*background: #FFFFFF url(../images/bg_submenu.png) repeat-y left top;*/
+}
+
+.menutable .menusub a {
+	color: #666666;
+}
+.menutable .menusub a:hover {
+	color: #666666;
+	text-decoration: underline;
+}
+
+.menulink {
+	font-size: 11px;
+	color: #666666;
+	text-decoration: none;
+}
+.menulinksmall {
+	font-size: 10px;
+	color: #666666;
+	text-decoration: none;
+}
+
+/********************/
+/**  Main  **********/
+/********************/
+.main {
+	padding: 10px;
+	font-size: 12px;
+	vertical-align: top;
+}
+
+
+.main h2 {
+	/*font-size: 16px;*/
+/*	font-weight: lighter;*/
+}
+.main a {
+	text-decoration: none;
+	color: #666666;
+}
+.main a:hover {
+	color: #FF00FF;
+}
+
+/**************************/
+/** Input Felder **********/
+/**************************/
+
+.main input {
+	/*border: 1px solid #053056;*/
+	/*background: #d1e2fd url(../images/input.png);*/
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	padding: 1px;
+	min-height:16px;
+}
+.main input.checkbox {
+	background:none;
+}	
+.main select {
+	/*background-color: #d1e2fd;*/
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	border: 1px solid #000066;
+}
+.main select:disabled {
+	color:#000000;
+}
+.main option {
+	/*background-color: #d1e2fd;*/
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	border: none #FFFFFF;
+}
+.main textarea {
+	border: 1px solid #000066;
+	background-color: #d1e2fd;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+.main input.inpmust {
+	border: 1px solid #053056;
+	/*background: #941616 url(../images/inputmust.png);*/
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	/*color: #FFFFFF;*/
+	font-weight: bold;
+}
+
+.main input.inputlock {
+	border: 1px solid #053056;
+	background: #5d5d5d url(../images/inputlock.png);
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #f7f7f7;
+	font-weight: normal;
+}
+
+.main select.inpmust {
+	border: 1px solid #053056;
+	/*background: #FFBFBF;*/
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	/*color: #FFFFFF;*/
+	font-weight: bold;
+}
+
+.main option.inpmust {
+	/*background: #FFBFBF;*/
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	/*color: #FFFFFF;*/
+	font-weight: bold;
+}
+
+.main option.inpmustaccess {
+	background: #d1e2fd;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #000000;
+	font-weight: normal;
+}
+
+/*.main .inpmust {
+	border: 1px solid #000066;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #000000;
+	font-size: 12px;
+}*/
+
+.main iframe {
+    border: none;
+}
+.main .checkbox {
+	background:none;
+	border: none #FFFFFF;
+}
+.main .checkboxline {
+	background:none;
+	border: none #FFFFFF;
+}
+.main .loglegend {
+	border: 0px;
+	padding: 0px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+.main .logtitlecell {
+	background-color: #0c4271;
+	border: 1px solid #333333;
+	padding: 2px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #FFFFFF;
+}
+.main .logdatacell {
+	background-color: #FFFFFF;
+	padding: 2px;
+	border: 1px solid #333333;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+/*
+.main .admintable th {
+	background-color: #0c4271;
+	font-size: 12px;
+	font-weight: bold;
+	color: #FFFFFF;
+	text-align: left;
+	vertical-align: middle;
+	padding-right: 5px;
+	padding-left: 5px;
+	padding-top: 2px;
+	padding-bottom: 3px;
+}*/
+.main .admintable .tdlb {
+	/*font-size: 12px;*/
+	vertical-align: middle;
+}
+.main .admintable .tdld {
+	/*font-size: 12px;*/
+	background-color: #EFEFEF;
+	vertical-align: middle;
+}
+.admintable .tdmb {
+	/*font-size: 12px;*/
+	text-align: center;
+	vertical-align: middle;
+}
+.admintable .tdmb img{
+margin:0;
+padding:0 1px 0 0;
+	}
+.admintable .tdmd img{
+margin:0;
+padding:0 1px 0 0;
+	}
+.main .admintable .tdmd {
+	/*font-size: 12px;*/
+	text-align: center;
+	vertical-align: middle;
+	background-color: #EFEFEF;
+}
+.main .buttontable {
+	/*font-size: 12px;*/
+	font-size: 8pt;
+}
+.main .inserttable {
+	font-size: 12px;
+}
+.main .dbmessage {
+	/*font-size: 12px;*/
+	color: #FF0000;
+}
+.main .warnmessage {
+	/*font-size: 12px;*/
+	color: #FF9900;
+	/*font-weight: bold;*/
+}
+.main .greenmessage {
+	/*font-size: 12px;*/
+	color: #009900;	
+}
+.main .okmessage {
+	/*font-size: 12px;*/
+}
+.main .infoline {
+	/*font-size: 12px;*/
+	color: #000000;
+}
+.version {
+	font-size: 9px;
+	color: #999999;
+	text-align: center;
+}
+	.version a {
+		text-decoration:none;
+		color:#999999;
+	}
+	.version a:hover {
+		text-decoration:none;
+		color:#333333;
+	}	
+.main .pagelinks {
+	font-size: 12px;
+	color: #006600;
+	margin: 0 auto;
+	width: 25%;
+}
+.elementHide {
+	display:none;
+}
+.elementShow {
+
+}
+/*YUI*/
+#cal-cont .bd:after {
+	content:".";
+	display:block;
+	clear:left;
+	height:0;
+	visibility:hidden;
+}
+#cal-cont .bd {
+	padding:0;
+}
+#cal-cont2 .bd:after {
+	content:".";
+	display:block;
+	clear:left;
+	height:0;
+	visibility:hidden;
+}
+#cal-cont2 .bd {
+	padding:0;
+}
+#cal {
+	border:none;
+	padding:1em
+}
+.yui-content input[type="radio"] {
+	background-color:#EDF5FF;
+}
+.yui-content input[type="checkbox"] {
+	background-color:#EDF5FF;
+}
+/*AutoCompleter*/
+.suggestionsBox {
+  position: relative;
+  left: 30px;
+  margin: 10px 0px 0px 0px;
+  width: 200px;
+  background-color: #212427;
+  -moz-border-radius: 7px;
+  /*-webkit-border-radius: 7px;*/
+  border: 2px solid #000; 
+  color: #fff;
+}
+
+.suggestionList {
+  margin: 0px;
+  padding: 0px;
+}
+
+.suggestionList li {
+  margin: 0px 0px 3px 0px;
+  padding: 3px;
+  cursor: pointer;
+}
+
+.suggestionList li:hover {
+  background-color: #659CD8;
+ }
+ 
+/* Nagios Control */
+.verify-ok {
+	color: #009900;
+	font-weight: bold;
+	}
+	
+.verify-critical {
+	color: #941616;
+	font-weight: bold;
+	}
+ 
+ /* Custom */
+	.tablerow {
+		border-bottom:1px solid #0c4271;
+		font-size:12px;
+		height:20px;
+		padding-top:2px;
+		padding-left:5px;
+		padding-right:5px;
+	}
+	
+	
+.admintable{
+	border: 1px solid #D3D3D3;
+	border-collapse: collapse;
+	text-align: left;
+	margin: 5px;
+	font-size: 8pt;
+	}
+table.admintable th{
+	background: #D3D3D3;
+	}
+table.admine thead{
+	background: #D3D3D3;
+	}
+table.admin thead tr{
+	background: #D3D3D3;
+	}
+	
+.headerparts{
+	height: 25px;
+	}
+	
+.listactions{
+	}
+.hostlistactions{
+	}
+.servicelistactions{
+	}
+.withchecked{
+	}
+	
+.admintabletools{
+	}

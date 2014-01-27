@@ -1,0 +1,348 @@
+2011R3.3 - 08/20/2012
+====================
+- Added in logic for 2012 Configuration Snapshots Rollback Feature -SW
+- Fixed bug in core to process perfdata even if empty - used in distributed monitoring -SW
+- Fixed bug where users authorized_for_monitoring_system could not see Event Log in XI but could in Core. -SW
+- Fixed bug where performance data wasn't being sent if using NRDP for outbound checks -SW
+- Fixed issue with backup script not saving properly with backups over 4GB - SW
+- Fixed issue with upgrade scripts failing if nagios crontab does not exist -MG 
+- Applied patch to Nagios Core that fixes issue with frozen checks when using DNX - MG
+- Fixed bug #275 where service details ajax could break with a '\' in the service description -MG
+- Fixed bug #272 where audit log scripts were not executable - MG
+- Added callback function ability for subsystem dbmaint.php and cleaner.php scripts - MG
+- Added callback function ability for Apply Configuration and Reconfigure - MG
+- Added callback function ability for any subsystem command - MG
+- Patched Nagios Core, previous patch for bug #338 didn't take into account that flexible downtime events can happen before end_time. -SW
+- Updated Highcharts library to 2.2.5, fixes bug with scalable performance graphs not resizing/rescaling correctly after zooming. - MG
+- Fixed bug #279 on unified hostgroups and servicegroups pages where basic auth would be requested -MG
+- Added support for HTTPS in outbound NRDP check transfers - EG
+- Compile NRPE with argument support - AG
+- Added session_write_close() to dashlet-related AJAX calls and pages to improve dashlet load times - MG
+- Fixed bug #282: security issue in subsystem logging - MG
+- Fixed XSS security vulnerability with Core Config Manager login page (reported by Adam Baldwin) - MG
+- Compile Core with disable-embedded-perl option to prevent NEB related memory leaks - MG
+
+
+
+2011R3.2 - 06/27/2012
+=====================
+- Fixed error in upgrade script with missing dependencies package - EG
+- Fixed bug in upgrade script where NSCA may not upgrade properly - MG
+- Fixed issue where backing up crontabs could halt an upgrade if a tempfile already existed - AG
+- Added external api script to send data to audit log - MG
+- Added escalation status to notifications report page - EG
+- Added fix to force correct permissions for all newly installed components, dashlets, and wizards - MG
+- Added ability to delete hosts or services from the command line. To be documented in "Automated Host Management" doc - MG
+- Fixed bug with host status search not searching against host_name field - MG
+- Fixed bug with 2012 availability report where hostgroups showed all host states as 0% -SW
+- Ndoutils upgrade script now checks existing DB username for any future upgrades -MG
+- Added escalated status to alertsummary notification macro - EG
+- Fixed issue with upgrade script stopping because of package conflicts - MG
+- Added wkhtml installation to upgrade script (not yet implemented)- EG
+- Added ajaxterm installation to upgrade script(not yet implemented) - EG
+- Added external URL to global config settings page to allow for custom URL in notification messages, scheduled reporting (future) - EG
+- Fixed bug #259 where state history report would now show services when using specific hostgroup for report - EG
+- Patched Nagios Core bug #338 where schedule downtime would not persist properly upon a restart of Nagios (Carlos Velasco) - MG
+- Fixed issue where duplicate table indexes may have been created upon upgrade (KevinD and gwakem) - MG 
+
+
+
+2011R3.1 - 06/08/2012
+=====================
+- Fixed issue with upgrade script that could remove user-defined cron jobs from root crontab - SW
+- Fixed bug created in 3.0 where '/' was not allowed in service descriptions - MG
+
+
+
+2011R3.0 - 06/04/2012
+=====================
+- Added fix for incorrect permissions with MIB and graph template directories - EG
+- Added support for 2012 notification management functions: Default Messages, and locking notification settings -MG
+- Improved sanity checks for XI notification settings for XI users -MG
+- Added 'getalerthistogram' to backend API commands. -MG 
+- Fixed XSS vulnerabilities reported by user: 0a29406d9794e4f9b30b3c5d6702c708  -MG
+- Fixed overlapping values in piechart for both current and 2012 versions -SW 
+- Fixed bug #260 with notifications search(broke in 2.4).  Expanded search options for more robust searches -MG
+- Fixed bug #156 where illegal characters can be passed for object names in the config wizards, now replaced with '_' -MG
+- Fixed issue where illegal characters could be used with service descriptions in the Core Config Manager -MG
+- Fixed minor bug with availability CSV export - SW
+- Updated Nagios Core to 3.4.1
+- Updated NSCA to 2.9.1
+- Updated Ndoutils to 1.5.1 
+- Mod applied to Ndoutils 1.5.1 that fixes kernel msg queue issue
+
+
+2011R2.4 - 04/24/2012
+====================
+- Added top alert producers to backend API via: cmd=gettopalertproducers -MG
+- Fixed bug where hosts without services may not show available commands or tabs correctly - SW
+- Fixed an issue where duplicate notifications can populate the notifications report - MG
+- Added permissions fix in reset_config_perms for future Renaming tool component - MG
+- Changed EPEL and RPMForge repos to use local rpms for manual installation - MG
+- Fixed performance data not being sent on outbound transfers with NSCA #254 - SW
+
+
+2011R2.3 - 04/16/2012
+====================
+- Fixed a bug where some monitoring wizards couldn't complete because of missing values - SW/MG
+- 0 is now an acceptable value for first_notification_delay on monitoring wizards - MG
+- Fixed issue where the upgrade script could fail if the /usr/local/nagiosxi/tmp directory was empty -SW
+- Added new performance options to the Admin->Performance settings page, subsystem procs/logging can be disabled to improve performance - MG
+- Modified some of the subsystem processes to only run when needed - MG
+- Added config options for the performance data spool directories to allow for use of RAM disks with XI's subsystem processes. -MG
+	$cfg['xidpe_dir'] = '/usr/local/nagios/var/spool/xidpe';
+	$cfg['perfdata_spool']= '/usr/local/nagios/var/spool/perfdata';
+- Fixed comment/author notification variables to now be %comment% and %author%, respectively - EG
+- Added some python libraries as dependencies in preparation for capacity planning project - AG
+- Fixes for rapid response authentication - EG
+- Fixed issue with Date/Time picker for custom graph timeperiods - SW
+- Fixed issue on 64-bit el5 where removal on librsvg2.i386 failed and held up the installer - AG
+- Reverted sudoers install script to support CentOS 5 - EG
+- Added nmap support to sudoers (used by autodiscovery) - EG
+- Added helper functions to detect if a specific wizard or component is installed - EG
+- Fixed bug where deleted users weren't being properly removed from the cgi.cfg file - SW
+- Bugfix for a small error in table alignment in PDFs - SW
+- Fixed issue where downtime is scheduled several days into the future, and a couple other problems - SW 
+- CPU Load meter on syssstat dashlet now accounts for multiple CPUs -SW
+- Fixed issue with rapid response url with read-only users - MG
+- Fixed bug #250 related to European date formats in reports -SW
+- Added session performance improvement suggested by CB - EG
+
+
+
+2011R2.2 - 03/05/2012
+=====================
+- Fixed problem where blank service performance graphs were being displayed - SW
+- Fixed potential bugs relating to the $CDPATH shell variable - AG
+- Removed hard-coded package path in 1-prereqs - AG
+- Streamlined generation of dependency meta-package - AG
+- Added a "Finish" button to the wizard logic to allow for quick configuration - EG
+- Added new rapid response feature for notifications - EG
+- Removed hard-coded db passwords in install scripts - EG
+- Added uninstall script (consider this beta) - EG
+- Added new notification variables (%responseurl%, %objecttype%, %objectid%, %notificationauthor%, %notificationcomment%, %alertsummary%) - EG
+- Fixed offlineinstall for Red Hat systems - AG
+- Fixed bug that broke performance graphs for some check_mk graph templates -MG
+- Added login screen splash information for contacting us - EG
+- Increased the default timeout value for process_perfdata.pl to 15 seconds for new installs - MG
+- Added ability to reset notification messages to system defaults in account settings - EG
+- Added option to run same wizard again at completion of monitoring wizard - EG
+- Fixed bug where availability report not display if one of the values was less than 0.14% but not 0  - SW
+- Fixed bug #239 where someone can save a service escalation without a contact or contact group. - MG
+- Fixed bug #238 that prevented service escalations from saving a service list under certain circumstances - MG
+- Fixed an issue where the unique service descriptions that populated the service escalations page were case insensitive - MG
+- Fixed bug #202 where custom date selections for performance graphs always led to "All Hosts" page - MG
+- Fixed a bug where custom date selections can cause all blank graphs upon a new login. - MG
+
+
+
+2011R2.1 - 02/09/2012
+=====================
+- Fixed sourcegaurdian error upon upgrade -AG
+- Fixed JS minifiy issues in release prep - AG
+- Fixed bugs in fullinstall process - AG
+
+
+2011R2.0 - 02/06/2012
+=====================
+- Fixed bug that displayed debugging output on email test page #207 -MG
+- Fixed bug where email addresses without FQDN's can vail validation and fail to send (example: root@localhost) -MG
+- Fixed bug #207 that broke the URL for Unhandled problems in the login alerts window and Nagios Fusion. - MG
+- Postgres sequence fix script is now run during upgrades, full installs - EG
+- Added option to specify http port in config.inc.php.  Apply Config would fail without a mod_rewrite. -MG
+- Fixed bug #185 with adding new service escalations and dependencies.  Removed safety nets in the UI to allow
+	services with service->hostgroup relationships to work correctly.  
+- Fixed bug #152 related to service escalations creating ghost services upon import. - MG	
+- Added fix/feature for bug #190 to allow html output for host/service status text.  Option is switchable in the Admin->Manage System Config page. - MG
+- Fixed broken link on Unconfigured Objects page - SW
+- Added a System Profile page to the Admin menu to assist in troubleshooting - MG
+- Fixed availability report bug where host name was not displayed properly - SW
+- Fixed bug #122 which displayed inconsistent data in state history reports - EG
+- Added new backend commands to support future NagiosQL snapshot rollbacks - EG
+- Fixed bug #218 where servicegroup availability reports contained incorrect host data - EG
+- Fixed bug #215 where performance graphs in object detail screens could not be added to dashboards - EG
+- Fixed bug where host and service notifications could not be completely disabled on a per-user basis - EG
+- Changed Nagios Core hostgroup/servicegroup logic to match Nagios XI - EG
+- Fixed bug where escalation macro was not getting populated for use in notification messages - EG
+- Fixed bugs with improperly encoded URLs causing broken links -SW
+- New installations will have cleaner handling of sudoers, cron jobs, and php limits
+- Removed freetds and dbd dependencies
+- Lots of bug fixes in the installer
+
+
+2011R1.9 - 12/07/2011
+=====================
+- Prevented some time-critical SQL queries from being cached - EG
+- Prevented service graph from being generated in availability reports when a host has no services (issue #198) - EG
+- Patched recurring downtime script to fix problem with Nagios scheduling it's own downtimes (issue 136) - submitted by Alexandru Lacraru
+- Added ability to copy permalink URL to clipboard (suggested by Troy Lea) - EG
+- Added fix for potential bug that prevented performance graphs from displaying on some systems -MG
+- Added fix to the rrdtool graph API for improved compatibility with existing PNP graph templates - MG
+- Fixed security escalation race conditions in crontab install scripts - EG / AG
+- Fixed XSS vulnerabilty in backend_url javascript link - EG
+- Fixed XSS vulnerability in xiwindow variables (affected permalinks) - EG
+- Fixed XSS vulnerability in recurring downtime script - EG
+- Fixed XSS vulnerability in alertheatmap report, "My reports" listing - EG
+- Fixed XSS vulnerabilities in status/report page link functions - EG
+- Fixed security vulnerability during package installation - AG
+- Special thanks to 0a29406d9794e4f9b30b3c5d6702c708 for reporting security vulnerabilities.  
+- Fixed potential endless loop in non-interactive fullinstall script - AG
+- Fixed bug with multiple calls to session_start() that produced error messages - EG
+- Changed home page notifications link to use newer report - EG
+- Added event log report to legacy reports - EG
+- Fix for availability report including incorrect data - EG
+- Fixed bug where custom tabs (eg. object notes) would not appear in service details screens - EG
+- Added ability to attach multiple files to an email message - EG
+- Added ability to have multiple recipients in email messages - EG
+- Fixed minor bug in coreuiproxy.inc.php script that was generating a PHP Warning on CentOS/RHEL 6 installs - MG
+- Further revision on repairmysql.sh script for more successful repair runs - MG 
+
+
+2011R1.8 - 10/28/2011
+=====================
+- Added ability to include attachments in emails - NS
+- Added group membership query functions - EG
+- Fixed date in webroot index page (suggested by Troy Lea) - EG
+- Added MIB management to admin page (suggested by Troy Lea) - EG
+- Updated jQuery to 1.6.2 - EG
+- Performance graph panels in object detail pages now only display if panel is selected (suggested by Troy Lea) - EG
+- Fixed problem with apostrophes being cut off in comments/acknowledgements - EG
+- Added PNP graph template management (suggested by Troy Lea) - EG
+- Added custom date/time selection to performance graphs (suggested by Troy Lea) - EG
+- Added Automatic login feature - EG
+- Modified cmdsubsys cron job to run daily update checks - EG
+- Added zip to the prereqs list for CentOS 6 - NS
+- Fixed bug #191 that created an extra footer div on child pages and prevented buttons and links from working - MG
+- Added missing dependency for check_by_ssh - AG
+- Revised OS checker for installer scripts to ensure compatibility and supported installations - AG
+- Updated the repair_mysql.sh script for more successful repair runs - MG
+- Modified load_url logging to overwrite load_url.log instead of appending to prevent log flooding with duplicate info. - MG  
+- Fixed bug 194 that created an SQL error in the browser when updating notification preferences - MG
+- Multiple install attempts will not append to the install.log file instead of overwriting it. - AG
+- Added CentOS CR repo for CentOS 6 installations.  Fixes package conflict for php-mssql package - AG
+- Updated NPCD daemon to 0.4-latest snapshot.  Fixes memory leak that can crash NPCD process.  - MG 
+- Fixed memcached support by adding caching TTL (defaults to 10 seconds) - EG
+- Added a fix that allows update checks to work on a proxy install -MG 
+	- http://assets.nagios.com/downloads/nagiosxi/components/proxy.zip - Adds a Proxy Configuration page to the Admin menu. 
+
+
+
+2011R1.7 - 8/29/2011
+=====================
+- More robust installation scripts, support for RHEL 6 -AG
+- Changed permissions on files under /usr/local/nagiosxi to restrict access to Nagios and Apache users only -EG
+- Applied fix to check_xi_service_mrtgtraf.php PNP template to fix units problem on perf graphs -NS
+- Added checks to detect wrong file types when uploading components, wizards, and dashlets -EG
+- Changed activation logic to require re-activate on IP address change -EG
+- Fixed permissions in alert heatmap, notifications, histogram, and status history reports (issue #186) - EG
+- Removed event log report link for non-admins - EG
+- Fixed errors when determining backend URL (old logic broke with command line scripts) - EG
+- Added logging when internal and external http calls fail: /usr/local/nagiosxi/var/load_url.log -MG
+- Updated backend URL logic to fix problem with command-line scripts - EG
+- Fixed bug in footer with z-index and tray alert transparency - EG
+- Added an import prep script that preps all .cfg files in a single directory (scripts/xi_prep_dir.php) -MG
+- Added ability to search for host status by IP address in the "Quick Find" search box - EG
+- Added sanity checks to all stages of reconfigure_nagios.sh to identify any problems during Apply Configuration -MG
+- Added error catches for "Apply Configuration" in the browser, problems will now exit the loop with an appropriate error message -MG
+- Added host alias to the host details page: Tracker Request: #165 -MG
+- Fixed tracker issue #127 related to status table sort arrows not being clickable -MG
+- Added ability to filter new reports by a single host. Tracker Request #134 - MG
+- Fixed bug created in 1.6 that causes slow performance with installs behind NAT -MG
+	NOTE for proxy installs: Nagios XI needs to make internal calls to localhost, set your proxy accordingly.  
+- Added callbacks to allow for overriding default home page, injecting links in reports - EG
+- Fixed bug in E-importnagiosql script with Apache not restarting and removed duplicate dependencies in 1-prereqs scripts - AG
+
+
+
+2011R1.6 - 07/25/2011
+=====================
+- Fixed bug 163: related to long plugin output breaking the host/service details pages.  Max status text is now 6k.  
+- Added support for RHEL 6 (0-yum)
+- Added bug fix to 12-mrtg that was preventing rrd's from being created correctly from the switch wizard
+- Added patches to fullinstall and 0-yum that allow for non-interactive installs for 64bit systems. 
+- Fixed bug that was causing the "delete service" command to fail on the XI service details page. 
+- Fixed bug in CCM that prevented lines longer than 4k from being imported and written to file correctly.  
+- Fixed XSS vulnerabilities discovered in status pages (ajax calls)
+- Updated Windows desktop wizard with bug fixes related to saving preferences when using the back button
+- Fixed SSL bugs caused by an SSL host-certificate issue with curl.  
+- Modified monitoring wizard API to allow wizards to hide hostgroup, servicegroup, and parent host options
+- Fixed bug #168 re: permalinks breaking on URLs that contained a space (this affected services and hosts)
+- Removed hard-coded http calls in new reports
+- Fixed bug #179 with CCM password limit at 15 characters
+- Fixes in E-importnagiosql for Apache not being detected as having started
+
+
+2011R1.5 - 06/23/2011
+=====================
+- Added "check all" and "uncheck all" feature to switch wizard
+- Fixed problem with Windows server wizard modifying port numbers in existing command definitions
+- Removed custom port options for Windows server wizard (we will reimplement this in a later release)
+- Fixed problems with incorrect permissions on /usr/local/nagios/var directory files (caused orphan check errors)
+- Updated Nagios Core init script to suppress error messages about processes that couldn't be killed (e.g. that no longer exist)
+
+
+2011R1.4 - 05/16/2011
+=====================
+- Modified Nagios Core notification scripts to include the host display name macro and allow it be used used in user notifications (using the %hostdisplayname% variable)
+- New init script to fix problems with multiple Nagios instances running
+- Fixed bug in object functions related to instance_id and active state that affected object status pages
+- Added preliminary support for memcached
+- Added initial support for automatic logins
+- Fixed bug in E-importnagiosql script where Apache was not starting properly
+- Fixed bug where applying configuration changes would hang
+- Fixed bug where re-notification interval of zero (0) corrupted wizard object definitions
+- Fixed bug where fullinstall script needed to be run twice
+- Added a non-interactive option to the fullinstall script for unattended installations
+
+
+2011R1.3 - 05/24/2011
+=====================
+- Added HTTPS support for underlying NagiosQL scripts ("$cfg['use_https']=true" must be set in config.inc.php file)
+- Fixed bugs that prevented strict SSL compatibility with backend calls.  Pure https support now enabled with mod_rewrite.  -MG
+- Created a new performance graph API that fixes several known issues related to performance graphs displaying correctly -MG
+- Fixed a javascript bug with the blue "fullscreen" triangle. 
+
+
+2011R1.2 - 04/11/2011
+=====================
+- Removed event data from component status dashlet (was incorrect for some users)
+- Fixed error in nagios init script that affected clean restarts
+- Added lockfile to dbmaint cron job to prevent overlapping jobs running/hanging
+- Fixed bug in NDOUtils addon where host and service check statistics were no longer being reported
+- Fixed bug where top alert producers report didn't have proper authorization checks
+- Removed javascript scrollpane effect in left navigation bar
+- Fixed bug in dbmaint cron job that could cause table corruption for some users 
+
+
+2011R1.1 - 03/07/2011
+=====================
+- Disabled logging of external commands, passive checks for new installs and upgrades
+- Fixed bug in unconfigured objects parsing code
+- Added styled scrollbar to left navigation menu
+- Added max notifications age setting in database performance page
+- Stylesheet fixes for Opera and Chrome
+
+
+2011R1 -  02/28/2011
+====================
+- Added a new "screen" dashboard for attaching dashlets to each screen (top frame)
+- Added tray alert to footer
+- Incorporated Exfoliation theme for Nagios Core
+- Added login alert screen
+- Renamed "All Graphs" menu link to "Host Graphs"
+- Added support for saving preferences in performance graphs
+- Host Performance graphs now do not show hosts for which graphs are not available
+- Fixed bug where permalinks to dashboards didn't work
+- New reports with CSV and PDF output capability
+- Added "My Reports" feature for favorite reports
+- Added check for missing posix_getpwuid() when applying config changes
+- Included highcharts for dynamic report generation (licensed code)
+- Improvements in MySQL database efficiency with new NDOUtils mods
+- Added support for new components, including:
+	- Auto-discovery
+	- Hypermap
+	- Alert timeline
+	- Alert cloud
+	- Network replay report
+	- SNMP scan wizard
+

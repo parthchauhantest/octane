@@ -1,0 +1,5 @@
+#!/bin/sh
+
+#install new packages that we didn't have at the begining of 2011 release
+
+yum install -y --skip-broken bc dstat expat-devel mailx mod_ssl numpy openldap openldap-devel python-lxml python-simplejson rpmdevtools rrdtool-python sudo 

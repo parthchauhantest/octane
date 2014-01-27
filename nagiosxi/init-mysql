@@ -1,0 +1,73 @@
+#!/bin/sh -e
+
+. ./xi-sys.cfg
+
+##########################################
+# INITIALIZE MYSQL
+##########################################
+
+# See if user already initialized MySQL
+if [ -f installed.mysql ]; then
+	echo "MySQL already initialized - skipping."
+	exit 0
+fi
+
+# Check that mysql is installed
+if [ ! -x /etc/init.d/"$mysqld" ]; then
+	echo "ERROR: MySQL not installed - exiting." >&2
+	exit 1
+fi
+echo "MySQL installed OK - continuing..."
+
+echo "Starting MySQL..."
+if ! service "$mysqld" start; then
+	echo "ERROR: MySQL failed to start - exiting." >&2
+	exit 1
+fi
+
+echo "Initializing MySQL..."
+
+# Test for pre-saved password (from ./fullinstall script)
+if mysqlshow -u root -p"$mysqlpass" &>/dev/null; then
+	echo "Saved password '$mysqlpass' worked..."
+# Test for null MySQL root password
+elif mysqlshow -u root &>/dev/null; then
+	# Set the password to "nagiosxi"
+	mysqlpass=nagiosxi  
+	mysqladmin -u root password "$mysqlpass"
+	echo "MySQL root password is now set to: $mysqlpass"
+else
+	for i in 1 2 3; do
+		if [ "$INTERACTIVE" = "True" ]; then
+			# Ask for the password
+			echo "Enter the MySQL root password to continue..."
+			read -p "MySQL Root Password: " pass
+		fi
+
+		# Test the password
+		if mysqlshow -u root -p"$pass" &>/dev/null; then
+			echo "Password validated."
+			mysqlpass="$pass"
+			break
+		else
+			echo "Password failed." >&2
+			[ $i -eq 3 ] && exit 1
+		fi
+	done
+fi
+
+# Update xi-sys.cfg with MySQL password for later use by subcomponent install
+if ! ./xivar mysqlpass "$mysqlpass"; then
+	echo "ERROR: Failed to update xi-sys.cfg with MySQL password - exiting." >&2
+	exit 1
+fi
+
+# Update automysqlbackup script
+if ! sed -i -e "s/PASSWORD=/PASSWORD=$mysqlpass/g" nagiosxi/automysqlbackup; then
+	echo "ERROR: Failed to update automysqlbackup with MySQL password - exiting." >&2
+	exit 1
+fi
+
+echo "MySQL initialized OK"
+touch installed.mysql
+

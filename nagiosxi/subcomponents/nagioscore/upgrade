@@ -1,0 +1,42 @@
+#!/bin/sh -e
+
+. ../../xi-sys.cfg
+
+pkgname="nagios-3.4.1"
+
+echo "NAGIOSCORE"
+
+# Delete the old directory
+rm -rf "$pkgname"
+rm -rf nagios
+
+# Extract archive
+tar -xzf "$pkgname.tar.gz"
+ln -s nagios "$pkgname"
+
+
+# Apply our patches
+./apply-patches "$pkgname"
+
+# Make and install Nagios
+(
+	cd "./$pkgname"
+	./configure --with-command-group="$nagioscmdgroup" --disable-embedded-perl
+	make all
+	make install
+	#make install-init
+	#make install-config
+	#make install-commandmode
+)
+
+service nagios restart
+
+# Exfoliation theme
+#tar -xzvf ./mods/exfoliation/exfoliation.tgz -C /usr/local/nagios/share
+
+# Custom logo
+#cp -f mods/images/sblogo.png /usr/local/nagios/share/images
+
+# Post-upgrade modifications
+#./post-upgrade
+

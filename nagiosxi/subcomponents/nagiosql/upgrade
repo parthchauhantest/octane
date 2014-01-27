@@ -1,0 +1,9 @@
+#!/bin/sh -e
+
+cp -f /var/www/html/nagiosql/config/settings.php /tmp/settings.php
+
+./install-html
+
+##preserve settings if mysql is offloaded 
+cp -f /tmp/settings.php /var/www/html/nagiosql/config/settings.php 
+rm -f /tmp/settings.php 

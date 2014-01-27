@@ -1,0 +1,50 @@
+#!/bin/sh -e
+
+. ../../xi-sys.cfg
+
+pkgdir="nagiosql3-modified"
+
+echo "Installing NagiosQL..."
+
+# Pre-install modifications
+./pre-install
+
+# Make and install 
+(
+	cd "./$pkgdir"
+
+	destdir="/var/www/html/nagiosql"
+	mkdir -p "$destdir"
+	cp -r * "$destdir"
+	chown -R "$apacheuser:$apachegroup" "$destdir"
+)
+
+# Post-install modifications
+./post-install
+
+echo "NAGIOSQL CREDENTIALS"
+echo "==="
+echo "USER: nagiosadmin"
+echo "PASS: welcome"
+echo ""
+
+# Do a simple sanity check to make sure some key files exist...
+for f in /var/www/html/nagiosql/index.php ; do
+	if [ ! -f "$f" ]; then
+		echo "ERROR: NagiosQL install appears to have failed - exiting.  Missing file = $f"
+		exit 1
+	fi
+done
+
+# Check MySQL database
+echo "NOTE: If prompted, enter the MySQL root password"
+if mysql -u root -p"$mysqlpass" nagiosql -e "SELECT COUNT(*) FROM tbl_host" &>/dev/null; then
+	echo "NagiosQL database appears OK"
+else
+	echo "ERROR: NagiosQL database install appears to have failed - exiting."
+	exit 1
+fi
+
+# Things are okay
+echo "NagiosQL installed OK"
+

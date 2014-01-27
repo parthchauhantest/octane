@@ -1,0 +1,17 @@
+#!/bin/sh -e
+
+# extract tarball
+tar -xzf nagiosmobile.tar.gz
+
+# copy correct apache config
+cp -f mods/nagiosmobile_apache.conf nagiosmobile/nagiosmobile_apache.conf
+cp -f mods/INSTALL.php nagiosmobile/INSTALL.php
+
+# enter directory and run installer
+(
+	cd ./nagiosmobile
+	./INSTALL.php
+)
+
+# Things are okay
+echo "Nagios Mobile installed OK"

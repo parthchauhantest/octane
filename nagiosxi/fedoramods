@@ -1,0 +1,71 @@
+#!/bin/sh -e
+. ./xi-sys.cfg
+
+########################################################################
+# START Fedora 14 special case #
+########################################################################
+
+
+	if [ "$INTERACTIVE" != False ]; then
+		cat <<-EOF
+		****************************************************************
+		NOTICE!:Fedora 14 detected
+		        This script assumes a *minimal* *net-install* of Fedora.
+		        *wget* and *tar* must be installed through yum first.
+		        Fedora support is still in testing - YOU'VE BEEN WARNED!
+		****************************************************************
+		EOF
+		read -p "Press [enter] to continue"
+	fi
+	if [ "$arch" = "x86_64" ]; then
+		if [ "$INTERACTIVE" != False ]; then
+			cat <<-EOF
+			****************************************************************
+			WARNING: This script will remove existing RPMs installed on this
+			         system, which may result in existing applications being
+			         removed!
+			****************************************************************
+			EOF
+			read -p "Do you want to continue? [y/N]: " res
+			echo "RESP: $res"
+			if [ "$res" != "y" ]; then
+				echo "Exiting"
+				exit 1
+			fi
+		fi
+
+		echo "64-bit system detected, modifying yum"
+	#	cat >>/etc/yum.conf <<-EOF
+		
+			# Modifications by Nagios XI installer
+	#		multilib_policy=best
+	#		exclude=*.i?86
+	#	EOF
+		# 32-bit librsvg2 must be removed before 32-bit gtk2 to avoid armageddon
+		if rpm -q librsvg2.i386 >/dev/null; then
+			yum -y remove librsvg2.i386
+		fi
+		yum -y remove \*.i?86
+	fi
+
+	if ! rpm -q rpmforge-release &>/dev/null; then
+
+		echo "Enabling RPMForge repo..."
+		PKG="packages/rpmforge-release-0.5.2-2.fedora.rf.$arch.rpm"
+		##Add logging so we can trace this failure in the future -MG
+		echo "Installing RPMForge PKG: $PKG"
+		#PKG=$(basename "$URL")
+		#curl -L -O "$URL"
+		rpm -Uvh "$PKG"
+		rm "$PKG"
+		unset PKG
+
+		yum check-update || true
+
+	fi
+	mkdir -p /usr/lib/php/modules	
+
+
+########################################################################
+# END Fedora 14 special case #
+########################################################################

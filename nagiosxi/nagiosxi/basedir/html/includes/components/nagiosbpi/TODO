@@ -1,0 +1,14 @@
+ToDo List for NagiosBPI
+
+[BUGS]
+- Set controlled widths for all TD tags for more reliable formatting?
+
+[PREP]
+
+
+FUTURE VERSIONS:
+
+- Current use of constants/$bpi_options is dumb.  Needs to be reworked for less redundancy, and none of these should be constants
+- Need to be able to point to parent groups during child creation
+	- This will require a new config specification
+

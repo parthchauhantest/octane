@@ -1,0 +1,66 @@
+<!-- (c) 2008, 2009 by Martin Willisegger	-->					
+<!-- -->
+<!-- Project    : NagiosQL -->
+<!-- Component  : Verification template -->
+<!-- Website    : http://www.nagiosql.org -->
+<!-- Date       : $LastChangedDate: 2009-04-28 15:02:27 +0200 (Di, 28. Apr 2009) $ -->
+<!-- Author     : $LastChangedBy: rouven $ -->
+<!-- Version    : 3.0.3 -->
+<!-- Revision   : $LastChangedRevision: 708 $ -->
+<!-- SVN-ID     : $Id: verify.tpl.htm 708 2009-04-28 13:02:27Z rouven $ -->
+<!-- BEGIN header -->
+<td class="main">
+      <h1>{TITLE}</h1>
+<!-- END header -->
+<!-- BEGIN main -->
+<form name="frmImport" method="post" action="{ACTION_INSERT}">
+  <script language="JavaScript" type="text/JavaScript">
+    <!--
+    // Eingabe abbrechen
+    function abort() {
+      this.location.href = "{ACTION_INSERT}";
+    }
+    //-->
+  </script>
+  <table border="0"  class="inserttable">
+    <tr>
+      <td>{WRITE_MONITORING_DATA}</td>
+      <td><input name="writeMonitoring" type="submit" id="writeMonitoring" value="{MAKE}"></td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>	
+    <tr>
+      <td>{WRITE_ADDITIONAL_DATA}</td>
+      <td><input name="writeAdditional" type="submit" id="writeAdditional" value="{MAKE}"></td>
+    </tr>
+    <tr>
+      <td><img src="{IMAGE_PATH}pixel.gif" alt="" width="200" height="1"></td>
+      <td><img src="{IMAGE_PATH}pixel.gif" alt="" width="80" height="1"></td>
+    </tr>
+    <tr>
+     	<td>&nbsp;</td>
+     	<td>&nbsp;</td>
+    </tr>	
+    <tr>
+      <td width="300">{CHECK_CONFIG}</td>
+      <td><input name="checkConfig" type="submit" id="checkConfig" value="{MAKE}"></td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>	
+    <tr>
+      <td>{RESTART_NAGIOS}</td>
+      <td><input name="restartNagios" type="submit" id="restartNagios" value="{MAKE}"></td>
+    </tr>
+  </table>
+</form>
+<p><span class="dbmessage">{WARNING}</span></p>
+<p>
+<!-- BEGIN verifyline --><span class="{VERIFY_CLASS}">{VERIFY_LINE}{DATA}</span><br><!-- END verifyline -->
+&nbsp;</p>
+<br>
+</td>
+<!-- END main -->

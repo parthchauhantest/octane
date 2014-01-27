@@ -1,0 +1,42 @@
+#!/bin/sh -e
+# Gets OS information - essentially a frontend for lsb_release but with
+# extra logic for RHEL-based systems, because minimal RHEL installations
+# don't have lsb_release by default
+
+# Make sure we're on a Linux distro
+if [ `uname -s` != Linux ]; then
+	echo "ERROR: Unsupported OS detected. This script only detects Linux distributions." >&2
+	exit 2
+fi
+
+# Get architecture
+architecture=`uname -m`
+
+# Get OS & version
+if which lsb_release &>/dev/null; then
+	distro=`lsb_release -si`
+	version=`lsb_release -sr`
+elif [ -r /etc/redhat-release ]; then
+
+	if rpm -q centos-release; then
+		distro=CentOS
+	elif rpm -q sl-release; then
+		distro=Scientific
+	elif rpm -q fedora-release; then
+		distro=Fedora
+	elif rpm -q redhat-release || rpm -q redhat-release-server; then
+		distro=RedHatEnterpriseServer
+	fi >/dev/null
+
+	version=`sed 's/.*release \([0-9.]\+\).*/\1/' /etc/redhat-release`
+
+else
+	echo "ERROR: Could not determine OS. Please make sure lsb_release is installed." >&2
+	exit 1
+fi
+
+# Print results
+#echo "$distro"
+#echo "$version"
+#echo "$architecture"
+

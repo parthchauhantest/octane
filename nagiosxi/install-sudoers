@@ -1,0 +1,26 @@
+#!/bin/sh -e
+
+. ./xi-sys.cfg
+
+# Remove old sudoers entries
+grep -v NAGIOSXI /etc/sudoers > /etc/sudoers.new
+mv -f /etc/sudoers.new /etc/sudoers
+
+# Remove TTY requirement
+sed -i 's/Defaults    requiretty/#Defaults    requiretty/g' /etc/sudoers
+
+# Add new sudoers entries
+cat nagiosxi/nagiosxi.sudoers >> /etc/sudoers
+
+# Set permissions
+chmod 440 /etc/sudoers
+
+
+# NOTE - This stuff doesn't work on CentOS 5...
+## Setup sudoers stuff
+#if [ ! -d /etc/sudoers.d ]; then
+#	install -dm 750 /etc/sudoers.d
+#	echo '#includedir /etc/sudoers.d' >>/etc/sudoers
+#fi
+#install  -m 440 nagiosxi/nagiosxi.sudoers /etc/sudoers.d/nagiosxi
+

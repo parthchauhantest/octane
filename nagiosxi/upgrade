@@ -1,0 +1,442 @@
+#!/bin/sh -e
+
+# Set up system variables
+./init.sh
+. ./xi-sys.cfg
+
+#subcomponents that may need to be recompiled, flags set so it's only done once per upgrade
+#not yet fully implemented 
+CORE_UPDATED=0
+NDO_UPDATED=0
+PNP_UPDATED=0
+PLUGINS_UPDATED=0
+NRPE_UPDATED=0
+NSCA_UPDATED=0
+NRDP_UPDATED=0
+
+# Get existing version ID
+oldversion=$(./get-version)
+
+if [ "$oldversion" -eq 0 ]; then
+	echo "ERROR: Could not determine currently installed version of Nagios XI!" >&2
+	exit 1
+fi
+
+# Fix problem with 2011R1 id
+if [ "$oldversion" -eq 300 ]; then
+	oldversion=200
+fi
+
+## ACTIVATION NOTICE #########################################
+
+if [ "$oldversion" -lt 200 ]; then
+
+	fmt -s -w $(tput cols) <<-EOF
+		===================
+		ACTIVATION REQUIRED
+		===================
+		This version of Nagios XI requires that you activate your license key.
+		You can obtain an activation key for your license by visiting:
+
+		         http://www.nagios.com/activate/
+
+		WARNING: Certain features of Nagios XI will be disabled until you
+		         successfully activate your key.
+
+	EOF
+
+	read -p "Are you sure you want to continue? [y/N] " res
+
+	if [ "$res" = "y" -o "$res" = "Y" ]; then
+		echo "Proceeding with upgrade..."
+	else
+		echo "Upgrade cancelled"
+		exit 1
+	fi
+
+fi
+
+
+#update prereqs   ## Moved to top because Ajaxterm requires SSL be installed before running install script
+./install-2012-prereqs
+
+#echo "OLD VERSION: $oldversion"
+
+
+## VERSION-SPECIFIC FIXES ####################################
+
+
+## 2009R1.1H AND EARLIER FIXES
+# These only need to run if the version being upgraded is 1.1H or earlier
+if [ "$oldversion" -le 112 ]; then
+
+	# Needed for rpmdevtools
+	echo "Enabling EPEL repo..."
+	rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm  
+
+	# New PNP init script
+	cp subcomponents/pnp/mods/npcd.init /etc/init.d/npcd
+	service npcd restart
+
+	# Nagios Core object definition fixes
+	cp subcomponents/nagioscore/mods/cfg/fixes/2009r1.1i.cfg /usr/local/nagios/etc/import
+	cp subcomponents/nagioscore/mods/cfg/fixes/nagiosadmin.cfg /usr/local/nagios/etc/import
+	
+	# Add nagiosxi user to Core CGI config file
+	sed -i 's/^\(authorized_for_.*\)$/\1,nagiosxi/' /usr/local/nagios/etc/cgi.cfg
+
+fi
+
+
+## 2009R1.2B AND EARLIER FIXES
+# These only need to run if the version being upgraded is 1.2A or earlier
+if [ "$oldversion" -le 113 ]; then
+
+	# Nagios Core object definition fixes
+	cp subcomponents/nagioscore/mods/cfg/fixes/2009r1.2b.cfg /usr/local/nagios/etc/import
+
+	# Daemon tools
+	echo "Installing daemon tools..."
+	rpm -i -p http://libslack.org/daemon/download/daemon-0.6.3-1.i386.rpm
+
+	# Logrotate entry
+	echo "Adding logrotate entries..."
+	cp ./nagiosxi/logrotate.nagiosxi /etc/logrotate.d/nagiosxi
+	# Force log rotation
+	logrotate -f /etc/logrotate.conf
+
+fi
+
+
+## 2009R1.2C AND EARLIER FIXES
+# These only need to run if the version being upgraded is 1.2C or earlier
+if [ "$oldversion" -le 114 ]; then
+
+	# Fix perms on Nagios etc directory
+	chown apache:nagios /usr/local/nagios/etc
+	chmod g+s /usr/local/nagios/etc
+
+fi
+
+
+# 2009R1.4 FIXES (PATCHES R1.3G and EARLIER)
+if [ "$oldversion" -le 125 ]; then
+	
+	# Fix perms on perfdata directory
+	chmod g+w /usr/local/nagios/var/spool/perfdata
+
+	# Make XI data processing engine directory
+	mkdir /usr/local/nagios/var/spool/xidpe
+	chown nagios:nagios /usr/local/nagios/var/spool/xidpe
+
+	# Change performance data processing commands
+	#sed -i 's/service_perfdata_file_processing_command=process-service-perfdata-file-pnp-bulk/service_perfdata_file_processing_command=process-service-perfdata-file-bulk/g' /usr/local/nagios/etc/nagios.cfg
+	#sed -i 's/host_perfdata_file_processing_command=process-host-perfdata-file-pnp-bulk/host_perfdata_file_processing_command=process-host-perfdata-file-bulk/g' /usr/local/nagios/etc/nagios.cfg
+
+	# New nagios.cfg file (with perfdata fixes)
+	cp -f /usr/local/nagios/etc/nagios.cfg /usr/local/nagios/etc/nagios.cfg.orig
+	cp -f subcomponents/nagioscore/mods/cfg/nagios.cfg /usr/local/nagios/etc/
+
+	# Nagios Core object definition fixes/changes
+	cp subcomponents/nagioscore/mods/cfg/fixes/2009r1.4.cfg /usr/local/nagios/etc/import
+
+
+	# Install NRDP
+	(
+		cd ./subcomponents/nrdp
+		./install
+		NRDP_UPDATED=1
+	)
+
+	# Upgrade PNP
+	(
+		cd ./subcomponents/pnp
+		./upgrade
+		PNP_UPDATED=1
+	)
+
+fi
+
+
+# 2009R1.4B FIXES (PATCHES R1.4 and EARLIER)
+if [ "$oldversion" -le 126 ]; then
+
+	# Fix permissions on plugin directory
+	chown apache:nagios /usr/local/nagios/libexec
+	chmod ug+rwx /usr/local/nagios/libexec
+	chmod g+s /usr/local/nagios/libexec
+	service httpd reload
+
+fi
+
+# 2011R1 (PATCHES EARLIER RELEASES)
+## removed NDO update since it will happen later in the script - 2/3/2012 -MG
+
+
+# 2011R1.1 (PATCHES EARLIER RELEASES)
+if [ "$oldversion" -lt 201 ]; then
+
+	# Disable logging of passive checks, external commands
+	sed -i 's/log_passive_checks=1/log_passive_checks=0/g' /usr/local/nagios/etc/nagios.cfg
+	sed -i 's/log_external_commands=1/log_external_commands=0/g' /usr/local/nagios/etc/nagios.cfg
+
+	# Restart Nagios
+	service nagios restart
+
+fi
+
+
+## 2011R1.4 AND EARLIER FIXES
+if [ "$oldversion" -le 204 ]; then
+
+	# Nagios Core object definition fixes
+	cp subcomponents/nagioscore/mods/cfg/fixes/2011r1.4.cfg /usr/local/nagios/etc/import
+
+fi
+	
+
+## 2011R1.5 FIXES (PATCHES EARLIER RELEASES)
+if [ "$oldversion" -le 205 ]; then
+
+	# Fix fubar'ed command definitions
+	cp subcomponents/nagioscore/mods/cfg/fixes/2011r1.5.cfg /usr/local/nagios/etc/import
+
+	# Fix fubar'ed permissions
+	chown -R nagios:nagios /usr/local/nagios/var
+	chown -R nagios:nagcmd /usr/local/nagios/var/rw
+
+fi
+
+
+## 2011R1.8 FIXES (PATCHES EARLIER RELEASES)
+if [ "$oldversion" -le 208 ]; then
+
+	# Set SNMP MIB directory perms
+	chown -R .nagios /usr/share/snmp/mibs
+	chmod g+ws /usr/share/snmp/mibs
+	
+	# Set PNP template directory perms
+	chown -R .nagios /usr/local/nagios/share/pnp
+	chmod g+ws /usr/local/nagios/share/pnp/templates
+	chmod g+ws /usr/local/nagios/share/pnp/templates.dist
+
+	# Reload apache to apply perms
+	service httpd reload
+	
+	if [ $PNP_UPDATED -eq 0 ]; then
+	# Update PNP to pnp-latest
+	(
+		cd ./subcomponents/pnp
+		./install
+		PNP_UPDATED=1
+	)
+	fi
+
+fi
+
+
+## 2011R2.4 FIXES
+if [ "$oldversion" -lt 214 ]; then
+
+	# Create audit log database structure
+	./init-auditlog
+fi
+
+## 2011R3.0 Updates
+if [ "$oldversion" -lt 215 ]; then
+
+	# Update core to 3.4.1
+	if [ $CORE_UPDATED -eq 0 ]; then
+	(
+		cd ./subcomponents/nagioscore
+		./upgrade
+		CORE_UPDATED=1
+	)
+	fi
+	
+	# Update ndoutils to 1.5.1
+	if [ $NDO_UPDATED -eq 0 ]; then
+	(
+		cd ./subcomponents/ndoutils
+		./upgrade
+		NDO_UPDATED=1
+	)
+	fi	
+	
+	# Update NSCA to 1.5.1
+	if [ $NSCA_UPDATED -eq 0 ]; then
+	(
+		cd ./subcomponents/nsca
+		./upgrade
+		NSCA_UPDATED=1
+	)
+	fi		
+	
+fi 
+
+
+## 2011R3.2 Updates
+if [ "$oldversion" -lt 217 ]; then
+	(
+		# Install wkhtml
+		cd ./subcomponents/wkhtml
+		./install
+	)
+
+fi
+
+## 2011R3.3 Updates
+if [ "$oldversion" -lt 218 ]; then
+	if [ $NRPE_UPDATED -eq 0 ]; then 
+	(
+		cd ./subcomponents/nrpe/
+		./upgrade
+		NRDP_UPDATED=1
+	)
+	fi
+	# Apply schedule DT patch to core 3.4.1
+	if [ $CORE_UPDATED -eq 0 ]; then
+	(
+		cd ./subcomponents/nagioscore
+		./upgrade
+		CORE_UPDATED=1
+	)
+	fi
+
+	(
+		# Install Ajaxterm
+		cd ./subcomponents/ajaxterm
+		./install	
+	)
+	
+fi
+
+##########################################################################
+## COMMON FIXES
+##
+## These run during ever upgrade after version-specific upgrade procedures
+##########################################################################
+
+
+# Update old crontab entries
+./uninstall-crontab-nagios
+./uninstall-crontab-root
+install -m 644 nagiosxi/nagiosxi.cron.d /etc/cron.d/nagiosxi 
+
+# Fix/update sudoers
+./install-sudoers
+	
+
+
+# Fix perms on Nagios etc directory
+chown apache:nagios /usr/local/nagios/etc
+chmod g+s /usr/local/nagios/etc
+
+# Make sure latest prereqs are installed
+# One update prereqs if you was configured properly
+#if [ "$1" != "noprereqs" ]; then
+#	if [ ! -f installed.yum ]; then
+#		echo "Yum not configured - skipping prereqs update";
+#	else
+#		./1-prereqs
+#	fi
+#fi
+
+# Install updated NagiosXI PHP files, scripts, etc. to /usr/local/nagiosxi
+# This also makes the latest config perm reset utility
+./install-html
+
+# Update databases (indexes, etc)
+(
+	cd /usr/local/nagiosxi/scripts
+	/usr/bin/php patch_ndoutils.php
+)
+
+# Fix sequences in Postgres database
+echo "Updating sequences..."
+./nagiosxi/basedir/tools/fix_postgres_sequences.sh
+
+# Install latest PNP templates
+./install-pnptemplates
+
+# Install latest init script
+echo "Updating init script..."
+cp ./nagiosxi/nagiosxi.init /etc/init.d/nagiosxi
+
+# Make sure large install tweaks are enabled
+echo "Enabling large install tweaks..."
+sed -i 's/use_large_installation_tweaks=0/use_large_installation_tweaks=1/g' /usr/local/nagios/etc/nagios.cfg
+
+# Remove old/stale import files 
+#rm -f /usr/local/nagios/etc/import/*.cfg
+
+# Fix permissions on config files
+echo "Fixing config file permissions..."
+chown apache:nagios /usr/local/nagios/etc/*.cfg
+chown apache:nagios /usr/local/nagios/etc/hosts/*.cfg
+chown apache:nagios /usr/local/nagios/etc/services/*.cfg
+
+# Set permissions on htpasswd file
+echo "Fixing htpasswd permissions..."
+chown -R nagios:apache "$proddir/etc/htpasswd.users"
+
+# Enforce proper group membership
+echo "Checking group memberships..."
+eval "$usermodbin" -a -G "$nagioscmdgroup" "$nagiosuser"
+eval "$usermodbin" -a -G "$nagioscmdgroup" "$apacheuser"
+eval "$usermodbin" -a -G "$nagiosgroup" "$nagiosuser"
+eval "$usermodbin" -a -G "$nagiosgroup" "$apacheuser"
+
+# Restart apache so it recognizes the new permissions
+service httpd restart
+
+# Update wizards - wait for 2012
+#(
+#	cd ./subcomponents/xiwizards
+#	./install
+#)
+
+# Update components - wait for 2012
+#(
+#	cd ./subcomponents/xicomponents
+#	./install
+#)
+
+# Install dashlets - wait for 2012
+#(
+#	cd ./subcomponents/xidashlets
+#	./install
+#)
+
+# Install new Nagios Core templates (restarts Nagios Core)
+./install-templates
+
+# Install Sourceguardian extension
+./install-sourceguardian-extension.sh
+
+
+# Upgrade dependency meta-package
+#if [ -h ./nagiosxi-deps-$xiver-1.noarch.rpm ]; then
+#	echo "Ensuring new prereqs are installed..."
+#	yum -y --nogpgcheck localinstall $(readlink -e ./nagiosxi-deps-$xiver-1.noarch.rpm)
+#else
+#	echo ""
+#	echo "WARNING: Prereqs dependency meta-package not found - skipping dependency updates"
+#	echo ""
+#fi
+
+
+ip=$(ifconfig eth0 | awk '/inet[^6]/{print substr($2,6)}')
+
+fmt -s -w $(tput cols) <<-EOF
+	==================
+	UPGRADE COMPLETED!
+	==================
+
+	Logout of the Nagios XI interface and log back in as 'nagiosadmin' to complete the upgrade.
+
+	You can access the Nagios XI web interface by visiting:
+	    http://$ip/nagiosxi/
+
+EOF
+

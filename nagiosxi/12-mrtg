@@ -1,0 +1,26 @@
+#!/bin/sh -e
+
+. ./xi-sys.cfg
+
+# Was previous step completed?
+if [ ! -f installed.sourceguardian ]; then
+	echo "Sourceguardian was not configured - run previous script" >&2
+	exit 1
+fi
+
+# Was this step already completed?
+if [ -f installed.mrtg ]; then
+	echo "MRTG already configured - skipping."
+	exit 0
+fi
+
+# New MRTG config file
+cp -r nagiosxi/mrtg.cfg "$mrtgcfg"
+echo "WorkDir: /var/lib/mrtg" >>"$mrtgcfg"
+
+# Make the file writable by the web server
+chown "$apacheuser:$nagiosgroup" "$mrtgcfg"
+
+echo "MRTG configured OK"
+touch installed.mrtg
+

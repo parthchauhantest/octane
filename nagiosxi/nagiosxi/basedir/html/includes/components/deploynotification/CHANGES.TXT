@@ -1,0 +1,11 @@
+05/04/2013
+===========
+Add ability for notification templates to be deleted - SW
+
+12/05/2012
+===========
+- Fixed bug where cancel button was actually submitting the form - MG
+
+07-02-2012
+==========
+- Minor fix for mobile text message layout in textarea boxes - EG

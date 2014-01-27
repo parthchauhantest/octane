@@ -1,0 +1,16 @@
+#!/bin/sh -e
+
+. ./xi-sys.cfg
+
+# Was previous step completed?
+if [ ! -f installed.importnagiosql ]; then
+	echo "NagiosQL data was not imported - run previous script" >&2
+	exit 1
+fi
+
+for svc in httpd ndo2db nagios nagiosxi npcd crond; do
+	service $svc restart || exit 1
+done
+
+echo "Daemons started OK"
+

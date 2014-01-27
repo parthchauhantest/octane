@@ -1,0 +1,38 @@
+#!/bin/sh -e
+
+pkgname="$1"
+
+# Apply our patches
+echo "Applying Nagios XI patches to Nagios Core..."
+
+# Already in Nagios Core 3.2.3
+#patch "$pkgname/base/events.c" < patches/nagios-schedulingstatus.patch
+
+# Not relevant for Nagios Core 3.3.1+ (macro logic was rewritten)
+#patch "$pkgname/common/macros.c" < patches/nagios-macroescalated.patch  ##removed after core updated to 3.4.1
+
+# These three patches are in Nagios Core 3.3.1
+#patch "$pkgname/base/checks.c" < patches/nagios-passivehostcheckbroker.patch
+#patch "$pkgname/base/checks.c" < patches/nagios-passivehoststatusupdate.patch
+
+patch "$pkgname/common/downtime.c" < patches/nagios-scheduledt.patch
+# previous patch for bug #338 didn't take into account that flexible downtime events can happen before end_time. -SW
+patch "$pkgname/common/downtime.c" < patches/nagios-scheduledt2.patch
+
+#Patch to fix DNX frozen checks
+patch "$pkgname/base/checks.c" < patches/checks-fixdnx.patch
+
+# This will be in Nagios Core 3.3.2
+#patch "$pkgname/cgi/cgiauth.c" < patches/nagios-groupauth.patch
+
+
+# Custom CGIs
+cp patches/cgi/*.c "$pkgname/cgi"
+
+# Makefile mods for Custom CGIs
+patch "$pkgname/cgi/Makefile.in" < patches/cgi-makefile.patch
+
+# Fix to process perfdata even if empty - used in distributed monitoring -SW
+patch "$pkgname/xdata/xpddefault.h"  patches/nagios-3.4.1-perfdata-h.patch
+patch "$pkgname/xdata/xpddefault.c"  patches/nagios-3.4.1-perfdata.patch
+

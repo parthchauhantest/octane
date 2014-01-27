@@ -1,0 +1,29 @@
+Tentative Roadmap for Nagios XI
+===============================
+	
+	
+2009R1.4 - December 2010
+-------------------------
+- New Features:
+	- Action Links for hosts/services
+	- Host/servicegroup creation/modification wizards
+	- Ability to load MIB files from web UI
+	- SNMPWalk wizard to query available OIDs
+
+
+
+Future Features (Unknown Date)
+------------------------------
+- Flash map
+- Vacation mode for notifications
+	- Disable notifications for X days, Y hours or until specific date/time (similiar to downtime) 
+	- Recurring option 
+	
+
+Future Addon Integration (Unknown Date)
+---------------------------------------
+- CheckWMI Windows monitoring wizard
+- WMI proxy Windows monitoring wizard
+- Database monitoring wizard
+- DNX integration
+- napmap integration

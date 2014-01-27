@@ -1,0 +1,15 @@
+#!/bin/sh -e
+
+pkgname="$1"
+
+# Apply our patches
+echo "Applying Nagios XI patches to NDOUtils..."
+
+# These three patches will be in NDOUtils 1.0 (committed in early February 2012)
+#patch  "$pkgname/src/ndomod.c" < patches/ndomod-checkevents.patch
+#patch  "$pkgname/src/ndomod.c" < patches/ndomod-contactnotifications.patch
+#patch  "$pkgname/src/dbhandlers.c" < patches/dbhandlers-discardevents.patch
+
+# Bad patch - breaks host/service check stats
+#patch  "$pkgname/src/dbhandlers.c" < patches/dbhandlers-discardevents2.patch
+

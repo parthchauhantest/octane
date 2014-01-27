@@ -1,0 +1,13 @@
+BUGLIST
+
+[HIGH]
+- Service escalation (and others??) lists duplicate contact groups
+- Bulk disabled failure doesn't return an error message
+
+
+[UNCONFIRMED OR CAN'T REPRODUCE]
+- Notice: Undefined offset: 0 in /usr/local/nagiosxi/html/includes/components/ccm/classes/Form_class.php on line 586 -Services edit page
+- CSS bugs on table topper on different platforms (clear button ,etc)
+- Service escalations page has the Clear button in a weird place on Debian- Firefox 11
+	- Probably a result of the absolute positioning of that div.  Improper use of box model...
+- Contact page not showing all contacts?? - Ludmil	

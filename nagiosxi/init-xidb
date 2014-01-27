@@ -1,0 +1,97 @@
+#!/bin/sh -e
+
+# Set up system variables
+./init.sh
+. ./xi-sys.cfg
+
+##########################################
+# INITIALIZE NAGIOS XI POSTGRES DATABASE
+##########################################
+
+# See if user already initialized PostgresQL
+if [ ! -f installed.postgresql ]; then
+	echo "ERROR: PostgresQL was not installed - exiting." >&2
+	exit 1
+fi
+
+echo "Checking PostgresQL status..."
+if service postgresql status &>/dev/null; then
+	echo "PostgresQL running - continuing..."
+else
+	echo "ERROR: PostgresQL not running - exiting." >&2
+	exit 1
+fi
+
+
+# Create Postgres database and user
+echo "Creating role and database..."
+su - postgres -c $(readlink -e ./nagiosxi/create_postgres_db.sh)
+
+# Make sure the role exists
+res=$(psql -A -t -U postgres "$pgsqlrootpass" -c "select COUNT(*) from pg_user WHERE usename='nagiosxi'")
+if [ "$res" -eq 1 ]; then
+	echo "User 'nagiosxi' created successfully."
+else
+	echo "ERROR: PostgresQL user 'nagiosxi' was not created - exiting." >&2
+	exit 1
+fi
+
+# Make sure the nagiosxi database exists
+res=$(psql -A -t -U postgres "$pgsqlrootpass" -c "select count(*) from pg_catalog.pg_database where datname = 'nagiosxi'")
+if [ "$res" -eq 1 ]; then
+	echo "Database 'nagiosxi' created successfully."
+else
+	echo "ERROR: PostgresQL 'nagiosxi' database was not created - exiting." >&2
+	exit 1
+fi
+
+# Restart Postgres
+echo "Restarting Postgres..."
+service postgresql restart
+
+# Sleep a bit (required so Postgres finishes startup before we connect again)
+echo "Sleeping for a few seconds (please wait)..."
+sleep 7
+
+# Create Postgres db structure (if it doesn't exist already)
+if psql -A -t -U nagiosxi "$pgsqlpass" -c "select COUNT(*) from xi_options" &>/dev/null; then
+	echo "Database structure already created - skipping..."
+else
+	echo "Creating database structure..."
+	psql -U nagiosxi nagiosxi <nagiosxi/schema.pgsql.sql >/dev/null
+fi
+
+# Check database structure...
+if psql -A -t -U nagiosxi "$pgsqlpass" -c "select COUNT(*) from xi_options" &>/dev/null; then
+	echo "Database schema created successfully."
+else
+	echo "ERROR: PostgresQL 'nagiosxi' database schema was not created - exiting." >&2
+	exit 1
+fi
+
+# Load initial Postgres data (if its not already loaded)
+res=$(psql -A -t -U nagiosxi "$pgsqlpass" -c "select COUNT(*) from xi_options")
+if [ "$res" -eq 0 ]; then
+	echo "Loading data into database..."
+	psql -U nagiosxi nagiosxi < nagiosxi/load_pgsql_db.sql > /dev/null
+else
+	echo "Database already contains values - skipping data load..."
+fi
+
+# Check data...
+res=$(psql -A -t -U nagiosxi "$pgsqlpass" -c "select COUNT(*) from xi_options")
+if [ "$res" -gt 1 ]; then
+	echo "Data inserted into database successfully."
+else
+	echo "ERROR: Data was not inserted into PostgresQL 'nagiosxi' database - exiting." >&2
+	exit 1
+fi
+
+# Fix sequences in Postgres database
+./nagiosxi/basedir/tools/fix_postgres_sequences.sh
+
+# Create audit log database structure - added for 2012
+./init-auditlog
+
+echo "Nagios XI PostgresQL Database Initialized OK."
+

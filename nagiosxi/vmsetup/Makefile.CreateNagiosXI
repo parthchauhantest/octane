@@ -1,0 +1,534 @@
+#!/usr/bin/make -Bf
+# Usage:
+#    yum -y install subversion
+#    svn co https://devhub.nagios.com/svn/ximisc/trunk/"VM Creation Scripts"
+#    ./"VM Creation Scripts"/Makefile.CreateNagiosXI
+export MEID='$$Id: Makefile.CreateNagiosXI 108 2010-06-14 21:41:56Z mmestnik $$'
+# This file contains the commands for turning a
+# CentOS system into a NagiosXI system.
+
+all help:
+	@echo 'Usage: $0 [arg1] <arg2> ... <argn>'
+	@echo 'Arguments:'
+	@echo -e '\tdo-all\t\t= Sets every thing up in-order'
+	@echo -e '\tconfmysql\t= Configures mysql password less access'
+	@echo -e '\tmysqlcheck-aos\t= Cron script to cleanup mysql DB once in a while'
+	@echo -e '\tissue\t\t= Initialized /etc/issue and /etc/issue.net'
+	@echo -e '\tsetissue\t= Set /etc/issue on address change'
+	@echo -e '\tforceip\t\t= User zero config to force the host to get an IP'
+	@echo -e '\tmkinitrd\t= Setup 4th stage boot loader to have more drivers'
+	@echo -e '\tclearroot\t= Clears root password'
+	@echo -e '\tsshemptypass\t= Allows root ssh logins with no password'
+	@echo -e '\tconfmail\t= Send all root mail to you'
+	@echo -e '\tNagiosXI-Install = Download and install NagiosXI'
+	@echo -e '\tbonjour\t\t= Configure service discovery'
+	@echo -e '\trestartcronttabs = Restart the crontabs after an upgrade'
+
+.PHONY : help confmysql mysqlcheck-aos issue forceip setissue \
+		network-restart mk1.2vm \
+		mkinitrd clearroot sshemptypass confmail \
+		NagiosXI-Install all logrotate
+
+mk1.2vm: clearroot setissue mkinitrd forceip bonjour
+
+ID:=$(join $$I, \
+d$$)
+
+/root/.my.cnf:
+	@touch @$
+	@chmod 600 $@
+	@ci -l -m"For NagiosXI" <<<"For NagiosXI" $@
+	@stty -echo; \
+	passwd=blah; \
+	echo -n "MySQL Passwd: "; \
+	read passwd; \
+	stty echo; \
+	echo; \
+	echo '# $(ID)' > $@
+	echo '[client]' >> $@
+	echo 'password = '"$$passwd" >> $@
+	echo >> $@
+	echo '[mysql]' >> $@ 
+	echo 'database = nagios' >> $@
+	passwd=aaaaaaaaaaaaaaaaaaaaa; \
+	unset passwd
+	@ci -u -m"From $(MEID) $(serial)" $@
+
+confmysql: /root/.my.cnf
+
+/etc/cron.hourly/NagiosXI.sh: confmysql
+	# Then optimise the database hourly.
+	@touch $@
+	@chmod a+x $@
+	@ci -l -m"For NagiosXI" <<<"For NagiosXI" $@
+	@echo '#!/bin/sh' > $@
+	@echo 'mysqlcheck -aos --database nagios' >> $@
+	@ci -l -m"From $(MEID) $(serial)" $@
+
+mysqlcheck-aos:	/etc/cron.hourly/NagiosXI.sh
+
+# Step one like a zone file, we
+serial:=009
+a:=$(shell echo $(serial) > /etc/NagiosXI.serial)
+
+/usr/bin/ci:
+	@yum -y install rcs
+
+pkgrcs: /usr/bin/ci
+
+# Configure the hostname.
+hostname:=nagiosxi$(serial).local
+
+/etc/sysconfig/network: pkgrcs
+	@ci -l -m"For NagiosXI" <<<"For NagiosXI" $@; \
+	{ echo NETWORKING=yes; echo NETWORKING_IPV6=yes; \
+	echo HOSTNAME=$(hostname); } > $@
+	@ci -l -m"From $(MEID) $(serial)" $@
+
+/etc/sysconfig/network-scripts/RCS \
+  /etc/dhcp3/dhclient-exit-hooks.d/ \
+  /etc/dhcp3/dhclient-enter-hooks.d/:
+	@mkdir -p $@
+
+/etc/sysconfig/network-scripts/ifcfg-eth0: pkgrcs \
+		/etc/sysconfig/network-scripts/RCS
+	@touch $@
+	@ci -l -m"For NagiosXI" <<<"For NagiosXI" $@; \
+	{ echo DEVICE=eth0; echo BOOTPROTO=dhcp; echo ONBOOT=yes; \
+	} > $@
+	@ci -l -m"From $(MEID) $(serial)" $@
+
+/etc/sysconfig/network-scripts/ifcfg-lo: pkgrcs
+		/etc/sysconfig/network-scripts/RCS
+	@touch $@
+	@ci -l -m"For NagiosXI" <<<"For NagiosXI" $@; \
+	{ echo DEVICE=lo; echo BOOTPROTO=static; echo ONBOOT=yes; \
+		echo IPADDR=127.0.0.1; echo NETMASK=255.0.0.0; \
+		echo NETWORK=127.0.0.0; echo BROADCAST=127.255.255.255; \
+		echo NAME=loopback; } > $@
+	@ci -l -m"From $(MEID) $(serial)" $@
+
+/etc/hosts: pkgrcs
+	@ci -l -m"For NagiosXI" <<<"For NagiosXI" $@
+	@echo '# $(ID)' > $@
+	@echo '127.0.0.1 localhost $(hostname) nagiosxi$(serial)' >> $@
+	@echo '::1 ip6-localhost ip6-loopback ip6-$(hostname) ip6-nagiosxi$(serial)' >> $@
+	@echo 'fe00::0 ip6-localnet' >> $@
+	@echo 'ff00::0 ip6-mcastprefix' >> $@
+	@echo 'ff02::1 ip6-allnodes' >> $@
+	@echo 'ff02::2 ip6-allrouters' >> $@
+	@echo 'ff02::3 ip6-allhosts' >> $@
+	@echo >> $@
+	@ci -l -m"From $(MEID) $(serial)" $@
+	@hostname $(hostname)
+
+ISSUEHDR={ echo '$(ID)'; \
+	echo "$${stage}"'NagiosXI, script $(serial)'; \
+	echo; \
+	echo 'For assistance use our Forums:'; \
+	echo 'http://support.nagios.com/forum/'; \
+	echo; \
+	echo 'To access this servers web interface:'; \
+	echo 'http://'"$${hostname}"'/nagiosxi/'; \
+	echo; }
+
+/etc/issue /etc/issue.net: pkgrcs
+	# Start playing with issue.
+	@touch $@
+	@ci -l -m"For NagiosXI" <<<"For NagiosXI" $@
+	@stage='Infant '; hostname='$(hostname)'; \
+	$(ISSUEHDR) > $@
+	@ci -l -m"From $(MEID) $(serial)" $@
+
+/etc/issue.template: pkgrcs
+	@touch $@
+	@ci -l -m"For NagiosXI" <<<"For NagiosXI" $@
+	@stage=''; hostname='$(hostname)'; \
+	$(ISSUEHDR) > $@
+	@ci -l -m"From $(MEID) $(serial)" $@
+
+issue: /etc/issue /etc/issue.net
+
+/etc/dhcp3/dhclient-enter-hooks.d/avahi-autoipd: \
+	/etc/dhcp3/dhclient-enter-hooks.d/
+	@touch $@
+	@chmod 766 $@
+	@ci -l -m"For NagiosXI" <<<"For NagiosXI" $@
+	@echo 'cat > $@ <<EOF' > $@
+	@echo 'case "$$reason" in' >> $@
+	@echo '	MEDIUM|ARPCHECK|ARPSEND|NBI)' >> $@
+	@echo '	    ;;' >> $@
+	@echo >> $@
+	@echo '	PREINIT|BOUND|RENEW|REBIND|REBOOT|STOP|RELEASE)' >> $@
+	@echo '	    /usr/sbin/avahi-autoipd -k $$interface 2> /dev/null' >> $@
+	@echo '	    ;;' >> $@
+	@echo '' >> $@
+	@echo '	EXPIRE|FAIL|TIMEOUT)' >> $@
+	@echo '	    # Starting avahi-autoipd is left for the exit hook' >> $@
+	@echo '	    ;;' >> $@
+	@echo 'esac' >> $@
+	@ci -l -m"From $(MEID) $(serial)" $@
+
+/etc/dhcp3/dhclient-exit-hooks.d/zzz_avahi-autoipd: \
+	/etc/dhcp3/dhclient-exit-hooks.d/
+	@touch $@
+	@chmod 766 $@
+	@ci -l -m"For NagiosXI" <<<"For NagiosXI" $@
+	@echo 'case "$$reason" in' > $@
+	@echo '	MEDIUM|ARPCHECK|ARPSEND|NBI)' >> $@
+	@echo '	    ;;' >> $@
+	@echo '' >> $@
+	@echo '	PREINIT|BOUND|RENEW|REBIND|REBOOT|STOP|RELEASE)' >> $@
+	@echo '	    # Stopping avahi-autoipd is left for the enter hook' >> $@
+	@echo '	    ;;' >> $@
+	@echo '' >> $@
+	@echo '	EXPIRE|FAIL|TIMEOUT)' >> $@
+	@echo '	    /usr/sbin/avahi-autoipd -wD $$interface 2> /dev/null' >> $@
+	@echo '	    ;;' >> $@
+	@echo 'esac' >> $@
+	@ci -l -m"From $(MEID) $(serial)" $@
+
+forceip: /etc/dhcp3/dhclient-enter-hooks.d/avahi-autoipd \
+		/etc/dhcp3/dhclient-exit-hooks.d/zzz_avahi-autoipd
+
+/sbin/ifup-local: pkgrcs /etc/issue /etc/issue.net \
+			/etc/issue.template /etc/hosts
+	@touch $@
+	@chmod a+x $@
+	@ci -l -m"For NagiosXI" <<<"For NagiosXI" $@
+	@echo '#!/bin/bash' > $@
+	@echo '[ "$$1" = lo ] && exit0;' >> $@
+	@echo 'echo; # Make sure we are on a new line.' >> $@
+	@echo '[ "$${1:0:3}" = eth ] ||' >> $@
+	@echo 'echo "Warning: interface $$1 not supported.";' >> $@
+	@echo 'export MEID='\''$(ID)'\'';' >> $@
+	@echo 'serial=$$(cat /etc/NagiosXI.serial);' >> $@
+	@echo 'hostname=nagiosxi$${serial}.local;' >> $@
+	@echo 'ipaddress=$$(/sbin/ifconfig | grep "inet addr" |' >> $@
+	@echo 'grep -v "127.0.0.1" | awk '\''{ print $$2 }'\'' |' >> $@
+	@echo 'awk -F: '\''{ print $$2 }'\'');' >> $@
+	@echo 'ip6address=$$(/sbin/ifconfig | grep "inet6' >> $@
+	@echo '	addr.*Scope:Global" |' >> $@
+	@echo '	awk '\''{ print $$3 }'\'');' >> $@
+	@echo 'ip6linklocal=$$(/sbin/ifconfig | grep "inet6' >> $@
+	@echo '	addr.*Scope:Link" |' >> $@
+	@echo '	awk '\''{ print $$3 }'\'');' >> $@
+	@echo '[ "$${ipaddress}" ] || { one=" $${hostname}' >> $@
+	@echo '	nagiosxi$${serial}"; }' >> $@
+	@echo '[ "$${ip6address}$${ip6linklocal}" ] || {' >> $@
+	@echo '	two=" ip6-$${hostname} ip6-nagiosxi$${serial}"; };' >> $@
+	@echo '[ "$${ipaddress}" ] && { three+="$${ipaddress}' >> $@
+	@echo '	$${hostname} NagiosXI$${serial}' >> $@
+	@echo '"; }' >> $@
+	@echo '[ "$${ip6address}" ] && { three+="$${ip6address}' >> $@
+	@echo '	ip6-$${hostname} ip6-NagiosXI$${serial}' >> $@
+	@echo '"; } ||' >> $@
+	@echo '[ "$${ip6linklocal}" ] && { three+="$${ip6linklocal}' >> $@
+	@echo '	ip6-$${hostname} ip6-NagiosXI$${serial}' >> $@
+	@echo '"; };' >> $@
+	@echo 'ci -l -m"How $${MEID} $$(serial) found it." /etc/hosts <<<"For the horde.";' >> $@
+	@echo 'cat > /etc/hosts <<EJF' >> $@
+	@echo '# $$(ID)' >> $@
+	@echo '127.0.0.1 localhost$${one}' >> $@
+	@echo '::1 ip6-localhost ip6-loopback$${two}' >> $@
+	@echo 'fe00::0 ip6-localnet' >> $@
+	@echo 'ff00::0 ip6-mcastprefix' >> $@
+	@echo 'ff02::1 ip6-allnodes' >> $@
+	@echo 'ff02::2 ip6-allrouters' >> $@
+	@echo 'ff02::3 ip6-allhosts' >> $@
+	@echo '' >> $@
+	@echo '$${three}' >> $@
+	@echo 'EJF' >> $@
+	@echo 'ci -l -m"From $$(MEID) $$(serial)" /etc/hosts;' >> $@
+	@echo 'ci -l -m"How $$(MEID) $$(serial) found it." /etc/issue  <<<"For the horde.";' >> $@
+	@echo 'cat /etc/issue.template - > /etc/issue <<EJF' >> $@
+	@echo '$${ipaddress:+' >> $@
+	@echo 'Address:	$$ipaddress}$${ip6address:+' >> $@
+	@echo 'V6Address:	$$ip6address}$${ip6linklocal:+' >> $@
+	@echo 'Scope-Local:	$$ip6linklocal}' >> $@
+	@echo 'EJF' >> $@
+	@echo 'ci -l -m"From $${MEID} $${serial}" /etc/issue;' >> $@
+	@echo 'ci -l -m"How $$(MEID) $$(serial) found it." /etc/issue.net  <<<"For the horde.";' >> $@
+	@echo 'cat /etc/issue.template - > /etc/issue.net <<EJF' >> $@
+	@echo '$${ipaddress:+' >> $@
+	@echo 'Address:	$$ipaddress}$${ip6address:+' >> $@
+	@echo 'V6Address:	$$ip6address}$${ip6linklocal:+' >> $@
+	@echo 'Scope-Local:	$$ip6linklocal}' >> $@
+	@echo 'EJF' >> $@
+	@echo 'ci -l -m"From $${MEID} $${serial}" /etc/issue.net;' >> $@
+	@echo 'exit' >> $@
+	@ci -l -m"From $(MEID) $(serial)" $@
+
+setissue: network-restart
+
+network-restart: /sbin/ifup-local
+	# Engage
+	@service network restart
+
+mkinitrd:
+	# Add the virtio drivers.  We likely want a lot of scsi/raid/ect here
+	@mkinitrd --with=virtio_pci --with=virtio_blk -f \
+		/boot/initrd-$$(uname -r).img $$(uname -r)
+
+clearroot:
+	# Pull out the root password.
+	@grep -n YFBmoGnUhi /etc/shadow && \
+	sed -ie 's%$$1$$XkZfmYC1$$YFBmoGnUhialEG887aToT/%%' /etc/shadow || \
+	true
+
+sshemptypass:
+	@echo PermitEmptyPasswords yes >> /etc/ssh/sshd_config
+	@service sshd reload
+
+/etc/aliases:
+	# Sanitize aliases file.
+	@echo -n "Your Email Address: " >&2; \
+	read emailaddr; \
+	echo 'nagios:		root' >> /etc/aliases \
+	echo 'root:		'"$${emailaddr}" >> /etc/aliases
+	@newaliases
+
+confmail: /etc/aliases
+
+# Nagios XI install
+# /tmp is cleared at times.  We can put our stuff in more persistent
+# storage /var/tmp.
+/var/tmp/xi-latest.tar.gz:
+	@cd /var/tmp; \
+	wget -c http://assets.nagios.com/downloads/nagiosxi/xi-latest.tar.gz
+	# Why not grab them both.
+	@cd /var/tmp; \
+	wget -c --background http://assets.nagios.com/downloads/nagiosxi/xi-latest-devel.tar.gz
+
+# Consider using cjf and xjf instead of z.  This is .bz2 instead of .gz.
+/var/tmp/xi: /var/tmp/xi-latest.tar.gz
+	@tar -xzf xi-latest.tar.gz
+
+0-yum: /var/tmp/xi
+	@cd /var/tmp/xi; \
+	./0-yum
+1-prereqs: 0-yum
+	@cd /var/tmp/xi; \
+	./1-prereqs
+2-usersgroups: 1-prereqs
+	@cd /var/tmp/xi; \
+	./2-usersgroups
+3-dbservers: 2-usersgroups
+	@cd /var/tmp/xi; \
+	./3-dbservers
+4-services: 3-dbservers
+	@cd /var/tmp/xi; \
+	./4-services
+5-sudoers: 4-services
+	@cd /var/tmp/xi; \
+	./5-sudoers
+6-firewall: 5-sudoers
+	@cd /var/tmp/xi; \
+	./6-firewall
+7-sendmail: 6-firewall
+	@cd /var/tmp/xi; \
+	./7-sendmail
+8-selinux: 7-sendmail
+	@cd /var/tmp/xi; \
+	./8-selinux
+9-dbbackups: 8-selinux
+	@cd /var/tmp/xi; \
+	./9-dbbackups
+10-phplimits: 9-dbbackups
+	@cd /var/tmp/xi; \
+	./10-phplimits
+11-sourceguardian: 10-phplimits
+	@cd /var/tmp/xi; \
+	./11-sourceguardian
+12-mrtg: 11-sourceguardian
+	@cd /var/tmp/xi; \
+	./12-mrtg
+A-subcomponents: 12-mrtg
+	@cd /var/tmp/xi; \
+	./A-subcomponents
+B-installxi: A-subcomponents
+	@cd /var/tmp/xi; \
+	./B-installxi
+C-cronjobs: B-installxi
+	@cd /var/tmp/xi; \
+	./C-cronjobs
+D-chkconfigalldaemons: C-cronjobs
+	@cd /var/tmp/xi; \
+	./D-chkconfigalldaemons
+E-importnagiosql: D-chkconfigalldaemons
+	@cd /var/tmp/xi; \
+	./E-importnagiosql
+F-startdaemons: E-importnagiosql
+	@cd /var/tmp/xi; \
+	./F-startdaemons
+Z-webroot: F-startdaemons
+	@cd /var/tmp/xi; \
+	./Z-webroot
+
+NagiosXI-Install: Z-webroot
+
+pkgnss-mdns:
+	@rpm -i -p http://download.fedora.redhat.com/pub/epel/5Server/i386/nss-mdns-0.10-4.el5.i386.rpm || true
+
+_ns=hosts: files mdns_minimal [NOTFOUND=return] dns mdns
+/etc/nsswitch.conf: pkgrcs
+	@ci -l -m"For NagiosXI" <<<"For NagiosXI" $@ 
+	# Find the hosts line delete it and insert this one, write/quit.
+	@sed -i 's/^hosts:.*$$/$(_ns)/' $@
+	@ci -l -m"From $(MEID) $(serial)" $@
+
+/etc/sysconfig/iptables: pkgrcs
+	@grep -ne 'dport 5353 ' $@ || { \
+	ci -l -m"For NagiosXI" <<<"For NagiosXI" $@; \
+	{ echo '/^# DHCP'; \
+	echo 'i'; \
+	echo; \
+	echo '# MDNS'; \
+	echo '-A INPUT -p udp --dport 5353 -d 224.0.0.251 -j ACCEPT'; \
+	echo; \
+	echo '.'; \
+	echo 'w'; \
+	echo 'q'; \
+	} | ed $@; \
+	ci -l -m"From $(MEID) $(serial)" $@; \
+	}
+	# Engage
+	@service iptables restart
+
+nss-mdns: pkgnss-mdns /etc/nsswitch.conf /etc/sysconfig/iptables
+
+bonjour: nss-mdns
+
+# Serialize crontabs
+# eventman and cmdsubsys are high priority.
+# These messages, and others like it, indicate that my plan is working.
+# fatal: failed to become a daemon: Resource temporarily unavailable
+## to see the effect try this:
+####  watch 'ps $(pgrep -f php)'
+
+pkgdaemon:
+	@rpm -i -p \
+	http://libslack.org/daemon/download/daemon-0.6.3-1.i386.rpm || true
+
+rootcrontab: pkgdaemon
+	@{ echo ',s%^\([^/]*\)/root/scripts/automysqlbackup%\1/usr/local/bin/daemon -f -n msqlbackup -- /root/scripts/automysqlbackup%'; \
+	echo ',s%^\([^/]*\)/root/scripts/autopostgresqlbackup%\1/usr/local/bin/daemon -f -n pgsqlbackup -- /root/scripts/autopostgresqlbackup%'; \
+	echo 'w'; \
+	echo 'q'; \
+	} | VISUAL=ed crontab -u root -e
+
+/etc/logrotate.conf: pkgrcs
+	@ci -l -m"For NagiosXI" <<<"For NagiosXI" $@
+	@sed -i 's/weekly/daily/g' $@
+	@sed -i 's/#compress/compress/g' $@
+	@ci -l -m"From $(MEID) $(serial)" $@
+
+logrotate: /etc/logrotate.conf
+
+/etc/logrotate.d/nagiosxi: pkgrcs logrotate
+	@touch $@
+	@ci -l -m"For NagiosXI" <<<"For NagiosXI" $@
+	@echo '/usr/local/nagiosxi/var/*log {' > $@
+	@echo '    missingok' >> $@
+	@echo '    notifempty' >> $@
+	@echo '}' >> $@
+	@ci -l -m"From $(MEID) $(serial)" $@
+	@logrotate -f /etc/logrotate.conf
+
+/etc/init.d/nagiosxi:
+	@touch $@
+	@chmod 766 $@
+	@ci -l -m"For NagiosXI" <<<"For NagiosXI" $@
+	@echo '#!/bin/sh' > $@
+	@echo '#' >> $@
+	@echo '# chkconfig: 345 99 01' >> $@
+	@echo '# description: NagiosXI subtasks' >> $@
+	@echo '#' >> $@
+	@echo '# $(ID)' >> $@
+	@echo '#' >> $@
+	@echo '' >> $@
+	@echo 'PATH=$PATH:/usr/local/bin/' >> $@
+	@echo 'stdserv="sysstat cmdsubsys eventman feedproc nom cleaner"' >> $@
+	@echo '' >> $@
+	@echo '# See how we were called.' >> $@
+	@echo 'case "$$1" in' >> $@
+	@echo '    start)' >> $@
+	@echo '	RETVAL=0' >> $@
+	@echo '	for ech in $$stdserv; do true' >> $@
+	@echo '		daemon -n $$ech -r \' >> $@
+	@echo '			-u nagios.nagios -a 45 \' >> $@
+	@echo '			-o /usr/local/nagiosxi/var/$${ech}.log -- \' >> $@
+	@echo '			/usr/bin/php -q /usr/local/nagiosxi/cron/$${ech}.php' >> $@
+	@echo '		RETVAL=$$(( RETVAL || $$? ))' >> $@
+	@echo '	done' >> $@
+	@echo '	daemon -n dbmaint -r \' >> $@
+	@echo '		-u nagios.nagios -A 1 -L $$(( 60 * 5 )) \' >> $@
+	@echo '		-o /usr/local/nagiosxi/var/dbmaint.log -- \' >> $@
+	@echo '		/usr/bin/php -q /usr/local/nagiosxi/cron/dbmaint.php' >> $@
+	@echo '	RETVAL=$$(( RETVAL || $$? ))' >> $@	
+	@echo '	;;' >> $@
+	@echo '    stop)' >> $@
+	@echo '	RETVAL=0' >> $@
+	@echo '	for ech in $$stdserv dbmaint; do true' >> $@
+	@echo '		daemon -n $$ech -r --stop \' >> $@
+	@echo '			-u nagios.nagios' >> $@
+	@echo '		RETVAL=$$(( RETVAL || $$? ))' >> $@
+	@echo '	done' >> $@
+	@echo '	;;' >> $@
+	@echo '    status)' >> $@
+	@echo '	RETVAL=0' >> $@
+	@echo '	for ech in $$stdserv dbmaint; do true' >> $@
+	@echo '		daemon -n $$ech -r --status \' >> $@
+	@echo '			-u nagios.nagios' >> $@
+	@echo '		RETVAL=$$(( RETVAL || $$? ))' >> $@
+	@echo '	done' >> $@
+	@echo '	;;' >> $@
+	@echo '    *)' >> $@
+	@echo '	echo "Usage: $$0 {start|stop|status}"' >> $@
+	@echo '	RETVAL=1' >> $@
+	@echo '	;;' >> $@
+	@echo 'esac' >> $@
+	@echo 'exit $$RETVAL' >> $@
+	@echo '' >> $@
+	@ci -l -m"From $(MEID) $(serial)" $@
+
+nagiosxi: /etc/init.d/nagiosxi
+	@chkconfig --add $@
+	@chkconfig $@ on
+	@service $@ start
+
+nagiosinitrc: pkgdaemon /etc/logrotate.d/nagiosxi nagiosxi
+	@{ echo ',s/^.*sysstat.php.*$$//'; \
+	echo ',s/^.*cmdsubsys.php.*$$//'; \
+	echo ',s/^.*eventman.php.*$$//'; \
+	echo ',s/^.*feedproc.php.*$$//'; \
+	echo ',s/^.*nom.php.*$$//'; \
+	echo ',s/^.*reportengine.php.*$$//'; \
+	echo ',s/^.*dbmaint.php.*$$//'; \
+	echo ',s/^.*cleaner.php.*$$//'; \
+	echo 'w'; \
+	echo 'q'; \
+	} | VISUAL=ed crontab -u nagios -e || true
+
+restartcronttabs: pkgdaemon
+	@/usr/local/bin/daemon -n sysstat --user=nagios --restart
+	@/usr/local/bin/daemon -n cmdsubsys --user=nagios --restart
+	@/usr/local/bin/daemon -n eventman --user=nagios --restart
+	@/usr/local/bin/daemon -n nom --user=nagios --restart
+	@/usr/local/bin/daemon -n reportengine --user=nagios --restart
+	@/usr/local/bin/daemon -n cleaner --user=nagios --restart
+
+restartcrond: nagioscrontab rootcrontab
+	@service crond reload
+
+
+do-all: /root/.my.cnf /etc/cron.hourly/NagiosXI.sh \
+	/etc/sysconfig/network /etc/hosts /etc/issue \
+	/etc/sysconfig/network-scripts/ifcfg-eth0 \
+	/etc/sysconfig/network-scripts/ifcfg-lo \
+	/etc/dhcp3/dhclient-enter-hooks.d/avahi-autoipd \
+	/etc/dhcp3/dhclient-exit-hooks.d/zzz_avahi-autoipd \
+	/sbin/ifup-local network-restart mkinitrd clearroot \
+	sshemptypee /etc/aliases /var/tmp/xi-latest.tar.gz \
+	/var/tmp/xi NagiosXI-Install nss-mdns restartcrond
+

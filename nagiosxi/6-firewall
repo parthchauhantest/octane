@@ -1,0 +1,23 @@
+#!/bin/sh -e
+
+# Was previous step completed?
+if [ ! -f installed.sudoers ]; then
+	echo "sudoers were not initialized - run previous script" >&2
+	exit 1
+fi
+
+# Was this step already completed?
+if [ -f installed.firewall ]; then
+	echo "Firewall rules already configured - skipping."
+	exit 0
+fi
+
+
+# UPDATE FIREWALL SETTINGS AND RESTART IPTABLES
+cp -f nagiosxi/iptables /etc/sysconfig
+
+service iptables restart
+
+echo "Firewall rules updated OK"
+touch installed.firewall
+

@@ -1,0 +1,802 @@
+<!-- (c) 2008, 2009 by Martin Willisegger -->         
+<!-- -->
+<!-- Project    : NagiosQL -->
+<!-- Component  : admin master template -->
+<!-- Website    : http://www.nagiosql.org -->
+<!-- Date       : $LastChangedDate: 2009-04-28 15:02:27 +0200 (Di, 28. Apr 2009) $ -->
+<!-- Author     : $LastChangedBy: rouven $ -->
+<!-- Version    : 3.0.3 -->
+<!-- Revision   : $LastChangedRevision: 708 $ -->
+<!-- SVN-ID     : $Id: admin_master.tpl.htm 708 2009-04-28 13:02:27Z rouven $ -->
+<!-- BEGIN datatable -->
+  <form name="frmDatalist" method="post" action="{ACTION_MODIFY}">
+  <script language="JavaScript" type="text/JavaScript">
+  <!--
+    function actionPic(modus,id,name) {
+    if(id != "") {
+        document.forms.frmDatalist.hidModify.value = modus;
+        document.forms.frmDatalist.hidListId.value = id;
+        if (document.forms.frmDatalist.hidModify.value == "delete") {
+      		confirminit("{LANG_DELETESINGLE}\n"+name+"?","{LANG_SECURE_QUESTION}",2,"{LANG_YES}","{LANG_NO}",1);
+        } else {
+      		document.forms.frmDatalist.submit();
+    	}
+    }
+  }  
+  
+  // Downloadfunktion
+  function getDownload() {
+    var time = new Date();
+      var table = "{TABLE_NAME}";
+    this.location.href = "download.php?table="+table+"&timestamp="+time.getTime();
+  }
+  function addDataset() {
+      document.forms.frmDatalist.modus.value = "add";
+      document.forms.frmDatalist.submit();
+  }
+  function writeConfig() {
+      document.forms.frmDatalist.modus.value = "make";
+      document.forms.frmDatalist.submit();
+  }
+  function checkMode() {
+      if (document.forms.frmDatalist.selModify.value == "delete") {
+      confirminit("{LANG_DELETEOK}","{LANG_SECURE_QUESTION}",2,"{LANG_YES}","{LANG_NO}",2);
+      } else {
+      document.frmDatalist.submit();
+      document.frmDatalist.subDo.disabled = true; 
+    }
+  }
+  function confOpenerYes(key) {
+    if (key == 1) {
+      document.forms.frmDatalist.submit();
+    }
+    if (key == 2) {
+      document.frmDatalist.submit();
+      document.frmDatalist.subDo.disabled = true;
+    }
+  } 
+  //-->
+  </script>
+  <table width="100%" border="0" class="admintable">
+    <tr>
+      <th style="text-align: center"><img src="{IMAGE_PATH}pixel.gif" alt="" width="20" height="1"></th>
+      <th width="30%">{FIELD_1}<br>
+        <img src="{IMAGE_PATH}pixel.gif" alt="" width="200" height="1"></th>
+      <th width="70%">{FIELD_2}<br>
+        <img src="{IMAGE_PATH}pixel.gif" alt="" width="300" height="1"></th>
+      <th style="text-align: center">{LANG_ACTIVE}<br>
+        <img src="{IMAGE_PATH}pixel.gif" alt="" width="100" height="1"></th>
+      <th style="text-align: center">{LANG_FUNCTION}<br>
+        <img src="{IMAGE_PATH}pixel.gif" alt="" width="100" height="1"></th>
+    </tr>
+<!-- BEGIN datarow -->    
+    <tr>
+      <td class="{CELLCLASS_M}"><input type="checkbox" class="{CHB_CLASS}" name="chbId_{LINE_ID}" {DISABLED}><br></td>
+      <td class="{CELLCLASS_L}">{DATA_FIELD_1}</td>
+      <td class="{CELLCLASS_L}">{DATA_FIELD_2}</td>
+      <td class="{CELLCLASS_M}">{DATA_ACTIVE}</td>
+      <td class="{CELLCLASS_M}" valign="middle"><img src="{IMAGE_PATH}edit.gif" alt="{LANG_MODIFY}" title="{LANG_MODIFY}" width="18" height="18" border="0" onClick="actionPic('modify','{LINE_ID}','');"> 
+      <img src="{IMAGE_PATH}copy.gif" alt="{LANG_DUPLICATE}" title="{LANG_DUPLICATE}" width="18" height="18" border="0" onClick="actionPic('copy','{LINE_ID}','');"> 
+      <img src="{IMAGE_PATH}delete.gif" alt="{LANG_DELETE}" title="{LANG_DELETE}" width="18" height="18" onClick="actionPic('delete','{LINE_ID}','{DATA_FIELD_1}');">
+      <img src="{IMAGE_PATH}info.gif" alt="{INFO}" title="{INFO}" width="18" height="18" onClick="actionPic('info','{LINE_ID}','');">
+	  </td>
+    </tr>
+<!-- END datarow -->
+  </table>
+  <table width="100%" border="0" class="buttontable">
+  <tr>
+    <td><input name="subAdd" type="button" id="subAdd" onClick="addDataset()" value="{LANG_ADD}">
+	
+      <!--<input name="subMake" type="button" id="subMake" onClick="writeConfig()" value="{LANG_WRITE_CONFIG_FILE}">-->
+	  
+	  <input type="button" name="applyConfig" value="Apply Configuration"  onClick="apply_config()">
+	  
+      <input name="subDown" type="button" id="subDown" onClick="getDownload()" value="{LANG_DOWNLOAD}">
+      <input name="modus" type="hidden" id="modus" value="checkform">
+      <input name="hidModify" type="hidden" id="hidModify">
+      <input name="hidListId" type="hidden" id="hidListId">
+      <input name="hidLimit" type="hidden" id="hidLimit" value="{LIMIT}">
+      <br><img src="{IMAGE_PATH}pixel.gif" alt="" width="470" height="1"></td>
+    <td width="99%" align="right"><!--{LANG_MARKED}:--></td>
+      <td  class="withchecked">{LANG_MARKED}: <select name="selModify" id="select" >
+          <option value="delete">{DELETE}</option>
+          <option value="copy">{DUPLICATE}</option>
+        </select>
+        <input name="subDo" type="button" id="subDo" value="{LANG_DO_IT}" onClick="checkMode()"><br><img src="{IMAGE_PATH}pixel.gif" alt="" width="210" height="1"></td>
+  </tr>
+  </table>
+</form>
+<div class="pagelinks">{PAGES}&nbsp;</div>
+<div id="confirmcontainer"></div>
+<div id="msgcontainer"></div>
+<!-- END datatable -->
+<!-- BEGIN msgfooter -->
+  <p><span class="infoline">{LAST_MODIFIED}<br>{FILEDATE}<br>{FILEISOLD}</span><br>
+  <span class="dbmessage">{DBMESSAGE}&nbsp;</span><br>
+  <span class="{CON_MSGCLASS}">{CONSISTUSAGE}&nbsp;</span><br><span class="greenmessage">{FREEDATA}&nbsp;</span></p>
+</td>
+<!-- END msgfooter -->
+<!-- BEGIN datatablehost -->
+  <script language="JavaScript" type="text/JavaScript">
+  <!--
+  var intCheck = 0;
+  <!-- Funktion für die Steuerung der Funktionssymbole -->
+  function actionPic(modus,id,name) {
+    if(id != "") {
+      if (modus == "download") {
+        getDownload(id,name);
+        return;
+      }
+      document.forms.frmDatalist.hidModify.value = modus;
+      document.forms.frmDatalist.hidListId.value = id;
+      if (document.forms.frmDatalist.hidModify.value == "delete") {
+        confirminit("{LANG_DELETESINGLE}\n"+name+"?","{LANG_SECURE_QUESTION}",2,"{LANG_YES}","{LANG_NO}",1);
+      } else {
+        document.forms.frmDatalist.submit();
+      }
+    }
+  } 
+  <!-- Downloadfunktion -->
+  function getDownload(id,name) {
+    var time = new Date();
+    var table = "{TABLE_NAME}";
+    this.location.href = "download.php?table="+table+"&line="+id+"&config="+name+"&timestamp="+time.getTime();
+  }
+  function addDataset() {
+    document.forms.frmDatalist.modus.value = "add";
+    document.forms.frmDatalist.submit();
+  }
+  function writeConfig() {
+    document.forms.frmDatalist.modus.value = "make";
+    document.forms.frmDatalist.submit();
+  }
+  function checkMode() {
+    if (document.forms.frmDatalist.selModify.value == "delete") {
+      confirminit("{LANG_DELETEOK}","{LANG_SECURE_QUESTION}",2,"{LANG_YES}","{LANG_NO}",2);
+    } else {
+      document.frmDatalist.submit();
+      document.frmDatalist.subDo.disabled = true; 
+    }
+  }
+  function markAll() {
+    if (intCheck == 0) {
+      for($i={MIN_ID};$i<={MAX_ID};$i++) {
+        if (document.getElementById("chbId_"+$i)) {
+          document.getElementById("chbId_"+$i).checked = true;
+        }
+      }
+      intCheck = 1;
+    } else {
+      for($i={MIN_ID};$i<={MAX_ID};$i++) {
+        if (document.getElementById("chbId_"+$i)) {
+          document.getElementById("chbId_"+$i).checked = false;
+        }
+      } 
+      intCheck = 0;
+    }
+  }
+  function confOpenerYes(key) {
+    if (key == 1) {
+      document.forms.frmDatalist.submit();
+    }
+    if (key == 2) {
+      document.frmDatalist.submit();
+      document.frmDatalist.subDo.disabled = true;
+    }
+  }
+  function del(key) {
+    if (key == "search") {
+      document.frmDatalist.txtSearch.value = "";
+      document.frmDatalist.submit();
+    }
+  }
+  //-->
+  </script>
+<form name="frmDatalist" method="post" action="{ACTION_MODIFY}">
+  <table border="0" class="admintabletools" width="100%">
+    <tr valign="middle">    
+	
+      <td><input name="chbMark" type="checkbox" class="checkbox" id="chbMark" onMouseUp="markAll()" value=""> {LANG_MARKALL}</td>
+
+      <td>
+	  {LANG_SEARCH_STRING}: 
+	  <input type="text" name="txtSearch" value="{DAT_SEARCH}" style="width:120px" >
+	  
+	   <img src="{IMAGE_PATH}lupe.gif" width="18" height="18" alt="{LANG_SEARCH}" title="{LANG_SEARCH}" style="cursor: hand; cursor:pointer;" onClick="document.frmDatalist.submit()">&nbsp;<img src="{IMAGE_PATH}del.png" width="18" height="18" alt="{LANG_DELETE}" title="{LANG_DELETE}" onClick="del('search')" style="cursor: hand; cursor:pointer;">
+	   </td>
+
+    </tr>
+  </table>
+
+<!--
+  <table border="0" class="admintable">
+    <tr>
+      <td style="width:100px">{LANG_SEARCH_STRING}:</td>
+      <td style="width:130px"><input type="text" name="txtSearch" value="{DAT_SEARCH}" style="width:120px" ></td>
+      <td><img src="{IMAGE_PATH}lupe.gif" width="18" height="18" alt="{LANG_SEARCH}" style="cursor: hand; cursor:pointer;" onClick="document.frmDatalist.submit()">&nbsp;<img src="{IMAGE_PATH}del.png" width="18" height="18" alt="{LANG_DELETE}" onClick="del('search')" style="cursor: hand; cursor:pointer;"></td>
+      <td style="width:100px">&nbsp;</td>
+      <td align="right" class="tdlb">{LANG_MARKALL}:</td>
+      <td align="right" class="tdlb"><input name="chbMark" type="checkbox" class="checkbox" id="chbMark" onMouseUp="markAll()" value=""></td>
+    </tr>
+  </table>-->
+  <table width="100%" border="0" class="admintable">
+    <tr>
+      <th style="text-align: center"><img src="{IMAGE_PATH}pixel.gif" alt="" width="20" height="1"></th>
+      <th width="30%">{FIELD_1}<br>
+        <img src="{IMAGE_PATH}pixel.gif" alt="" width="180" height="1"></th>
+      <th width="70%">{FIELD_2}<br>
+        <img src="{IMAGE_PATH}pixel.gif" alt="" width="250" height="1"></th>
+      <th style="text-align: center">{LANG_ACTIVE}<br>
+        <img src="{IMAGE_PATH}pixel.gif" alt="" width="80" height="1"></th>
+      <th style="text-align: center">{LANG_FILE}<br>
+        <img src="{IMAGE_PATH}pixel.gif" alt="" width="80" height="1"></th>
+      <th style="text-align: center">{LANG_FUNCTION}<br>
+        <img src="{IMAGE_PATH}pixel.gif" alt="" width="125" height="1"></th>
+    </tr>
+<!-- BEGIN datarowhost -->
+    <tr>
+      <td class="{CELLCLASS_M}"><input type="checkbox" class="{CHB_CLASS}" name="chbId_{LINE_ID}"  id="chbId_{LINE_ID}" {DISABLED}><br></td>
+      <td class="{CELLCLASS_L}">{DATA_FIELD_1}</td>
+      <td class="{CELLCLASS_L}">{DATA_FIELD_2}</td>
+      <td class="{CELLCLASS_M}">{DATA_ACTIVE}</td>
+      <td class="{CELLCLASS_M}">{DATA_FILE}</td>
+      <td class="{CELLCLASS_M} listactions hostlistactions" valign="middle"><img src="{IMAGE_PATH}edit.gif" alt="{LANG_MODIFY}" title="{LANG_MODIFY}" width="18" height="18" border="0" onClick="actionPic('modify','{LINE_ID}','');"> 
+      <img src="{IMAGE_PATH}copy.gif" alt="{LANG_DUPLICATE}" title="{LANG_DUPLICATE}" width="18" height="18" border="0" onClick="actionPic('copy','{LINE_ID}','');"> 
+    <img src="{IMAGE_PATH}delete.gif" alt="{LANG_DELETE}" title="{LANG_DELETE}" width="18" height="18" onClick="actionPic('delete','{LINE_ID}','{DATA_FIELD_1}');">
+	<!-- XI MOD -->
+    <!--<img src="{IMAGE_PATH}write.gif" alt="{LANG_WRITE_CONFIG}" title="{LANG_WRITE_CONFIG}" width="18" height="18" onClick="actionPic('config','{LINE_ID}','{DATA_FIELD_1}');">-->
+    <img src="{IMAGE_PATH}download.gif" alt="{LANG_DOWNLOAD}" title="{LANG_DOWNLOAD}" width="18" height="18" onClick="actionPic('download','{LINE_ID}','{DATA_FIELD_1}');">
+	<!-- XI MOD -->
+    <img src="{IMAGE_PATH}info.gif" alt="{INFO}" title="{INFO}" width="18" height="18" onClick="actionPic('info','{LINE_ID}','');">
+	</td>
+    </tr>
+<!-- END datarowhost -->
+  </table>
+  <table width="100%" border="0" class="buttontable">
+  <tr>
+    <td><input name="subAdd" type="button" id="subAdd" onClick="addDataset()" value="{LANG_ADD}">
+      <!--<input name="subMake" type="button" id="subMake" onclick="writeConfig()" value="{LANG_WRITE_CONF_ALL}">-->
+      <input name="applyConfig" type="button" id="applyConfig" onclick="apply_config()" value="Apply Configuration">
+      <input name="modus" type="hidden" id="modus" value="checkform">
+      <input name="hidModify" type="hidden" id="hidModify">
+      <input name="hidListId" type="hidden" id="hidListId">
+      <input name="hidLimit" type="hidden" id="hidLimit" value="{LIMIT}"><br><img src="{IMAGE_PATH}pixel.gif" alt="" width="450" height="1"></td>
+    <td width="99%" align="right"><!--{LANG_MARKED}:--></td>
+      <td  class="withchecked">{LANG_MARKED}: <select name="selModify" id="select" >
+          <option value="none">&nbsp;</option>
+          <option value="delete">{DELETE}</option>
+          <option value="copy">{DUPLICATE}</option>
+		  <!-- XI MOD -->
+      <!--<option value="config">{WRITE_CONFIG}</option>-->
+        </select>
+        <input name="subDo" type="button" id="subDo" value="{LANG_DO_IT}" onClick="checkMode()"><br><img src="{IMAGE_PATH}pixel.gif" alt="" width="280" height="1"></td>
+  </tr>
+  </table>
+</form>
+<div class="pagelinks">{PAGES}&nbsp;</div>
+<div id="confirmcontainer"></div>
+<div id="msgcontainer"></div>
+<!-- END datatablehost -->
+<!-- BEGIN msgfooterhost -->
+  <p><span class="dbmessage">{DBMESSAGE}&nbsp;</span><br>
+  <span class="{CON_MSGCLASS}">{CONSISTUSAGE}&nbsp;</span><br><span class="greenmessage">{FREEDATA}&nbsp;</span></p>
+</td>
+<!-- END msgfooterhost -->
+<!-- BEGIN datatableservice -->
+  <script language="JavaScript" type="text/JavaScript">
+  <!--
+    var intCheck = 0;
+    // Funktion für die Steuerung der Funktionssymbole
+    function actionPic(modus,id,name) {
+    if(id != "") {
+      if (modus == "download") {
+        getDownload(id,name);
+        return;
+      }
+      document.forms.frmDatalist.hidModify.value = modus;
+      document.forms.frmDatalist.hidListId.value = id;
+      if (document.forms.frmDatalist.hidModify.value == "delete") {
+        confirminit("{LANG_DELETESINGLE}\n"+name+"?","{LANG_SECURE_QUESTION}",2,"{LANG_YES}","{LANG_NO}",1);
+      } else {
+        document.forms.frmDatalist.submit();
+      }
+    }
+  } 
+  // Downloadfunktion
+  function getDownload(id,name) {
+    var time = new Date();
+      var table = "{TABLE_NAME}";
+    this.location.href = "download.php?table="+table+"&line="+id+"&config="+name+"&timestamp="+time.getTime();
+  }
+  function addDataset() {
+    document.forms.frmDatalist.modus.value = "add";
+    document.forms.frmDatalist.submit();
+  }
+  function writeConfig() {
+      document.forms.frmDatalist.modus.value = "make";
+      document.forms.frmDatalist.submit();
+  }
+  function reloadFilter() {
+    document.forms.frmDatalist.modus.value = "filter";
+    document.forms.frmDatalist.hidLimit.value = "0";
+    document.forms.frmDatalist.submit();    
+    }
+  function checkMode() {
+      if (document.forms.frmDatalist.selModify.value == "delete") {
+      confirminit("{LANG_DELETEOK}","{LANG_SECURE_QUESTION}",2,"{LANG_YES}","{LANG_NO}",2);
+      } else {
+      document.frmDatalist.submit();
+      document.frmDatalist.subDo.disabled = true; 
+    }
+  }
+  function markAll() {
+      if (intCheck == 0) {
+        for($i={MIN_ID};$i<={MAX_ID};$i++) {
+          if (document.getElementById("chbId_"+$i)) {
+        document.getElementById("chbId_"+$i).checked = true;
+      }
+        }
+        intCheck = 1;
+      } else {
+        for($i={MIN_ID};$i<={MAX_ID};$i++) {
+      if (document.getElementById("chbId_"+$i)) {
+            document.getElementById("chbId_"+$i).checked = false;
+      }
+    } 
+    intCheck = 0;
+      }
+  }
+  function confOpenerYes(key) {
+    if (key == 1) {
+      document.forms.frmDatalist.submit();
+    }
+    if (key == 2) {
+      document.frmDatalist.submit();
+      document.frmDatalist.subDo.disabled = true;
+    }
+  }
+  function del(key) {
+    if (key == "search") {
+      document.frmDatalist.txtSearch.value = "";
+      document.frmDatalist.submit();
+    }
+  }
+  //-->
+  </script>
+<form name="frmDatalist" method="post" action="{ACTION_MODIFY}">
+  <table border="0" class="admintabletools" width="100%">
+    <tr valign="middle">    
+	
+      <td><input name="chbMark" type="checkbox" class="checkbox" id="chbMark" onMouseUp="markAll()" value=""> {LANG_MARKALL}</td>
+
+      <td>
+	  {LANG_SEARCH_STRING}: 
+	  <input type="text" name="txtSearch" value="{DAT_SEARCH}" style="width:120px" >
+	  
+	   <img src="{IMAGE_PATH}lupe.gif" width="18" height="18" alt="{LANG_SEARCH}" title="{LANG_SEARCH}" style="cursor: hand; cursor:pointer;" onClick="document.frmDatalist.submit()">&nbsp;<img src="{IMAGE_PATH}del.png" width="18" height="18" alt="{LANG_DELETE}" title="{LANG_DELETE}" onClick="del('search')" style="cursor: hand; cursor:pointer;">
+	   </td>
+	  
+      <td>
+	  {LANG_CONFIGFILTER}: 
+	  <select name="selOrderBy" id="selOrderBy" style="width:200px;" onChange="reloadFilter()">
+<!-- BEGIN configlist -->
+        <option value="{DAT_CONFIGNAME}" {DAT_CONFIGNAME_SEL}>{DAT_CONFIGNAME}
+<!-- END configlist -->
+          </select>
+		  </td>
+
+    </tr>
+  </table>
+  <table width="100%" border="0" class="admintable">
+    <tr>
+      <th style="text-align: center"><img src="{IMAGE_PATH}pixel.gif" alt="" width="20" height="1"></th>
+      <th width="30%">{FIELD_1}<br>
+        <img src="{IMAGE_PATH}pixel.gif" alt="" width="180" height="1"></th>
+      <th width="70%">{FIELD_2}<br>
+        <img src="{IMAGE_PATH}pixel.gif" alt="" width="250" height="1"></th>
+      <th style="text-align: center">{LANG_ACTIVE}<br>
+      <img src="{IMAGE_PATH}pixel.gif" alt="" width="80" height="1"></th>
+      <th style="text-align: center">{LANG_FILE}<br>
+      <img src="{IMAGE_PATH}pixel.gif" alt="" width="80" height="1"></th>
+      <th style="text-align: center">{LANG_FUNCTION}<br>
+        <img src="{IMAGE_PATH}pixel.gif" alt="" width="125" height="1"></th>
+    </tr>
+<!-- BEGIN datarowservice -->   
+    <tr>
+      <td class="{CELLCLASS_M}"><input type="checkbox" class="{CHB_CLASS}" name="chbId_{LINE_ID}" id="chbId_{LINE_ID}" {DISABLED}><br></td>
+      <td class="{CELLCLASS_L}">{DATA_FIELD_1}</td>
+      <td class="{CELLCLASS_L}">{DATA_FIELD_2}</td>
+      <td class="{CELLCLASS_M}">{DATA_ACTIVE}</td>
+      <td class="{CELLCLASS_M}">{DATA_FILE}</td>
+      <td class="{CELLCLASS_M} listactions servicelistactions" valign="middle"><img src="{IMAGE_PATH}edit.gif" alt="{LANG_MODIFY}" title="{LANG_MODIFY}" width="18" height="18" border="0" onClick="actionPic('modify','{LINE_ID}','');"> 
+      <img src="{IMAGE_PATH}copy.gif" alt="{LANG_DUPLICATE}" title="{LANG_DUPLICATE}" width="18" height="18" border="0" onClick="actionPic('copy','{LINE_ID}','');"> 
+    <img src="{IMAGE_PATH}delete.gif" alt="{LANG_DELETE}" title="{LANG_DELETE}" width="18" height="18" onClick="actionPic('delete','{LINE_ID}','{DATA_FIELD_1S} - {DATA_FIELD_2S}');">
+	<!-- XI MOD -->
+    <!--<img src="{IMAGE_PATH}write.gif" alt="{LANG_WRITE_CONFIG}" title="{LANG_WRITE_CONFIG}" width="18" height="18" onClick="actionPic('config','{LINE_ID}','');">-->
+    <img src="{IMAGE_PATH}download.gif" alt="{LANG_DOWNLOAD}" title="{LANG_DOWNLOAD}" width="18" height="18" onClick="actionPic('download','{LINE_ID}','{DATA_FIELD_1}');">
+	<!-- XI MOD -->
+    <img src="{IMAGE_PATH}info.gif" alt="{INFO}" title="{INFO}" width="18" height="18" onClick="actionPic('info','{LINE_ID}','');">
+	</td>
+    </tr>
+<!-- END datarowservice -->
+  </table>
+  <table width="100%" border="0" class="buttontable">
+  <tr>
+    <td><input name="subAdd" type="button" id="subAdd" onClick="addDataset()" value="{LANG_ADD}">
+      <!--<input name="subMake" type="button" id="subMake" onclick="writeConfig()" value="{LANG_WRITE_CONF_ALL}">-->
+      <input name="applyConfig" type="button" id="applyConfig" onclick="apply_config()" value="Apply Configuration">
+      <input name="modus" type="hidden" id="modus" value="checkform">
+      <input name="hidModify" type="hidden" id="hidModify">
+      <input name="hidListId" type="hidden" id="hidListId">
+      <input name="hidLimit" type="hidden" id="hidLimit" value="{LIMIT}"><br><img src="{IMAGE_PATH}pixel.gif" alt="" width="450" height="1"></td>
+      <td align="right"><!--{LANG_MARKED}:--></td>
+      <td class="withchecked">{LANG_MARKED}: <select name="selModify" id="select" >
+          <option value="none">&nbsp;</option>
+          <option value="delete">{DELETE}</option>
+          <option value="copy">{DUPLICATE}</option>
+		  <!-- XI MOD -->
+      <!--<option value="config">{WRITE_CONFIG}</option>-->
+        </select>
+        <input name="subDo" type="button" id="subDo" value="{LANG_DO_IT}" onClick="checkMode()"><br><img src="{IMAGE_PATH}pixel.gif" alt="" width="280" height="1"></td>
+  </tr>
+  </table>
+</form>
+<div class="pagelinks">{PAGES}&nbsp;</div>
+<div id="confirmcontainer"></div>
+<div id="msgcontainer"></div>
+<!-- END datatableservice -->
+<!-- BEGIN datatablecommon -->
+<form name="frmDatalist" method="post" action="{ACTION_MODIFY}">
+  <script language="JavaScript" type="text/JavaScript">
+  <!--
+  // Funktion für die Steuerung der Funktionssymbole
+    function actionPic(modus,id,name) {
+    if(id != "") {
+        document.forms.frmDatalist.hidModify.value = modus;
+        document.forms.frmDatalist.hidListId.value = id;
+        if ((document.forms.frmDatalist.hidModify.value == "delete") && (name == "Admin")) {
+      msginit(name+" {LANG_NODELETE}","{LANG_SECURE_QUESTION}",1);
+          return false; 
+        }
+        if (document.forms.frmDatalist.hidModify.value == "delete") {
+      confirminit("{LANG_DELETESINGLE}\n"+name+"?","{LANG_SECURE_QUESTION}",2,"{LANG_YES}","{LANG_NO}",1);
+        } else {
+      document.forms.frmDatalist.submit();
+    }
+    }
+  }
+  function addDataset() {
+      document.forms.frmDatalist.modus.value = "add";
+      document.forms.frmDatalist.submit();
+  }
+  function writeConfig() {
+      document.forms.frmDatalist.modus.value = "make";
+      document.forms.frmDatalist.submit();
+  }
+  function checkMode() {
+      if (document.forms.frmDatalist.selModify.value == "delete") {
+      confirminit("{LANG_DELETEOK}","{LANG_SECURE_QUESTION}",2,"{LANG_YES}","{LANG_NO}",2);
+      } else {
+      document.frmDatalist.submit();
+      document.frmDatalist.subDo.disabled = true; 
+    }
+  }
+  function confOpenerYes(key) {
+    if (key == 1) {
+      document.forms.frmDatalist.submit();
+    }
+    if (key == 2) {
+      document.frmDatalist.submit();
+      document.frmDatalist.subDo.disabled = true;
+    }
+  } 
+  //-->
+  </script>
+  <table width="100%" border="0" class="admintable">
+    <tr>
+      <th style="text-align: center"><img src="{IMAGE_PATH}pixel.gif" alt="" width="20" height="1"></th>
+      <th width="30%">{FIELD_1}<br>
+        <img src="{IMAGE_PATH}pixel.gif" alt="" width="200" height="1"></th>
+      <th width="70%">{FIELD_2}<br>
+        <img src="{IMAGE_PATH}pixel.gif" alt="" width="300" height="1"></th>
+      <th style="text-align: center">{LANG_ACTIVE}<br>
+      <img src="{IMAGE_PATH}pixel.gif" alt="" width="100" height="1"></th>
+      <th style="text-align: center">{LANG_FUNCTION}<br>
+        <img src="{IMAGE_PATH}pixel.gif" alt="" width="100" height="1"></th>
+    </tr>
+<!-- BEGIN datarowcommon -->    
+    <tr>
+      <td class="{CELLCLASS_M}"><input type="checkbox" class="{CHB_CLASS}" name="chbId_{LINE_ID}" {DISABLED}><br></td>
+      <td class="{CELLCLASS_L}">{DATA_FIELD_1}</td>
+      <td class="{CELLCLASS_L}">{DATA_FIELD_2}</td>
+      <td class="{CELLCLASS_M}">{DATA_ACTIVE}</td>
+      <td class="{CELLCLASS_M}" valign="middle"><img src="{IMAGE_PATH}edit.gif" alt="{LANG_MODIFY}" title="{LANG_MODIFY}" width="18" height="18" border="0" onClick="actionPic('modify','{LINE_ID}','');"> 
+      <img src="{IMAGE_PATH}copy.gif" alt="{LANG_COPY}" title="{LANG_COPY}" width="18" height="18" border="0" onClick="actionPic('copy','{LINE_ID}','');"> 
+    {DEL_HIDE_START}<img src="{IMAGE_PATH}delete.gif" alt="{LANG_DELETE}" title="{LANG_DELETE}" width="18" height="18" onClick="actionPic('delete','{LINE_ID}','{DATA_FIELD_1}');">{DEL_HIDE_STOP}</td>
+    </tr>
+<!-- END datarowcommon -->
+  </table>
+  <table width="100%" border="0" class="buttontable">
+  <tr>
+    <td><input name="subAdd" type="button" id="subAdd" onClick="addDataset()" value="{LANG_ADD}">
+      <input name="modus" type="hidden" id="modus" value="checkform">
+      <input name="hidModify" type="hidden" id="hidModify">
+      <input name="hidListId" type="hidden" id="hidListId">
+      <input name="hidLimit" type="hidden" id="hidLimit" value="{LIMIT}">
+      <br><img src="{IMAGE_PATH}pixel.gif" alt="" width="470" height="1"></td>
+    <td width="99%" align="right"><!--{LANG_MARKED}:--></td>
+      <td  class="withchecked">{LANG_MARKED}: <select name="selModify" id="select" >
+          <option value="delete">{DELETE}</option>
+          <option value="copy">{DUPLICATE}</option>
+        </select>
+        <input name="subDo" type="button" id="subDo" value="{LANG_DO_IT}" onClick="checkMode()"><br><img src="{IMAGE_PATH}pixel.gif" alt="" width="210" height="1"></td>
+  </tr>
+  </table>
+</form>
+<div class="pagelinks">{PAGES}&nbsp;</div>
+<div id="confirmcontainer"></div>
+<div id="msgcontainer"></div>
+<!-- END datatablecommon -->
+<!-- BEGIN errorsite -->
+<td class="main">
+  <center>
+  <h1>{TITLE}</h1>
+  <br>
+  <p><img src="{IMAGE_PATH}titel_gross.png" alt="NagiosQL 2005" width="400" height="80"></p>
+  <br>
+  <p><span class="dbmessage"><b>{MESSAGE}&nbsp;</b></span></p>
+  <p><a href="{LOGINPATH}">[{LOGINSITE}]</a></p>
+  </center>
+</td>
+<!-- END errorsite -->
+<!-- BEGIN passwordsite -->
+  <td class="main">
+  <h1>{LANG_CHANGE_PASSWORD}</h1>
+  <form name="frmPasswdInsert" method="post" action="{ACTION_INSERT}">
+  <script language="JavaScript" type="text/JavaScript">
+  <!--
+    function abort() {
+      this.location.href = "{ACTION_INSERT}";
+    }
+    // Formular absenden
+    function LockButton() {
+      if (checkForm() == false) {
+        return false;
+      } else {
+        document.frmPasswdInsert.submit();
+        document.frmPasswdInsert.subForm.disabled = true;
+      }
+    }
+    // Formulareingaben ueberpruefen
+    function checkForm() {
+      // Sind alle Mussfelder ausgefuellt?
+    var fields1 = "tfPasswordOld,tfPasswordNew1";
+    var msg1    = "{FILL_ALLFIELDS}";
+    var msg2    = "{FILL_NEW_PASSWD_NOT_EQUAL}";
+    var msg3    = "{FILL_NEW_PWDSHORT}";
+    var header  = "{LANG_FORMCHECK}";
+    var form    = document.frmPasswdInsert;
+    var check   = false;
+    check = checkfields(fields1,form,myFocusObject);
+    if (check == false) {
+      msginit(msg1,header,1);
+    return false;
+    } 
+    // Sind die neuen Passwoerter unterschiedlich?
+    if(form.tfPasswordNew1.value != form.tfPasswordNew2.value)  {
+        msginit(msg2,header,1);
+        form.tfPasswordNew1.focus();
+        return false;
+      }
+    // Ist das neue Passwort zu kurz?
+      if((form.tfPasswordNew1.value != "") && (form.tfPasswordNew1.value.length <= 5)) {
+        msginit(msg3,header,1);
+        form.tfPasswordNew1.focus();
+        return false;
+      }
+  }
+    //-->
+  </script>
+  <table border="0"  class="inserttable">
+    <tr>
+      <td>{LANG_OLD_PASSWORD}*</td>
+      <td colspan="2"><input name="tfPasswordOld" type="password" id="tfPasswordOld" tabindex="1" style="width:150px" class="inpmust" ></td>
+      </tr>
+    <tr>
+      <td>{LANG_NEW_PASSWORD}*</td>
+      <td colspan="2"><input name="tfPasswordNew1" type="password" id="tfPasswordNew1" tabindex="3" style="width:150px" class="inpmust" ></td>
+      </tr>
+    <tr>
+      <td>{LANG_CONFIRM_PASSWORD}*</td>
+      <td colspan="2"><input name="tfPasswordNew2" type="password" id="tfPasswordNew2" tabindex="4" style="width:150px" class="inpmust" ></td>
+      </tr>
+    <tr>
+      <td width="180">&nbsp;</td>
+      <td width="80">&nbsp;</td>
+      <td width="500">&nbsp;</td>
+      </tr>
+    <tr>
+      <td colspan="2"><input name="subForm" type="button" id="subForm" value="{LANG_SAVE}" onClick="LockButton()">
+      &nbsp;<input name="subAbort" type="button" id="subAbort" onClick="abort()" value="{LANG_ABORT}"></td>
+      <td>* {LANG_REQUIRED}</td>
+      </tr>
+  </table>
+</form>
+<br>
+<span class="dbmessage">{PW_MESSAGE}&nbsp;</span>
+<br>
+<div id="msgcontainer"></div>
+<!-- END passwordsite -->
+<!-- BEGIN logbooksite -->
+  <td class="main">
+  <h1>{TITLE}</h1>
+  <script language="javascript" type="text/javascript">
+    <!--
+  calendarinit("{LOCALE}",1,"txtFrom","showfrom","cal-cont","cal");
+  calendarinit("{LOCALE}",1,"txtTo","showto","cal-cont2","cal2");
+  function del(key) {
+    if (key == "from") {
+      document.frmLogfile.txtFrom.value = "";
+    }
+    if (key == "to") {
+      document.frmLogfile.txtTo.value = "";
+    }
+    if (key == "search") {
+      document.logSearchForm.txtSearch.value = "";
+      document.logSearchForm.submit();
+    }
+  }
+  function Validate() {
+    var form = document.frmLogfile;
+    if ((form.txtFrom.value == "") && (form.txtTo.value == "")) {
+      msginit("{LANG_SELECT_DATE}","{LANG_SECURE_QUESTION}",1);
+      return false;
+    }
+    confirminit("{LANG_DELETELOG}","{LANG_SECURE_QUESTION}",2,"{LANG_YES}","{LANG_NO}",1);
+  }
+  function confOpenerYes(key) {
+    if (key == 1) {
+      document.frmLogfile.submit();
+    }
+  } 
+  //-->
+  </script>
+  <form name="logSearchForm"  method="post" action="">
+  <table cellpadding="0" cellspacing="0" border="0">
+    <tr>
+      <td width="100">{LANG_SEARCH_STRING}:</td>
+      <td width="130"><input type="text" name="txtSearch" value="{DAT_SEARCH}" style="width:120px" ></td>
+      <td><img src="{IMAGE_PATH}lupe.gif" width="18" height="18" alt="{LANG_SEARCH}" style="cursor: hand; cursor:pointer;" onClick="document.logSearchForm.submit()">&nbsp;<img src="{IMAGE_PATH}del.png" width="18" height="18" alt="{LANG_DELETE}" onClick="del('search')" style="cursor: hand; cursor:pointer;"></td>
+    </tr>
+  </table>
+  </form>
+  <br>
+  <table border="0">
+    <tr>
+      <th class="logtitlecell" width="150" scope="col">{LANG_TIME}</th>
+      <th class="logtitlecell" width="80" scope="col">{LANG_USER}</th>
+      <th class="logtitlecell" width="100" scope="col">{LANG_IP}</th>
+      <th class="logtitlecell" width="80" scope="col">{LANG_DOMAIN}</th>
+      <th class="logtitlecell" width="390" scope="col">{LANG_ENTRY}</th>
+    </tr>
+<!-- BEGIN logdatacell -->
+    <tr>
+      <td class="logdatacell">{DAT_TIME}</td>
+      <td class="logdatacell">{DAT_ACCOUNT}</td>
+      <td class="logdatacell">{DAT_IPADRESS}</td>
+      <td class="logdatacell">{DAT_DOMAIN}</td>
+      <td class="logdatacell">{DAT_ACTION}</td>
+    </tr>
+<!-- END logdatacell -->
+  </table>
+  <br>
+  <table width="800" border="0">
+    <tr>
+      <td align="left" class="loglegend">{LANG_PREVIOUS}</td>
+      <td align="right" class="loglegend">{LANG_NEXT}</td>
+    </tr>
+  </table>
+  <br>
+  <form name="frmLogfile" method="post" action="">
+  <table cellpadding="0" cellspacing="0" border="0">
+    <tr>
+      <td colspan="9" class="loglegend"><strong>{LANG_ENTRIES_BEFORE}</strong><br>&nbsp;</td>
+    </tr>
+    <tr>
+      <td width="40">{LANG_FROM}:</td>
+      <td><input type="text" name="txtFrom" id="txtFrom" value="" style="width:80px" readonly ></td>
+      <td>&nbsp;<img src="{IMAGE_PATH}calbtn.gif" width="18" height="18" alt="Calendar" id="showfrom" style="cursor: hand; cursor:pointer;">&nbsp;<img src="{IMAGE_PATH}del.png" width="18" height="18" alt="{LANG_DELETE}" onClick="del('from')" style="cursor: hand; cursor:pointer;"></td>
+      <td width="15">&nbsp;</td>
+      <td width="40">{LANG_TO}:</td>
+      <td><input type="text" name="txtTo" id="txtTo" value="" style="width:80px" readonly ></td>
+      <td width="60">&nbsp;<img src="{IMAGE_PATH}calbtn.gif" width="18" height="18" alt="Calendar" id="showto" style="cursor: hand; cursor:pointer;">&nbsp;<img src="{IMAGE_PATH}del.png" width="18" height="18" alt="{LANG_DELETE}" onClick="del('to')" style="cursor: hand; cursor:pointer;"></td>
+      <td><input type="button" name="button" value="{LANG_DELETE_LOG_ENTRIES}" style="font-size:12px;" onClick="Validate()"></td>
+      <td>&nbsp;</td>
+    </tr>
+  </table>
+  <br>
+  </form><br>
+  <p><span class="dbmessage">{LOGDBMESSAGE}&nbsp;</span><span class="greenmessage">{OKDATA}&nbsp;</span></p>
+  <div id="cal-cont" style="visibility:hidden">
+    <div class="hd">{LANG_CALENDAR}</div>
+    <div class="bd">
+      <div id="cal"></div>
+    </div>
+  </div>
+  <div id="cal-cont2" style="visibility:hidden">
+    <div class="hd">{LANG_CALENDAR}</div>
+    <div class="bd">
+      <div id="cal2"></div>
+    </div>
+  </div>
+  <div id="confirmcontainer"></div>
+  <div id="msgcontainer"></div>
+<!-- END logbooksite -->
+<!-- BEGIN menuaccesssite -->
+  <td class="main">
+  <h1>{TITLE}</h1>
+  <form name="frmMenuAccess" method="post" action="{ACTION_INSERT}">
+    <script language="JavaScript" type="text/JavaScript">
+    <!--
+    function update(value) {
+      document.frmMenuAccess.submit();
+    }
+    <!-- Formular absenden
+    function LockButton() {
+      document.frmMenuAccess.submit();
+      document.frmMenuAccess.subSave.disabled = true;
+    }
+    //-->
+  </script>
+    <table border="0"  class="inserttable">
+      <tr>
+        <td>{LANG_MENU_PAGE}*</td>
+        <td colspan="2"><select name="selSubMenu" onChange="javascript:update(this.value)" class="inpmust" style="width:300px;">
+<!-- BEGIN submenu -->
+          <option value="{SUBMENU_VALUE}" {SUBMENU_SELECTED}>{SUBMENU_NAME}</option>
+<!-- END submenu -->
+        </select></td>
+      </tr>
+      <tr>
+        <td colspan="3">&nbsp;</td>
+      </tr>
+      <tr>
+        <td>{LANG_ACCESS_KEY_HOLES}*</td>
+        <td colspan="2"><input name="chbKey1" type="checkbox" class="checkbox" id="chbKey1" value="1" {KEY1_CHECKED} {KEY_DISABLE}>
+          1&nbsp;
+          <input name="chbKey2" type="checkbox" class="checkbox" id="chbKey2" value="1" {KEY2_CHECKED} {KEY_DISABLE}>
+          2&nbsp;
+          <input name="chbKey3" type="checkbox" class="checkbox" id="chbKey3" value="1" {KEY3_CHECKED} {KEY_DISABLE}>
+          3&nbsp;
+          <input name="chbKey4" type="checkbox" class="checkbox" id="chbKey4" value="1" {KEY4_CHECKED} {KEY_DISABLE}>
+          4&nbsp;
+          <input name="chbKey5" type="checkbox" class="checkbox" id="chbKey5" value="1" {KEY5_CHECKED} {KEY_DISABLE}>
+          5&nbsp;
+          <input name="chbKey6" type="checkbox" class="checkbox" id="chbKey6" value="1" {KEY6_CHECKED} {KEY_DISABLE}>
+          6&nbsp;
+          <input name="chbKey7" type="checkbox" class="checkbox" id="chbKey7" value="1" {KEY7_CHECKED} {KEY_DISABLE}>
+          7&nbsp;
+          <input name="chbKey8" type="checkbox" class="checkbox" id="chbKey8" value="1" {KEY8_CHECKED} {KEY_DISABLE}>
+        8</td>
+      </tr>
+      <tr>
+        <td width="180">&nbsp;</td>
+        <td width="100">&nbsp;</td>
+        <td width="400">&nbsp;</td>
+      </tr>
+      <tr>
+        <td colspan="3">{LANG_ACCESSDESCRIPTION}</td>
+      </tr>
+      <tr>
+        <td colspan="3">&nbsp;</td>
+      </tr>
+      <tr>
+        <td colspan="2"><input name="subSave" type="submit" value="{LANG_SAVE}">&nbsp;
+          <input name="subAbort" type="reset" value="{LANG_ABORT}"></td>
+        <td>* {LANG_REQUIRED}</td>
+      </tr>
+    </table>
+  </form>
+  <br>
+  <p><span class="dbmessage">{LOGDBMESSAGE}&nbsp;</span><span class="greenmessage">{OKDATA}&nbsp;</span></p>
+<!-- END menuaccesssite -->

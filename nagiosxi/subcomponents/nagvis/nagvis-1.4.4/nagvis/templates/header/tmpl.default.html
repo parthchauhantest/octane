@@ -1,0 +1,29 @@
+<link rel="stylesheet" type="text/css" href="[html_templates]tmpl.default.css" />
+<table class="header_table">
+	<tr>
+		<th class="logo"><a href="[html_base]/index.php"><img src="[html_base]/nagvis/images/internal/logo_119x31.png" alt="NagVis"></a></th>
+		<td style="width:150px;padding-left:10px;">[lang_select_map]: </td>
+		<td style="width:150px;">
+			<select style="width:100%;" name="chooseMap" onChange="changeMap('[html_base]',this.options[this.selectedIndex].value)">
+				<option value="" [selected]>[lang_overview]</option>
+				<!-- BEGIN maplist --><option value="[map_name][url_params]" [selected]>[map_alias]</option><!-- END maplist -->
+			</select>
+		</td>
+		<th style="width:150px;"><a href="[html_base]/wui/index.php?map=[current_map]">[lang_edit_map]</a></th>
+		<td></td>
+		<td style="width:20px;text-align:center;" id="refreshCounterHead"></td>
+		<th style="width:150px;">
+			<a id="refreshSwitch" href="#" onClick="switchRefresh(this,'[lang_refresh_start]','[lang_refresh_stop]');"><!-- This label is set with the setRefreshLabel() function dynamicaly --></a><br />
+			<a id="rotationSwitch" href="#" onClick="switchRotation(this,'[lang_rotation_start]','[lang_rotation_stop]');"><!-- This label is set with the setRotationLabel() function dynamicaly --></a>
+		</th>
+		<td style="width:150px;">
+			<select style="width:100%;" name="chooseSupport" onChange="window.open(this.options[selectedIndex].value);this.selectedIndex=0">
+				<option value="" selected="selected">[lang_need_help]</option>
+				<option value="[html_base]/docs/[current_language]/index.html">[lang_online_doc]</option>
+				<option value="http://www.nagios-portal.org/wbb/index.php?page=Board&amp;boardID=42">[lang_forum]</option>
+				<option value="[html_base]/nagvis/index.php?info">[lang_support_info]</option>
+			</select>
+		</td>
+	</tr>
+</table>
+<script type="text/javascript">setRotationLabel('[lang_rotation_start]','[lang_rotation_stop]');</script>

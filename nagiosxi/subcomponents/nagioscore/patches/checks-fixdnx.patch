@@ -1,0 +1,33 @@
+447,459d446
+< #ifdef USE_EVENT_BROKER
+< 	/* send data to event broker */
+< 	neb_result = broker_service_check(NEBTYPE_SERVICECHECK_INITIATE, NEBFLAG_NONE, NEBATTR_NONE, svc, SERVICE_CHECK_ACTIVE, start_time, end_time, svc->service_check_command, svc->latency, 0.0, service_check_timeout, FALSE, 0, processed_command, NULL);
+< 
+< 	/* neb module wants to override the service check - perhaps it will check the service itself */
+< 	if(neb_result == NEBERROR_CALLBACKOVERRIDE) {
+< 		clear_volatile_macros_r(&mac);
+< 		svc->latency = old_latency;
+< 		my_free(processed_command);
+< 		return OK;
+< 		}
+< #endif
+< 
+478a466,483
+> 
+> #ifdef USE_EVENT_BROKER
+>         /* send data to event broker */
+>         neb_result = broker_service_check(NEBTYPE_SERVICECHECK_INITIATE, NEBFLAG_NONE, NEBATTR_NONE, svc, SERVICE_CHECK_ACTIVE, start_time, end_time, svc->service_check_command, svc->latency, 0.0, service_check_timeout, FALSE, 0, processed_command, NULL);
+> 
+>         /* neb module wants to override the service check - perhaps it will check the service itself */
+>         if(neb_result == NEBERROR_CALLBACKOVERRIDE) {
+>                 clear_volatile_macros_r(&mac);
+>                 svc->latency = old_latency;
+>                 my_free(processed_command);
+>                 return OK;
+>                 }
+> #endif
+> 
+> 
+> 
+> 
+> 

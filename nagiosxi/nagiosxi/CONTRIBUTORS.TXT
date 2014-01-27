@@ -1,0 +1,11 @@
+Below is a list of known community contributors to Nagios XI.
+Thanks for your work in helping to improve this product!
+	- The Nagios Enterprises Team
+
+===============================================================
+
+Antal Ferenc (antalf@ulx.hu)
+	01-27-2010: Fix for performance graphs on service detail page using incorrect first datasource
+	
+Todd Groten
+	06-27-2012: Pioneered methods for automated host management and shared his script mods with us

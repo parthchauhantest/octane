@@ -1,0 +1,15 @@
+#!/bin/sh -e
+
+echo "Installing/updating XI dashlets..."
+
+# Install/update each dashlet
+for f in `ls -1 dashlets/*.zip`; do
+	echo "Installing '$f'"
+	
+	../../nagiosxi/basedir/tools/install_dashlet.php --file=$f --refresh=1
+
+done
+
+# Things are okay
+echo "Dashlets installed/updated OK"
+

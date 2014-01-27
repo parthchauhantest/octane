@@ -1,0 +1,223 @@
+<!-- (c) 2008, 2009 by Martin Willisegger	-->					
+<!-- -->
+<!-- Project    : NagiosQL -->
+<!-- Component  : hostdependencies template -->
+<!-- Website    : http://www.nagiosql.org -->
+<!-- Date       : $LastChangedDate: 2009-04-28 15:02:27 +0200 (Di, 28. Apr 2009) $ -->
+<!-- Author     : $LastChangedBy: rouven $ -->
+<!-- Version    : 3.0.3 -->
+<!-- Revision   : $LastChangedRevision: 708 $ -->
+<!-- SVN-ID     : $Id: hostdependencies.tpl.htm 708 2009-04-28 13:02:27Z rouven $ -->
+<!-- BEGIN header -->
+    <td class="main">
+      <h1>{TITLE}</h1>
+<!-- END header -->
+<!-- BEGIN datainsert -->
+<form name="frmDetail" method="post" action="{ACTION_INSERT}">
+  <script language="JavaScript" type="text/JavaScript">
+    <!--
+    // Mutieren Dialog initialisieren
+	openMutDlgInit("selHostDepend","mutdialoghostdepend","{LANG_MODIFY_SELECTION}: {LANG_DEPENDHOSTS}","muthostdepend","{LANG_SAVE}","{LANG_ABORT}");
+	openMutDlgInit("selHostgroupDep","mutdialoghostgroupdepend","{LANG_MODIFY_SELECTION}: {LANG_DEPENDHOSTGRS}","muthostgroupdepend","{LANG_SAVE}","{LANG_ABORT}");
+	openMutDlgInit("selHost","mutdialoghost","{LANG_MODIFY_SELECTION}: {LANG_HOSTS}","muthost","{LANG_SAVE}","{LANG_ABORT}");
+	openMutDlgInit("selHostgroup","mutdialoghostgroup","{LANG_MODIFY_SELECTION}: {LANG_HOSTGROUPS}","muthostgroup","{LANG_SAVE}","{LANG_ABORT}");
+	// Eingabe abbrechen
+    function abort() {
+      this.location.href = "{ACTION_INSERT}?limit={LIMIT}";
+    }
+    // Formular absenden
+    function LockButton() {
+      if (checkForm() == false) {
+        return false;
+      } else {
+	    document.getElementById("selHostDepend").disabled 	= false;
+	    document.getElementById("selHostgroupDep").disabled = false;
+	    document.getElementById("selHost").disabled 		= false;
+	    document.getElementById("selHostgroup").disabled 	= false;
+        document.frmDetail.submit();
+        document.frmDetail.subForm.disabled = true;
+      }
+    }
+    // Formulareingaben überprüfen
+    function checkForm() {
+      // Sind alle Mussfelder ausgefuellt?
+	  var fields1 = "tfConfigName";
+	  var msg1    = "{FILL_ALLFIELDS}";
+	  var header  = "{LANG_FORMCHECK}";
+	  var form    = document.frmDetail;
+	  var check   = false;
+	  check = checkfields(fields1,form,myFocusObject);
+	  if (check == false) {
+	  	msginit(msg1,header,1);
+		return false;
+	  }	
+	  // Sind Hosts oder Hostgruppen ausgewählt?
+      if((form.selHostDepend.value == "") &&
+		 (form.selHostgroupDep.value == "")) {
+		 msginit(msg1,header,1);
+		 return false;
+      }
+	  // Sind Hosts oder Hostgruppen ausgewählt?
+      if((form.selHost.value == "") &&
+		 (form.selHostgroup.value == "")) {
+		 msginit(msg1,header,1);
+		 return false;
+      }
+    }
+    //-->
+  </script>
+  <table border="0" class="inserttable">
+    <tr>
+      <td valign="top">{LANG_DEPENDHOSTS}(*)</td>
+      <td rowspan="2">
+      	<table cellpadding="0" cellspacing="0" border="0">
+      	  <tr>
+            <td width="205">
+              <select name="selHostDepend[]" size="5" multiple id="selHostDepend" style="width:205px;" class="inpmust" {SELECT_FIELD_DISABLED}>
+<!-- BEGIN hostdepend -->
+          		<option value="{DAT_HOSTDEPEND_ID}" {DAT_HOSTDEPEND_SEL} class="inpmust">{DAT_HOSTDEPEND}</option>
+<!-- END hostdepend -->
+        	  </select>            </td>
+            <td valign="top" style="padding-left:1px"><img id="muthostdepend" src="{IMAGE_PATH}mut.gif" width="24" height="24" alt="{LANG_MODIFY}" title="{LANG_MODIFY}" style="cursor:pointer" ><br><br>&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('hostdependency','dependent_host','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+          </tr>
+        </table>      </td>
+      <td valign="top"><span class="{CLASS_NAME_30}">{LANG_DEPENDHOSTGRS}(*)</span></td>
+      <td rowspan="2">
+      	<table cellpadding="0" cellspacing="0" border="0" class="{CLASS_NAME_30}">
+      	  <tr>
+            <td width="205">
+              <select name="selHostgroupDep[]" size="5" multiple id="selHostgroupDep" style="width:205px;font-size:12px;" {SELECT_FIELD_DISABLED} class="inpmust">
+<!-- BEGIN hostgroupdepend -->
+          		<option value="{DAT_HOSTGROUPDEP_ID}" {DAT_HOSTGROUPDEP_SEL} class="inpmust">{DAT_HOSTGROUPDEP}</option>
+<!-- END hostgroupdepend -->
+        	  </select>            </td>
+            <td valign="top" style="padding-left:1px"><img id="muthostgroupdepend" src="{IMAGE_PATH}mut.gif" width="24" height="24" alt="{LANG_MODIFY}" title="{LANG_MODIFY}" style="cursor:pointer" ><br><br>&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('hostdependency','dependent_hostgroups','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+          </tr>
+        </table>      </td>
+    </tr>
+    <tr>
+      <td><small>{LANG_CTRLINFO}</small></td>
+      <td><small>{LANG_CTRLINFO}</small></td>
+    </tr>
+    
+    <tr>
+      <td valign="top">{LANG_HOSTS}(*)</td>
+      <td rowspan="2">
+      	<table cellpadding="0" cellspacing="0" border="0">
+      	  <tr>
+            <td width="205">
+              <select name="selHost[]" size="5" multiple id="selHost" style="width:205px;" class="inpmust" {SELECT_FIELD_DISABLED}>
+<!-- BEGIN host -->
+          		<option value="{DAT_HOST_ID}" {DAT_HOST_SEL} class="inpmust">{DAT_HOST}</option>
+<!-- END host -->
+        	  </select>            </td>
+            <td valign="top" style="padding-left:1px"><img id="muthost" src="{IMAGE_PATH}mut.gif" width="24" height="24" alt="{LANG_MODIFY}" title="{LANG_MODIFY}" style="cursor:pointer" ><br><br>&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('hostdependency','host','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+          </tr>
+        </table>      </td>
+      <td valign="top"><span class="{CLASS_NAME_30}">{LANG_HOSTGROUPS}(*)</span></td>
+      <td rowspan="2">
+      	<table cellpadding="0" cellspacing="0" border="0" class="{CLASS_NAME_30}">
+      	  <tr>
+            <td width="205">
+              <select name="selHostgroup[]" size="5" multiple id="selHostgroup" style="width:205px;font-size:12px;" {SELECT_FIELD_DISABLED} class="inpmust">
+<!-- BEGIN hostgroup -->
+          		<option value="{DAT_HOSTGROUP_ID}" {DAT_HOSTGROUP_SEL} class="inpmust">{DAT_HOSTGROUP}</option>
+<!-- END hostgroup -->
+        	  </select>            </td>
+            <td valign="top" style="padding-left:1px"><img id="muthostgroup" src="{IMAGE_PATH}mut.gif" width="24" height="24" alt="{LANG_MODIFY}" title="{LANG_MODIFY}" style="cursor:pointer" ><br><br>&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('hostdependency','hostgroup','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+          </tr>
+        </table>      </td>
+    </tr>
+    <tr>
+      <td><small>{LANG_CTRLINFO}</small></td>
+      <td><small>{LANG_CTRLINFO}</small></td>
+      </tr>
+    <tr>
+      <td colspan="4"><img src="{IMAGE_PATH}pixel.gif" alt="" width="8" height="8"></td>
+      </tr>
+    <tr>
+      <td>{LANG_CONFIG_NAME}*</td>
+      <td><input name="tfConfigName" type="text" id="tfConfigName" value="{DAT_CONFIG_NAME}" style="width:200px;" class="inpmust">&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('hostdependency','config_name','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+      <td>{LANG_INHERIT}</td>
+      <td><input type="checkbox" name="chbInherit" class="checkbox" value="1" {ACT_INHERIT}>&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('hostdependency','inherit_parents','all','Info')" style="vertical-align:text-bottom; padding-bottom:3px" ></td>
+    </tr>
+    <tr>
+      <td><span class="{CLASS_NAME_30}">{LANG_DEPENDENCY_PERIOD}</span></td>
+      <td><span class="{CLASS_NAME_30}"><select name="selDependPeriod" id="selDependPeriod" style="width:200px;">
+<!-- BEGIN dependentperiod -->
+          <option value="{DAT_DEPENDENCY_PERIOD_ID}" {DAT_DEPENDENCY_PERIOD_SEL} >{DAT_DEPENDENCY_PERIOD}</option>
+<!-- END dependentperiod -->
+        </select> &nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('hostdependency','dependency_period','3','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></span></td>
+      <td>{LANG_EXECFAILCRIT}</td>
+      <td>
+		<table cellpadding="0" cellspacing="0" border="0">
+          <tr>
+          	<td><input name="chbEOo" type="checkbox" class=" checkbox" id="chbEOo" value="o" {DAT_EOO_CHECKED}></td>
+            <td>o</td>
+            <td><input name="chbEOd" type="checkbox" class=" checkbox" id="chbEOd" value="d" {DAT_EOD_CHECKED}></td>
+            <td>d</td>
+            <td><input name="chbEOu" type="checkbox" class=" checkbox" id="chbEOu" value="u" {DAT_EOU_CHECKED}></td>
+            <td>u</td>
+            <td><input name="chbEOp" type="checkbox" class=" checkbox" id="chbEOp" value="p" {DAT_EOP_CHECKED}></td>
+            <td>p</td>
+            <td><input name="chbEOn" type="checkbox" class=" checkbox" id="chbEOn" value="n" {DAT_EON_CHECKED}></td>
+            <td>n</td>
+            <td>&nbsp;&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('hostdependency','execution_failure_criteria','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+		  </tr>
+        </table>      </td>
+    </tr>
+    <tr>
+      <td>{LANG_ACTIVE}</td>
+      <td><input name="chbActive" type="checkbox" class="checkbox" id="chbActive" value="1" {ACT_CHECKED}>
+        <input name="modus" type="hidden" id="modus" value="{MODUS}">
+        <input name="hidId" type="hidden" id="hidId" value="{DAT_ID}">
+        <input name="hidLimit" type="hidden" id="hidLimit" value="{LIMIT}"></td>
+      <td>{LANG_NOTIFFAILCRIT}</td>
+      <td>
+		<table cellpadding="0" cellspacing="0" border="0">
+          <tr>
+          	<td><input name="chbNOo" type="checkbox" class=" checkbox" id="chbNOo" value="o" {DAT_NOO_CHECKED}></td>
+            <td>o</td>
+            <td><input name="chbNOd" type="checkbox" class=" checkbox" id="chbNOd" value="d" {DAT_NOD_CHECKED}></td>
+            <td>d</td>
+            <td><input name="chbNOu" type="checkbox" class=" checkbox" id="chbNOu" value="u" {DAT_NOU_CHECKED}></td>
+            <td>u</td>
+            <td><input name="chbNOp" type="checkbox" class=" checkbox" id="chbNOp" value="p" {DAT_NOP_CHECKED}></td>
+            <td>p</td>
+            <td><input name="chbNOn" type="checkbox" class=" checkbox" id="chbNOn" value="n" {DAT_NON_CHECKED}></td>
+            <td>n</td>
+            <td>&nbsp;&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('hostdependency','notification_failure_criteria','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+		  </tr>
+        </table>      </td>
+    </tr>
+    <tr>
+      <td width="150">&nbsp;</td>
+      <td width="250">&nbsp;</td>
+      <td width="150">&nbsp;</td>
+      <td width="250">&nbsp;</td>
+    </tr>
+    <tr>
+      <td colspan="2"><input name="subForm" type="button" id="subForm" value="{LANG_SAVE}" onClick="LockButton()">&nbsp;
+      <input name="subAbort" type="button" id="subAbort" onClick="abort()" value="{LANG_ABORT}"></td>
+      <td>*&nbsp;{LANG_REQUIRED}</td>
+      <td><span class="dbmessage">{WARNING}&nbsp;</span></td>
+    </tr>
+  </table>
+</form>
+<div id="mutdialoghostdepend">
+    <div id="mutdialoghostdependcontent" class="bd"></div>
+</div>
+<div id="mutdialoghostgroupdepend">
+    <div id="mutdialoghostgroupdependcontent" class="bd"></div>
+</div>
+<div id="mutdialoghost">
+    <div id="mutdialoghostcontent" class="bd"></div>
+</div>
+<div id="mutdialoghostgroup">
+    <div id="mutdialoghostgroupcontent" class="bd"></div>
+</div>
+<div id="msgcontainer"></div>
+<div id="infodialog">
+    <div id="dialogcontent" class="bd"></div>
+</div>
+<!-- END datainsert -->

@@ -1,0 +1,155 @@
+<!-- (c) 2008, 2009 by Martin Willisegger	-->					
+<!-- -->
+<!-- Project    : NagiosQL -->
+<!-- Component  : servicegroup template -->
+<!-- Website    : http://www.nagiosql.org -->
+<!-- Date       : $LastChangedDate: 2009-04-28 15:02:27 +0200 (Di, 28. Apr 2009) $ -->
+<!-- Author     : $LastChangedBy: rouven $ -->
+<!-- Version    : 3.0.3 -->
+<!-- Revision   : $LastChangedRevision: 708 $ -->
+<!-- SVN-ID     : $Id: servicegroups.tpl.htm 708 2009-04-28 13:02:27Z rouven $ -->
+<!-- BEGIN header -->
+    <td class="main">
+      <h1>{TITLE}</h1>
+<!-- END header -->
+<!-- BEGIN datainsert -->
+<form name="frmDetail" method="post" action="{ACTION_INSERT}">
+  <script language="JavaScript" type="text/JavaScript">
+    <!--
+    // Mutieren Dialog initialisieren
+	openMutDlgInit("selMembers","mutdialogmembers","{LANG_MODIFY_SELECTION}: {LANG_MEMBERS}","mutmembers","{LANG_SAVE}","{LANG_ABORT}");
+	openMutDlgInit("selServicegroupMembers","mutdialogservicegroupmembers","{LANG_MODIFY_SELECTION}: {LANG_SERVICEGROUP_MEMBERS}","mutservicegroupmembers","{LANG_SAVE}","{LANG_ABORT}");
+    // Eingabe abbrechen
+    function abort() {
+      this.location.href = "{ACTION_INSERT}?limit={LIMIT}";
+    }
+    // Formular absenden
+    function LockButton() {
+      if (checkForm() == false) {
+        return false;
+      } else {
+	    document.getElementById("selMembers").disabled 	= false;
+	    document.getElementById("selServicegroupMembers").disabled = false;
+        document.frmDetail.submit();
+        document.frmDetail.subForm.disabled = true;
+      }
+    }
+    // Formulareingaben überprüfen
+    function checkForm() {
+      // Sind alle Mussfelder ausgefuellt?
+	  var fields1 = "tfName,{MEMBER_20_MUST}tfFriendly";
+	  var msg1    = "{FILL_ALLFIELDS}";
+	  var msg2    = "{FILL_ILLEGALCHARS}";
+	  var header  = "{LANG_FORMCHECK}";
+	  var form    = document.frmDetail;
+	  var check   = false;
+	  check = checkfields(fields1,form,myFocusObject);
+	  if (check == false) {
+	  	//msginit(msg1 + " [" +myFocusObject.myValue.name + "]",header,1);
+		msginit(msg1,header,1);
+		return false;
+	  }	
+	  // Kommen unerlaubte Zeichen vor?
+	  //if (form.tfName.value.match(/[^a-zA-Z0-9_-]/)) {
+	  //	msginit(msg2+" {LANG_COMMAND}",header,1);
+	  //	form.tfDomain.focus()
+	  //	return false;
+	  //}	
+	}
+    //-->
+  </script>
+  <table border="0" class="inserttable">
+    <tr>
+      <td>{LANG_SERVICEGROUP_NAME}*</td>
+      <td><input name="tfName" type="text" id="tfName" value="{DAT_SERVICEGROUP_NAME}" style="width:200px" class="inpmust">&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('servicegroup','servicegroup_name','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+      <td>&nbsp;</td>
+      <td>{LANG_MEMBERS}{MUST_20_STAR}</td>
+      <td rowspan="4" valign="top">
+      	<table cellpadding="0" cellspacing="0" border="0">
+      	  <tr>
+            <td width="205">
+              <select name="selMembers[]" size="5" multiple id="selMembers" style="width:205px;" {CLASS_20_MUST_ONLY} {SELECT_FIELD_DISABLED}>
+<!-- BEGIN services -->
+          		<option value="{DAT_SERVICES_ID}" {DAT_SERVICES_SEL} {CLASS_20_MUST_ONLY} title="{DAT_SERVICES}">{DAT_SERVICES}</option>
+<!-- END services -->
+        	  </select>           
+            </td>
+            <td valign="top" style="padding-left:1px"><img id="mutmembers" src="{IMAGE_PATH}mut.gif" width="24" height="24" alt="{LANG_MODIFY}" title="{LANG_MODIFY}" style="cursor:pointer" ><br><br>&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('servicegroup','members','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+          </tr>
+        </table>      
+      </td>
+    </tr> 
+    <tr>
+      <td>{LANG_DESCRIPTION}*</td>
+      <td><input name="tfFriendly" type="text" id="tfFriendly" value="{DAT_ALIAS}" style="width:200px" class="inpmust">&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('servicegroup','description','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+      <td>&nbsp;</td>
+      <td width="130" rowspan="3"><small>{LANG_CTRLINFO}</small></td>
+    </tr>
+    <tr>
+      <td><span class="{CLASS_NAME_30}">{LANG_NOTES}</span></td>
+      <td><span class="{CLASS_NAME_30}"><input name="tfNotes" type="text" id="tfNotes" value="{DAT_NOTES}" style="width:200px">&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('servicegroup','notes','3','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></span></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><span class="{CLASS_NAME_30}">{LANG_NOTES_URL}</span></td>
+      <td><span class="{CLASS_NAME_30}"><input name="tfNotesURL" type="text" id="tfNotesURL" value="{DAT_NOTES_URL}" style="width:200px">&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('servicegroup','notes_url','3','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></span></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><span class="{CLASS_NAME_30}">{LANG_ACTION_URL}</span></td>
+      <td><span class="{CLASS_NAME_30}"><input name="tfActionURL" type="text" id="tfActionURL" value="{DAT_ACTION_URL}" style="width:200px">&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('servicegroup','action_url','3','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></span></td>
+      <td>&nbsp;</td>
+      <td><span class="{CLASS_NAME_30}">{LANG_SERVICEGROUP_MEMBERS}</span></td>
+      <td rowspan="4" valign="top">
+      	<table cellpadding="0" cellspacing="0" border="0" class="{CLASS_NAME_30}">
+      	  <tr>
+            <td width="205">
+              <select name="selServicegroupMembers[]" size="5" multiple id="selServicegroupMembers" style="width:205px;" {CLASS_20_MUST_ONLY} {SELECT_FIELD_DISABLED}>
+<!-- BEGIN servicegroupmembers -->
+          		<option value="{DAT_SERVICEGROUP_ID}" {DAT_SERVICEGROUP_SEL}>{DAT_SERVICEGROUP}</option>
+<!-- END servicegroupmembers -->
+        	  </select>            
+            </td>
+            <td valign="top" style="padding-left:1px"><img id="mutservicegroupmembers" src="{IMAGE_PATH}mut.gif" width="24" height="24" alt="{LANG_MODIFY}" title="{LANG_MODIFY}" style="cursor:pointer" ><br><br>&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('servicegroup','servicegroup_members','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+          </tr>
+        </table>      
+      </td>
+    </tr> 
+    <tr>
+      <td colspan="4">&nbsp;</td>
+    </tr>
+    <tr>
+      <td valign="top">{LANG_ACTIVE}</td>
+      <td colspan="3" valign="top"><input name="chbActive" type="checkbox" class="checkbox" id="chbActive" value="1" {ACT_CHECKED} {ACT_DISABLED}>
+        <input name="hidActive" type="hidden" id="hidActive" value="{ACTIVE}">
+        <input name="modus" type="hidden" id="modus" value="{MODUS}">
+        <input name="hidId" type="hidden" id="hidId" value="{DAT_ID}">
+        <input name="hidLimit" type="hidden" id="hidLimit" value="{LIMIT}"></td>
+    </tr>
+    <tr>
+      <td width="130">&nbsp;</td>
+      <td width="230">&nbsp;</td>
+      <td width="30">&nbsp;</td>
+      <td width="150">&nbsp;</td>
+    </tr>
+    <tr>
+      <td colspan="3"><input name="subForm" type="button" id="subForm" value="{LANG_SAVE}" onClick="LockButton()">&nbsp;
+      <input name="subAbort" type="button" id="subAbort" onClick="abort()" value="{LANG_ABORT}"></td>
+      <td>*&nbsp;{LANG_REQUIRED}</td>
+      <td colspan="2"><span class="dbmessage">{WARNING}&nbsp;</span></td>
+    </tr>
+  </table>
+</form>
+{CHECK_MUST_DATA}
+<br>
+<div id="mutdialogmembers">
+    <div id="mutdialogmemberscontent" class="bd"></div>
+</div>
+<div id="mutdialogservicegroupmembers">
+    <div id="mutdialogservicegroupmemberscontent" class="bd"></div>
+</div>
+<div id="msgcontainer"></div>
+<div id="infodialog">
+    <div id="dialogcontent" class="bd"></div>
+</div>
+<!-- END datainsert -->

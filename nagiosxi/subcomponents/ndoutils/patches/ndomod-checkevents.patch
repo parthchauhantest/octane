@@ -1,0 +1,30 @@
+--- ndoutils-1.4b9/src/ndomod.c	2009-10-27 03:08:29.000000000 -0500
++++ ndoutils-1.4b9-modified/src/ndomod.c	2010-07-27 11:23:07.000000000 -0500
+@@ -1691,9 +1691,14 @@
+ 		break;
+ 
+ 	case NEBCALLBACK_SERVICE_CHECK_DATA:
+-
++	
+ 		scdata=(nebstruct_service_check_data *)data;
+ 
++		/* Nagios XI MOD */
++		/* send only the data we really use */
++		if(scdata->type!=NEBTYPE_SERVICECHECK_PROCESSED)
++			break;
++
+ 		es[0]=ndo_escape_buffer(scdata->host_name);
+ 		es[1]=ndo_escape_buffer(scdata->service_description);
+ 		es[2]=ndo_escape_buffer(scdata->command_name);
+@@ -1771,6 +1776,11 @@
+ 
+ 		hcdata=(nebstruct_host_check_data *)data;
+ 
++		/* Nagios XI MOD */
++		/* send only the data we really use */
++		if(hcdata->type!=NEBTYPE_HOSTCHECK_PROCESSED)
++			break;
++
+ 		es[0]=ndo_escape_buffer(hcdata->host_name);
+ 		es[1]=ndo_escape_buffer(hcdata->command_name);
+ 		es[2]=ndo_escape_buffer(hcdata->command_args);

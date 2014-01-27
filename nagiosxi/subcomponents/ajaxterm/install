@@ -1,0 +1,62 @@
+#!/bin/sh -e
+
+. ../../xi-sys.cfg
+
+##BYPASS this script for now
+##exit 0
+
+
+echo "Installing Ajaxterm..."
+
+# mod_ssl is required for ajaxterm
+yum -y install mod_ssl
+
+# Install RPM if necessary
+if [ ! -d /usr/share/ajaxterm/ ]; then
+	yum localinstall --nogpgcheck -y /tmp/nagiosxi/packages/Ajaxterm-0.10-8.el5.noarch.rpm
+fi
+
+# Bail if error
+if [ ! -d /usr/share/ajaxterm/ ]; then
+	echo "Ajaxterm install failed."
+	return
+fi
+
+# Copy files
+cp -vrf /usr/share/ajaxterm/ /usr/local/nagios/share
+
+# Change Apache SSL configuration...
+if [ ! -e /etc/httpd/conf.d/ssl.conf ]; then
+	echo "ERROR: ssl.conf not found - aborting Ajaxterm install."
+fi
+
+# Make a backup
+if [ ! -e /etc/httpd/conf.d/ssl.conf.nagiosxibackup ]; then
+	cp -f /etc/httpd/conf.d/ssl.conf /etc/httpd/conf.d/ssl.conf.nagiosxibackup
+fi
+
+# Configure Ajaxterm if necessary
+install1=`grep ajaxterm /etc/httpd/conf.d/*.conf | wc -l`
+install2=`grep ajaxterm /etc/httpd/conf/httpd.conf | wc -l`
+echo "CHECK1: ${install1}"
+echo "CHECK2: ${install2}"
+if [ ${install1} -eq 0 ] && [ ${install2} -eq 0 ]; then
+
+	# Generate a new ssl.conf with proxy mods
+	grep -v "</VirtualHost>" /etc/httpd/conf.d/ssl.conf > /etc/httpd/conf.d/ssl.conf.new
+	cat sslmod.conf >> /etc/httpd/conf.d/ssl.conf.new
+	mv -f  /etc/httpd/conf.d/ssl.conf.new  /etc/httpd/conf.d/ssl.conf
+
+	# Restart Apache
+	service ${httpd} restart
+
+	# Start Ajaxterm
+	chkconfig ajaxterm on
+	service ajaxterm start
+
+	echo "Ajaxterm installed"
+	
+else
+	echo "It appears as though Ajaxterm is already configured, so we'll skip that step."
+fi
+

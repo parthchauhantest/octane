@@ -1,0 +1,37 @@
+#!/bin/sh -e
+
+pkgname="nrpe-2.12"
+
+echo "Installing NRPE..."
+
+# Delete the old archive
+rm -rf "$pkgname"
+
+# Extract archive
+tar -xzf "$pkgname.tar.gz"
+
+# Make and install 
+(
+	cd "./$pkgname"
+	./configure --enable-command-args
+	make all
+#	make install-plugin
+	make install-daemon
+#	make install-xinetd
+#	make install-daemon-config
+)
+
+# Restart xinetd
+service xinetd restart
+
+# Do a simple sanity check to make sure some key files exist...
+for f in /usr/local/nagios/bin/nrpe /usr/local/nagios/libexec/check_nrpe ; do
+	if [ ! -f "$f" ]; then
+		echo "ERROR: NRPE install appears to have failed - exiting.  Missing file = $f"
+		exit 1
+	fi
+done
+
+# Things are okay
+echo "NRPE installed OK"
+

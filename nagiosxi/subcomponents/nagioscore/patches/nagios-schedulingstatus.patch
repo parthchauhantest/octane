@@ -1,0 +1,24 @@
+--- nagios-3.2.0/base/events.c	2010-07-27 10:18:37.000000000 -0500
++++ nagios-3.2.0-modified/base/events.c	2010-07-27 10:20:02.000000000 -0500
+@@ -391,6 +391,10 @@
+ 	/* add scheduled service checks to event queue */
+ 	for(temp_service=service_list;temp_service!=NULL;temp_service=temp_service->next){
+ 
++		/* NAGIOS XI MOD - Applied to Nagios Core 3.3.1 */
++		/* update status of all services (scheduled or not) */
++		update_service_status(temp_service,FALSE);
++
+ 		/* skip most services that shouldn't be scheduled */
+ 		if(temp_service->should_be_scheduled==FALSE){
+ 
+@@ -522,6 +526,10 @@
+ 
+ 	/* add scheduled host checks to event queue */
+ 	for(temp_host=host_list;temp_host!=NULL;temp_host=temp_host->next){
++	
++		/* NAGIOS XI MOD - Applied to Nagios Core 3.3.1 */
++		/* update status of all hosts (scheduled or not) */
++		update_host_status(temp_host,FALSE);
+ 
+ 		/* skip most hosts that shouldn't be scheduled */
+ 		if(temp_host->should_be_scheduled==FALSE){

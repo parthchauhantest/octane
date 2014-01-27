@@ -1,0 +1,15 @@
+#!/bin/sh -e
+
+echo "Installing/updating XI components..."
+
+# Install/update each component
+for f in `ls -1 components/*.zip`; do
+	echo "Installing '$f'"
+	
+	../../nagiosxi/basedir/tools/install_component.php --file=$f --refresh=1
+
+done
+
+# Things are okay
+echo "Components installed/updated OK"
+

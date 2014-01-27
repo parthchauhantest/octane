@@ -1,0 +1,30 @@
+#!/bin/sh -e
+
+# Was previous step completed?
+if [ ! -f installed.dbbackups ]; then
+	echo "Database backups were not configured - run previous script" >&2
+	exit 1
+fi
+
+# Was this step already completed?
+if [ -f installed.phplimits ]; then
+	echo "PHP limits already configured - skipping."
+	exit 0
+fi
+
+
+# Up the memory limit for PHP
+#cat >>/etc/php.ini <<-EOF
+#
+#	; Up the memory limit
+#	memory_limit = 64M
+#
+#EOF
+
+
+# Restart Apache
+#service httpd restart
+
+echo "PHP limits configured OK"
+touch installed.phplimits
+

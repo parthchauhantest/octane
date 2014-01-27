@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# Find a suitable filename
+backupfile=/tmp/root.crontab.orig
+while [ -f "$backupfile" ]; do
+	# increment number at the end of the file
+	# e.g. /tmp/root.crontab.orig   -> /tmp/root.crontab.orig.1
+	#      /tmp/root.crontab.orig.1 -> /tmp/root.crontab.orig.2
+	backupfile=$(echo "$backupfile" | awk -F. 'BEGIN{OFS="."} {print $1, $2, $3, $4+1}')
+done
+
+# Remove old crontab entries
+echo "Saving old crontab to $backupfile..."
+if [ `crontab -l -u root > "$backupfile"` ]; then
+    echo "Removing XI cron jobs..."
+    crontab -l -u root | grep -v /root/scripts/automysqlbackup | grep -v /root/scripts/autopostgresqlbackup | crontab -u root -
+fi

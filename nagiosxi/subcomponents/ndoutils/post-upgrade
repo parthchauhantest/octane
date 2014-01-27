@@ -1,0 +1,40 @@
+#!/bin/sh -e
+
+pkgname="$1"
+
+echo "NDOUTILS POST-UPGRADE..."
+##parse values in case mysql is offloaded 
+ndopass=$(sed -n '/^db_pass=/ s///p' /usr/local/nagios/etc/ndo2db.cfg)
+ndohost=$(sed -n '/^db_host=/ s///p' /usr/local/nagios/etc/ndo2db.cfg)
+ndouser=$(sed -n '/^db_user=/ s///p' /usr/local/nagios/etc/ndo2db.cfg)
+# Post-install modifications
+
+# New init file
+cp -f mods/ndo2db.init /etc/init.d/ndo2db
+
+# Change some settings in /etc/sysctl.conf, add them if they're not there 
+if [ "`grep kernel.msg /etc/sysctl.conf`" == "" ] ; then
+	echo "kernel.msgmnb = 131072000" >> /etc/sysctl.conf
+	echo "kernel.msgmax = 131072000" >> /etc/sysctl.conf
+	echo "kernel.shmmax = 4294967295" >> /etc/sysctl.conf
+	echo "kernel.shmall = 268435456" >> /etc/sysctl.conf	
+else
+	sed -i 	-e '/^kernel\.msgmnb/ s/.*/kernel.msgmnb = 131072000/' \
+			-e '/^kernel\.msgmax/ s/.*/kernel.msgmax = 131072000/' \
+			-e '/^kernel\.shmmax/ s/.*/kernel.shmmax = 4294967295/' \
+			-e '/^kernel\.shmall/ s/.*/kernel.shmall = 268435456/' \
+			/etc/sysctl.conf
+fi
+
+# Apply settings to sysctl.conf
+sysctl -e -p /etc/sysctl.conf
+	
+# Upgrade the database
+./"$pkgname"/db/upgradedb -u "$ndouser" -p "$ndopass" -h "$ndohost" -d nagios
+
+# Restart ndo2db daemon
+service ndo2db restart
+
+# Restart Nagios Core (to use new ndomod module)
+service nagios restart
+

@@ -1,0 +1,12 @@
+#!/bin/sh -e
+
+# New Cacti Apache config file
+#cp -r nagiosxi/httpd.cacti.conf /etc/httpd/conf.d/cacti.conf
+
+#/init.d/httpd restart
+
+# TODO - import cacti sql
+#/var/www/cacti/cacti.sql
+
+echo "Step completed OK"
+

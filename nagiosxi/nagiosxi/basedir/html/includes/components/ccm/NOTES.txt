@@ -1,0 +1,5 @@
+
+
+phpdoc -d ./ -o HTML:frames:Default -t docs
+
+##test

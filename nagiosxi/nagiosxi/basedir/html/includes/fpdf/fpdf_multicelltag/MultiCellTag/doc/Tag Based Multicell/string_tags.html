@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class string_tags</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name"><img src="../media/images/Class_logo.png"
+														alt=" Class"
+														title=" Class"
+														style="vertical-align: middle"> string_tags</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+													<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Extracts the tags and corresponding text from a string</p>
+	<ul class="tags">
+				<li><span class="field">author:</span> Bintintan Andrei &lt;<a href="mailto:andy@interpid.eu">andy@interpid.eu</a>&gt;</li>
+				<li><span class="field">version:</span> 1.1</li>
+				<li><span class="field">name:</span> string_tags</li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_class.string_tags.php.html">/class.string_tags.php</a> (line <span class="field"><a href="../__filesource/fsource_Tag Based Multicell__class.string_tags.php.html#a40">40</a></span>)
+		</p>
+		
+				
+		<pre></pre>
+	
+			</div>
+</div>
+
+
+
+	<a name="sec-var-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variable Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
+							| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<div class="var-summary">
+																																								<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">struct(array)</span>
+					<a href="#$aHREF" title="details" class="var-name">$aHREF</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">struct(array)</span>
+					<a href="#$aTAGS" title="details" class="var-name">$aTAGS</a>
+				</div>
+																<div class="var-title">
+					<img src="../media/images/Variable.png" alt=" " />
+					<span class="var-type">integer</span>
+					<a href="#$iTagMaxElem" title="details" class="var-name">$iTagMaxElem</a>
+				</div>
+											</div>
+		</div>
+	</div>
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																																<div class="method-definition">
+					<img src="../media/images/Constructor.png" alt=" "/>
+											<span class="method-result">void</span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
+											([<span class="var-type">numeric</span>&nbsp;<span class="var-name">$p_tagmax</span> = <span class="var-default">10</span>])
+									</div>
+																<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#CloseTag" title="details" class="method-name">CloseTag</a>
+											(<span class="var-type">sting</span>&nbsp;<span class="var-name">$p_tag</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">$p_array</span>)
+									</div>
+																<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">string</span>
+										<a href="#expand_parameters" title="details" class="method-name">expand_parameters</a>
+											(<span class="var-type">struct</span>&nbsp;<span class="var-name">$pResult</span>)
+									</div>
+																<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">array</span>
+										<a href="#get_tags" title="details" class="method-name">get_tags</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$p_str</span>)
+									</div>
+																<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#OpenTag" title="details" class="method-name">OpenTag</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$p_tag</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">$p_array</span>)
+									</div>
+																<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">array</span>
+										<a href="#optimize_tags" title="details" class="method-name">optimize_tags</a>
+											(<span class="var-type">array</span>&nbsp;<span class="var-name">$result</span>)
+									</div>
+											</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			
+<a name="var$aHREF" id="$aHREF"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">struct(array)</span>
+			<span class="var-name">$aHREF</span>
+						(line <span class="line-number"><a href="../__filesource/fsource_Tag Based Multicell__class.string_tags.php.html#a56">56</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Contains the links for the tags that have specified this parameter</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$aTAGS" id="$aTAGS"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">struct(array)</span>
+			<span class="var-name">$aTAGS</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number"><a href="../__filesource/fsource_Tag Based Multicell__class.string_tags.php.html#a48">48</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Contains the Tag/String Correspondence</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$iTagMaxElem" id="$iTagMaxElem"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<img src="../media/images/Variable.png" />
+		<span class="var-title">
+			<span class="var-type">integer</span>
+			<span class="var-name">$iTagMaxElem</span>
+						(line <span class="line-number"><a href="../__filesource/fsource_Tag Based Multicell__class.string_tags.php.html#a64">64</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The maximum number of chars for a tag</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+						
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+														<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Constructor.png" />
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number"><a href="../__filesource/fsource_Tag Based Multicell__class.string_tags.php.html#a73">73</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Constructor</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			__construct
+		</span>
+					([<span class="var-type">numeric</span>&nbsp;<span class="var-name">$p_tagmax</span> = <span class="var-default">10</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">numeric</span>
+				<span class="var-name">$p_tagmax</span><span class="var-description">: - the number of characters allowed in a tag</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodCloseTag" id="CloseTag"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">CloseTag</span> (line <span class="line-number"><a href="../__filesource/fsource_Tag Based Multicell__class.string_tags.php.html#a129">129</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Returns true if $p_tag is a &quot;&lt;close tag&gt;&quot;</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			CloseTag
+		</span>
+					(<span class="var-type">sting</span>&nbsp;<span class="var-name">$p_tag</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">$p_array</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">sting</span>
+				<span class="var-name">$p_tag</span><span class="var-description">: - tag name</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$p_array</span><span class="var-description">: - tag array</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodexpand_parameters" id="expand_parameters"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">expand_parameters</span> (line <span class="line-number"><a href="../__filesource/fsource_Tag Based Multicell__class.string_tags.php.html#a162">162</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Expands the paramteres that are kept in Href field</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			expand_parameters
+		</span>
+					(<span class="var-type">struct</span>&nbsp;<span class="var-name">$pResult</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">struct</span>
+				<span class="var-name">$pResult</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodget_tags" id="get_tags"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">get_tags</span> (line <span class="line-number"><a href="../__filesource/fsource_Tag Based Multicell__class.string_tags.php.html#a234">234</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Parses a string and returnes an array of TAG - SRTING correspondent array</p>
+<p class="description"><p>The result has the following structure:  		array(  			array (string1, tag1),  			array (string2, tag2),  			... etc  		)</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> - the result array</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			get_tags
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$p_str</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$p_str</span><span class="var-description">: - the Input String</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodOpenTag" id="OpenTag"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">OpenTag</span> (line <span class="line-number"><a href="../__filesource/fsource_Tag Based Multicell__class.string_tags.php.html#a87">87</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Returns TRUE if the specified tag name is an &quot;&lt;open tag&gt;&quot;, (it is not already opened)</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			OpenTag
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$p_tag</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">$p_array</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$p_tag</span><span class="var-description">: - tag name</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$p_array</span><span class="var-description">: - tag arrays</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodoptimize_tags" id="optimize_tags"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">optimize_tags</span> (line <span class="line-number"><a href="../__filesource/fsource_Tag Based Multicell__class.string_tags.php.html#a184">184</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Optimizes the result of the tag result array  In the result array there can be strings that are consecutive and have the same tag, they  are concatenated.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> - optimized result</li>
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			optimize_tags
+		</span>
+					(<span class="var-type">array</span>&nbsp;<span class="var-name">$result</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$result</span><span class="var-description">: - the array that has to be optimized</span>			</li>
+				</ul>
+		
+			
+	</div>
+						
+		</div>
+	</div>
+
+	
+	<p class="notes" id="credit">
+		Documentation generated on Wed, 04 Feb 2009 22:01:34 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.0a2</a>
+	</p>
+	</div></body>
+</html>

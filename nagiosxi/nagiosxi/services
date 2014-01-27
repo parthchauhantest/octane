@@ -1,0 +1,5 @@
+
+# Nagios services
+nrpe    5666/tcp
+nsca    5667/tcp
+ndo2db          5668/tcp

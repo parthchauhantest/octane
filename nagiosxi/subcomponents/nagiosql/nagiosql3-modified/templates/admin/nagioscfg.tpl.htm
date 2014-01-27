@@ -1,0 +1,66 @@
+<!-- (c) 2008, 2009 by Martin Willisegger	-->					
+<!-- -->
+<!-- Project    : NagiosQL -->
+<!-- Component  : nagios config template -->
+<!-- Website    : http://www.nagiosql.org -->
+<!-- Date       : $LastChangedDate: 2009-04-28 15:02:27 +0200 (Di, 28. Apr 2009) $ -->
+<!-- Author     : $LastChangedBy: rouven $ -->
+<!-- Version    : 3.0.3 -->
+<!-- Revision   : $LastChangedRevision: 708 $ -->
+<!-- SVN-ID     : $Id: nagioscfg.tpl.htm 708 2009-04-28 13:02:27Z rouven $ -->
+<!-- BEGIN header -->
+    <td class="main">
+      <h1>{TITLE}</h1>
+<!-- END header -->
+<!-- BEGIN naginsert -->
+<form name="frmNagiosConfig" method="post" action="{ACTION_INSERT}">
+  <script language="JavaScript" type="text/JavaScript">
+    <!--
+    // Eingabe abbrechen
+    function abort() {
+      this.location.href = "{MAINSITE}";
+    }
+    // Formular absenden
+    function LockButton() {
+      if (checkForm() == false) {
+        return false;
+      } else {
+        document.frmNagiosConfig.submit();
+        document.frmNagiosConfig.subForm.disabled = true;
+      }
+    }
+    // Formulareingaben überprüfen
+    function checkForm() {
+      // Sind alle Mussfelder ausgefuellt?
+	  var fields1 = "taNagiosCfg";
+	  var msg1    = "{FILL_ALLFIELDS}";
+	  var msg2    = "{FILL_ILLEGALCHARS}";
+	  var header  = "{LANG_FORMCHECK}";
+	  var form    = document.frmNagiosConfig;
+	  var check   = false;
+	  check = checkfields(fields1,form,myFocusObject);
+	  if (check == false) {
+	  	msginit(msg1,header,1);
+		return false;
+	  }	
+    }
+    //-->
+  </script>
+  <table border="0"  class="inserttable">
+    <tr>
+      <td><textarea name="taNagiosCfg" cols="100" rows="20" id="taNagiosCfg">{DAT_NAGIOS_CONFIG}</textarea></td>
+      </tr>
+    <tr>
+      <td>&nbsp;</td>
+      </tr>
+    <tr>
+      <td><input name="subForm" type="button" id="subForm" value="{LANG_SAVE}" onClick="LockButton()">
+      &nbsp;<input name="subAbort" type="button" id="subAbort" onClick="abort()" value="{LANG_ABORT}">
+      <input name="modus" type="hidden" id="modus" value="{MODUS}"></td>
+      </tr>
+  </table>
+</form>
+<p><span class="dbmessage">{MESSAGE}</span></p>
+<div id="msgcontainer"></div>
+<br>
+<!-- END naginsert -->

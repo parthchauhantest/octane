@@ -1,0 +1,522 @@
+<!-- (c) 2008, 2009 by Martin Willisegger	-->					
+<!-- -->
+<!-- Project    : NagiosQL -->
+<!-- Component  : contact template -->
+<!-- Website    : http://www.nagiosql.org -->
+<!-- Date       : $LastChangedDate: 2009-04-28 15:02:27 +0200 (Di, 28. Apr 2009) $ -->
+<!-- Author     : $LastChangedBy: rouven $ -->
+<!-- Version    : 3.0.3 -->
+<!-- Revision   : $LastChangedRevision: 708 $ -->
+<!-- SVN-ID     : $Id: contacttemplates.tpl.htm 708 2009-04-28 13:02:27Z rouven $ -->
+<!-- BEGIN header -->
+    <td class="main">
+      <h1>{TITLE}</h1>
+<!-- END header -->
+<!-- BEGIN datainsert -->
+  <script language="JavaScript" type="text/JavaScript">
+    <!--
+    // Mutieren Dialog initialisieren
+	openMutDlgInit("selContactGroup","mutdialoggroup","{LANG_MODIFY_SELECTION}: {LANG_CONTACT_GROUP}","mutgroups","{LANG_SAVE}","{LANG_ABORT}");
+	openMutDlgInit("selHostCommand","mutdialoghostcmd","{LANG_MODIFY_SELECTION}: {LANG_HOST_COMMAND}","muthostcmd","{LANG_SAVE}","{LANG_ABORT}");
+	openMutDlgInit("selServiceCommand","mutdialogservcmd","{LANG_MODIFY_SELECTION}: {LANG_SERVICE_COMMAND}","mutservcmd","{LANG_SAVE}","{LANG_ABORT}");
+    // Eingabe abbrechen
+	function abort() {
+      this.location.href = "{ACTION_INSERT}?limit={LIMIT}";
+    }
+    // Formular absenden
+    function LockButton() {
+      if (checkForm() == false) {
+        return false;
+      } else {
+	    document.getElementById("selContactGroup").disabled 	= false;
+	    document.getElementById("selHostCommand").disabled 		= false;
+	    document.getElementById("selServiceCommand").disabled 	= false;
+        document.frmDetail.submit();
+        document.frmDetail.subForm.disabled = true;
+      }
+    }
+    // Formulareingaben überprüfen
+    function checkForm() {
+      // Sind alle Mussfelder ausgefuellt?
+	  var fields1 = "tfName";
+	  var msg1    = "{FILL_ALLFIELDS}";
+	  var msg2    = "{FILL_ILLEGALCHARS}";
+	  var header  = "{LANG_FORMCHECK}";
+	  var form    = document.frmDetail;
+	  var check   = false;
+	  check = checkfields(fields1,form,myFocusObject);
+	  if (check == false) {
+	  	msginit(msg1,header,1);
+		return false;
+	  }	
+	  // Kommen unerlaubte Zeichen vor?
+	  //if (form.tfName.value.match(/[^a-zA-Z0-9_-]/)) {
+	  //	msginit(msg2+" {LANG_COMMAND}",header,1);
+	  //	form.tfDomain.focus()
+	  //	return false;
+	  //}	
+    }
+	// Freie Variabeldefinitionen einfügen
+	function insertDefintionVar() {
+		var txtDef 	 = document.frmDetail.txtVariablename.value;
+		var txtRange = document.frmDetail.txtVariablevalue.value;
+		if ((txtDef == "") || (txtRange == "")) {
+			var header  = "{LANG_FORMCHECK}";
+			msginit("{LANG_INSERT_ALL_VARIABLE}",header,1);
+			return false;
+		}
+		document.getElementById("variableframe").src = "{BASE_PATH}admin/variabledefinitions.php?dataId={DAT_ID}&version={VERSION}&mode=add&def="+txtDef+"&range="+txtRange;
+	}
+	// Templatedefinitionen einfügen
+	function insertDefintion() {
+		var txtDef 	 = document.frmDetail.selTemplate.value;
+		document.getElementById("templframe").src = "{BASE_PATH}admin/templatedefinitions.php?dataId={DAT_ID}&type=contacttemplate&mode=add&def="+txtDef;
+	}
+    //-->
+  </script>
+<form name="frmDetail" method="post" action="{ACTION_INSERT}">
+<div id="contacts" class="yui-navset">
+    <ul class="yui-nav">
+        <li class="selected"><a href="#tab1"><em>{LANG_COMMON_SETTINGS}</em></a></li>
+        <li><a href="#tab1"><em>{LANG_ADDON_SETTINGS}</em></a></li>
+    </ul>            
+	<div class="yui-content">
+    <div id="tab1">
+  <br>
+  <table cellpadding="0" cellspacing="2" border="0"  class="inserttable">
+    <tr>
+      <td>{LANG_TEMPLATE_NAME}*</td>
+      <td colspan="2"><input name="tfName" type="text" id="tfName" value="{DAT_TEMPLATE_NAME}" style="width:200px" class="inpmust" >&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('contacttemplate','template_name','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+      <td>{LANG_CONTACT_GROUP}</td>
+      <td rowspan="4" valign="top">
+      	<table cellpadding="0" cellspacing="0" border="0">
+      	  <tr>
+            <td width="205">
+              <select name="selContactGroup[]" size="4" multiple id="selContactGroup" style="width:205px;" {SELECT_FIELD_DISABLED}>
+<!-- BEGIN contactgroup -->
+          		<option value="{DAT_CONTACTGROUP_ID}" {DAT_CONTACTGROUP_SEL}>{DAT_CONTACTGROUP}</option>
+<!-- END contactgroup -->
+        	  </select>
+            </td>
+            <td valign="top" style="padding-left:1px"><img id="mutgroups" src="{IMAGE_PATH}mut.gif" width="24" height="24" alt="{LANG_MODIFY}" title="{LANG_MODIFY}" style="cursor:pointer" ><br><br>&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('contact','contactgroups','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+          </tr>
+        </table>       
+        <table cellpadding="0" cellspacing="0" border="0"  class="{CLASS_NAME_30}">
+          <tr>
+          	<td><input name="radContactGroup" type="radio" class="checkbox" id="radContactGroup0" value="0" {DAT_COG0_CHECKED}></td>
+            <td>+&nbsp;</td>
+            <td><input name="radContactGroup" type="radio" class="checkbox" id="radContactGroup1" value="1" {DAT_COG1_CHECKED}></td>
+            <td>null&nbsp;</td>
+            <td><input name="radContactGroup" type="radio" class="checkbox" id="radContactGroup2" value="2" {DAT_COG2_CHECKED}></td>
+            <td>{LANG_STANDARD}&nbsp;</td>
+            <td>&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('common','tploptions','3','Info')" ></td>
+		  </tr>
+        </table>        </td>
+    </tr>
+    <tr>
+      <td>{LANG_DESCRIPTION}</td>
+      <td colspan="2"><input name="tfFriendly" type="text" id="tfFriendly" value="{DAT_ALIAS}" style="width:200px" >&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('contact','alias','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+      <td rowspan="3">&nbsp;</td>
+    </tr>
+    <tr>
+      <td colspan="3">&nbsp;</td>
+    </tr>
+    <tr>
+      <td colspan="3">&nbsp;</td>
+    </tr>
+    <tr>
+      <td colspan="5">&nbsp;</td>  
+    </tr>
+    <tr>
+      <td>{LANG_EMAIL_ADDRESS}</td>
+      <td colspan="2"><input name="tfEmail" type="text" id="tfEmail" value="{DAT_EMAIL}" style="width:200px" >&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('contact','email','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+      <td>{LANG_PAGER_NUMBER}</td>
+      <td><input name="tfPager" type="text" id="tfPager" value="{DAT_PAGER}" style="width:200px" >&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('contact','pager','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+    </tr>
+    <tr>
+      <td>{LANG_ADDON_ADDRESS} 1</td>
+      <td colspan="2"><input name="tfAddress1" type="text" id="tfAddress1" value="{DAT_ADDRESS1}" style="width:200px" >&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('contact','address','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+      <td>{LANG_ADDON_ADDRESS} 2</td>
+      <td><input name="tfAddress2" type="text" id="tfAddress2" value="{DAT_ADDRESS2}" style="width:200px" ></td>
+    </tr>
+    <tr>
+      <td>{LANG_ADDON_ADDRESS} 3</td>
+      <td colspan="2"><input name="tfAddress3" type="text" id="tfAddress3" value="{DAT_ADDRESS3}" style="width:200px" ></td>
+      <td>{LANG_ADDON_ADDRESS} 4</td>
+      <td><input name="tfAddress4" type="text" id="tfAddress4" value="{DAT_ADDRESS4}" style="width:200px" ></td>
+    </tr>
+   <tr>
+      <td>{LANG_ADDON_ADDRESS} 5</td>
+      <td colspan="2"><input name="tfAddress5" type="text" id="tfAddress5" value="{DAT_ADDRESS5}" style="width:200px" ></td>
+      <td>{LANG_ADDON_ADDRESS} 6</td>
+      <td><input name="tfAddress6" type="text" id="tfAddress6" value="{DAT_ADDRESS6}" style="width:200px" ></td>
+    </tr>    
+    <tr>
+      <td colspan="5">&nbsp;</td>
+    </tr>
+    <tr id="notEnable30" class="{CLASS_NAME_30}">
+      <td>{LANG_HOST_NOTIF_ENABLE}</td>
+      <td colspan="2">
+		<table cellpadding="0" cellspacing="0" border="0">
+          <tr>
+          	<td><input name="radHostNotifEnable" type="radio" class="checkbox" id="radHostNotifEnable1" value="1" {DAT_HNE1_CHECKED}></td>
+            <td>{LANG_ON}&nbsp;</td>
+            <td><input name="radHostNotifEnable" type="radio" class="checkbox" id="radHostNotifEnable0" value="0" {DAT_HNE0_CHECKED}></td>
+            <td>{LANG_OFF}&nbsp;</td>
+            <td><input name="radHostNotifEnable" type="radio" class="checkbox" id="radHostNotifEnable2" value="2" {DAT_HNE2_CHECKED}></td>
+            <td>{LANG_SKIP}&nbsp;</td>
+            <td class="{CLASS_NAME_30}"><input name="radHostNotifEnable" type="radio" class="checkbox" id="radHostNotifEnable3" value="3" {DAT_HNE3_CHECKED}></td>
+            <td class="{CLASS_NAME_30}">null&nbsp;</td>
+            <td>&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('contact','host_notifications_enabled','3','Info')" ></td>
+		  </tr>
+        </table>
+      </td>
+      <td>{LANG_SERVICE_NOTIF_ENABLE}</td>
+      <td>
+      	<table cellpadding="0" cellspacing="0" border="0">
+          <tr>
+          	<td><input name="radServiceNotifEnable" type="radio" class="checkbox" id="radServiceNotifEnable1" value="1" {DAT_SNE1_CHECKED}></td>
+            <td>{LANG_ON}&nbsp;</td>
+            <td><input name="radServiceNotifEnable" type="radio" class="checkbox" id="radServiceNotifEnable0" value="0" {DAT_SNE0_CHECKED}></td>
+            <td>{LANG_OFF}&nbsp;</td>
+            <td><input name="radServiceNotifEnable" type="radio" class="checkbox" id="radServiceNotifEnable2" value="2" {DAT_SNE2_CHECKED}></td>
+            <td>{LANG_SKIP}&nbsp;</td>
+            <td class="{CLASS_NAME_30}"><input name="radServiceNotifEnable" type="radio" class="checkbox" id="radServiceNotifEnable3" value="3" {DAT_SNE3_CHECKED}></td>
+            <td class="{CLASS_NAME_30}">null&nbsp;</td>
+            <td>&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('contact','service_notifications_enabled','3','Info')" ></td>
+		  </tr>
+        </table>
+    </tr>
+    <tr>
+      <td>{LANG_TIME_PERIOD_HOSTS}</td>
+      <td colspan="2"><select name="selHostPeriod" id="selHostPeriod" style="width:205px;">
+<!-- BEGIN timeperiodgroup1 -->
+          <option value="{DAT_TIMEPERIOD_ID}" {DAT_TIMEPERIOD_SEL}>{DAT_TIMEPERIOD}</option>
+<!-- END timeperiodgroup1 -->
+        </select>&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('contact','host_notification_period','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+      <td>{LANG_TIME_PERIOD_SERVICES}</td>
+      <td><select name="selServicePeriod" id="selServicePeriod" style="width:205px;">
+<!-- BEGIN timeperiodgroup2 -->
+          <option value="{DAT_TIMEPERIOD_ID}" {DAT_TIMEPERIOD_SEL}>{DAT_TIMEPERIOD}</option>
+<!-- END timeperiodgroup2 -->
+        </select>&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('contact','service_notification_period','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+    </tr>
+    <tr>
+      <td>{LANG_HOST_OPTIONS}</td>
+      <td colspan="2" valign="middle">
+      	<table cellpadding="0" cellspacing="0" border="0">
+          <tr id="hostopt20" class="{CLASS_NAME_20}">
+          	<td><input name="chbHOd2" type="checkbox" class="checkbox" id="chbHOd2" value="d" {DAT_HOD_CHECKED}></td>
+            <td>d</td>
+            <td><input name="chbHOu2" type="checkbox" class="checkbox" id="chbHOu2" value="u" {DAT_HOU_CHECKED}></td>
+            <td>u</td>
+            <td><input name="chbHOr2" type="checkbox" class="checkbox" id="chbHOr2" value="r" {DAT_HOR_CHECKED}></td>
+            <td>r</td>
+            <td><input name="chbHOf2" type="checkbox" class="checkbox" id="chbHOf2" value="f" {DAT_HOF_CHECKED}></td>
+            <td>f</td>    
+            <td><input name="chbHOn2" type="checkbox" class="checkbox" id="chbHOn2" value="n" {DAT_HON_CHECKED}></td>
+            <td>n</td>
+            <td>&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('contact','host_notification_options','2','Info')" ></td>
+		  </tr>
+          <tr id="hostopt30" class="{CLASS_NAME_30}">
+          	<td><input name="chbHOd3" type="checkbox" class="checkbox" id="chbHOd3" value="d" {DAT_HOD_CHECKED}></td>
+            <td>d</td>
+            <td><input name="chbHOu3" type="checkbox" class="checkbox" id="chbHOu3" value="u" {DAT_HOU_CHECKED}></td>
+            <td>u</td>
+            <td><input name="chbHOr3" type="checkbox" class="checkbox" id="chbHOr3" value="r" {DAT_HOR_CHECKED}></td>
+            <td>r</td>
+            <td><input name="chbHOf3" type="checkbox" class="checkbox" id="chbHOf3" value="f" {DAT_HOF_CHECKED}></td>
+            <td>f</td>    
+            <td><input name="chbHOs3" type="checkbox" class="checkbox" id="chbHOs3" value="s" {DAT_HOF_CHECKED}></td>
+            <td>s</td>   
+            <td><input name="chbHOn3" type="checkbox" class="checkbox" id="chbHOn3" value="n" {DAT_HON_CHECKED}></td>
+            <td>n</td>
+            <!--<td><input name="chbHOnull3" type="checkbox" class=" checkbox" id="chbHOnull3" value="null" {DAT_HONULL_CHECKED}></td>
+            <td>null</td>-->
+            <td>&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('contact','host_notification_options','3','Info')" ></td>
+		  </tr>
+        </table>
+      </td>
+      <td>{LANG_SERVICE_OPTIONS}</td>
+      <td valign="middle">
+      	<table cellpadding="0" cellspacing="0" border="0">
+          <tr id="servopt20" class="{CLASS_NAME_20}">
+          	<td><input name="chbSOw2" type="checkbox" class="checkbox" id="chbSOw2" value="w" {DAT_SOW_CHECKED}></td>
+            <td>w</td>
+            <td><input name="chbSOu2" type="checkbox" class="checkbox" id="chbSOu2" value="u" {DAT_SOU_CHECKED}></td>
+            <td>u</td>
+            <td><input name="chbSOc2" type="checkbox" class="checkbox" id="chbSOc2" value="c" {DAT_SOC_CHECKED}></td>
+            <td>c</td>
+            <td><input name="chbSOr2" type="checkbox" class="checkbox" id="chbSOr2" value="r" {DAT_SOR_CHECKED}></td>
+            <td>r</td>    
+            <td><input name="chbSOf2" type="checkbox" class="checkbox" id="chbSOf2" value="f" {DAT_SOF_CHECKED}></td>
+            <td>f</td>
+            <td><input name="chbSOn2" type="checkbox" class="checkbox" id="chbSOn2" value="n" {DAT_SON_CHECKED}></td>
+            <td>n</td>
+            <td>&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('contact','service_notification_options','2','Info')" ></td>
+		  </tr>
+          <tr id="servopt30" class="{CLASS_NAME_30}">
+          	<td><input name="chbSOw3" type="checkbox" class="checkbox" id="chbSOw3" value="w" {DAT_SOW_CHECKED}></td>
+            <td>w</td>
+            <td><input name="chbSOu3" type="checkbox" class="checkbox" id="chbSOu3" value="u" {DAT_SOU_CHECKED}></td>
+            <td>u</td>
+            <td><input name="chbSOc3" type="checkbox" class="checkbox" id="chbSOc3" value="c" {DAT_SOC_CHECKED}></td>
+            <td>c</td>
+            <td><input name="chbSOr3" type="checkbox" class="checkbox" id="chbSOr3" value="r" {DAT_SOR_CHECKED}></td>
+            <td>r</td>    
+            <td><input name="chbSOf3" type="checkbox" class="checkbox" id="chbSOf3" value="f" {DAT_SOF_CHECKED}></td>
+            <td>f</td>
+            <td><input name="chbSOs3" type="checkbox" class="checkbox" id="chbSOs3" value="s" {DAT_SOS_CHECKED}></td>
+            <td>s</td>
+            <td><input name="chbSOn3" type="checkbox" class="checkbox" id="chbSOn3" value="n" {DAT_SON_CHECKED}></td>
+            <td>n</td>
+            <!--<td><input name="chbSOnull3" type="checkbox" class=" checkbox" id="chbSOnull3" value="null" {DAT_SONULL_CHECKED}></td>
+            <td>null</td>-->
+            <td>&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('contact','service_notification_options','3','Info')" ></td>
+		  </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">{LANG_HOST_COMMAND}</td>
+      <td colspan="2" rowspan="3">
+      	<table cellpadding="0" cellspacing="0" border="0">
+      	  <tr>
+            <td width="205">
+              <select name="selHostCommand[]" size="4" multiple id="selHostCommand" style="width:205px;" {SELECT_FIELD_DISABLED}>
+<!-- BEGIN commandgroup1 -->
+                    <option value="{DAT_COMMAND1_ID}" {DAT_COMMAND1_SEL}>{DAT_COMMAND1}</option>
+<!-- END commandgroup1 -->
+                </select>
+            </td>
+            <td valign="top" style="padding-left:1px"><img id="muthostcmd" src="{IMAGE_PATH}mut.gif" width="24" height="24" alt="{LANG_MODIFY}" title="{LANG_MODIFY}" style="cursor:pointer" ><br><br>&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('contact','host_notification_commands','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+          </tr>
+        </table> 
+        <table cellpadding="0" cellspacing="0" border="0" class="{CLASS_NAME_30}">
+          <tr>
+          	<td><input name="radHostCommand" type="radio" class="checkbox" id="radHostCommand0" value="0" {DAT_HOC0_CHECKED}></td>
+            <td>+&nbsp;</td>
+            <td><input name="radHostCommand" type="radio" class="checkbox" id="radHostCommand2" value="2" {DAT_HOC2_CHECKED}></td>
+            <td>{LANG_STANDARD}&nbsp;</td>
+            <td>&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('common','tploptions','3','Info')" ></td>
+		  </tr>
+        </table>      </td>
+      <td valign="top">{LANG_SERVICE_COMMAND}</td>
+      <td rowspan="3">
+      	<table cellpadding="0" cellspacing="0" border="0">
+      	  <tr>
+            <td width="205">
+              <select name="selServiceCommand[]" size="4" multiple id="selServiceCommand" style="width:205px;" {SELECT_FIELD_DISABLED}>
+<!-- BEGIN commandgroup2 -->
+                    <option value="{DAT_COMMAND2_ID}" {DAT_COMMAND2_SEL} >{DAT_COMMAND2}</option>
+<!-- END commandgroup2 -->
+                </select>
+            </td>
+            <td valign="top" style="padding-left:1px"><img id="mutservcmd" src="{IMAGE_PATH}mut.gif" width="24" height="24" alt="{LANG_MODIFY}" title="{LANG_MODIFY}" style="cursor:pointer" ><br><br>&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('contact','service_notification_commands','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+          </tr>
+        </table>       
+        <table cellpadding="0" cellspacing="0" border="0" class="{CLASS_NAME_30}">
+          <tr>
+          	<td><input name="radServiceCommand" type="radio" class="checkbox" id="radServiceCommand0" value="0" {DAT_SEC0_CHECKED}></td>
+            <td>+&nbsp;</td>
+            <td><input name="radServiceCommand" type="radio" class="checkbox" id="radServiceCommand2" value="2" {DAT_SEC2_CHECKED}></td>
+            <td>{LANG_STANDARD}&nbsp;</td>
+            <td>&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('common','tploptions','3','Info')" ></td>
+		  </tr>
+        </table>      </td>
+    </tr>
+    <tr>
+      <td><small>{LANG_CTRLINFO}</small></td>
+      <td><small>{LANG_CTRLINFO}</small></td>
+      </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td colspan="5">&nbsp;</td>  
+    </tr>
+    <tr id="addOpt30a" class="{CLASS_NAME_30}">
+      <td>{LANG_RETAIN_STATUS_INFO}</td>
+      <td colspan="2">
+		<table cellpadding="0" cellspacing="0" border="0">
+          <tr>
+          	<td><input name="radRetStatInf" type="radio" class="checkbox" id="radRetStatInf1" value="1" {DAT_RSI1_CHECKED}></td>
+            <td>{LANG_ON}&nbsp;</td>
+            <td><input name="radRetStatInf" type="radio" class="checkbox" id="radRetStatInf0" value="0" {DAT_RSI0_CHECKED}></td>
+            <td>{LANG_OFF}&nbsp;</td>
+            <td><input name="radRetStatInf" type="radio" class="checkbox" id="radRetStatInf2" value="2" {DAT_RSI2_CHECKED}></td>
+            <td>{LANG_SKIP}&nbsp;</td>
+            <td class="{CLASS_NAME_30}"><input name="radRetStatInf" type="radio" class="checkbox" id="radRetStatInf3" value="3" {DAT_RSI3_CHECKED}></td>
+            <td class="{CLASS_NAME_30}">null&nbsp;</td>
+            <td>&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('contact','retain_status_information','3','Info')" ></td>
+		  </tr>
+        </table>      
+      <td>{LANG_CAN_SUBMIT_COMMANDS}</td>
+      <td>
+		<table cellpadding="0" cellspacing="0" border="0">
+          <tr>
+          	<td><input name="radCanSubCmds" type="radio" class="checkbox" id="radCanSubCmds1" value="1" {DAT_CSC1_CHECKED}></td>
+            <td>{LANG_ON}&nbsp;</td>
+            <td><input name="radCanSubCmds" type="radio" class="checkbox" id="radCanSubCmds0" value="0" {DAT_CSC0_CHECKED}></td>
+            <td>{LANG_OFF}&nbsp;</td>
+            <td><input name="radCanSubCmds" type="radio" class="checkbox" id="radCanSubCmds2" value="2" {DAT_CSC2_CHECKED}></td>
+            <td>{LANG_SKIP}&nbsp;</td>
+            <td class="{CLASS_NAME_30}"><input name="radCanSubCmds" type="radio" class="checkbox" id="radCanSubCmds3" value="3" {DAT_CSC3_CHECKED}></td>
+            <td class="{CLASS_NAME_30}">null&nbsp;</td>
+            <td>&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('contact','can_submit_commands','3','Info')" ></td>
+		  </tr>
+        </table>       
+    </tr>
+    <tr id="addOpt30b" class="{CLASS_NAME_30}">
+      <td>{LANG_RETAIN_NONSTATUS_INFO}</td>
+      <td colspan="2">
+		<table cellpadding="0" cellspacing="0" border="0">
+          <tr>
+          	<td><input name="radRetNonStatInf" type="radio" class="checkbox" id="radRetNonStatInf1" value="1" {DAT_RNS1_CHECKED}></td>
+            <td>{LANG_ON}&nbsp;</td>
+            <td><input name="radRetNonStatInf" type="radio" class="checkbox" id="radRetNonStatInf0" value="0" {DAT_RNS0_CHECKED}></td>
+            <td>{LANG_OFF}&nbsp;</td>
+            <td><input name="radRetNonStatInf" type="radio" class="checkbox" id="radRetNonStatInf2" value="2" {DAT_RNS2_CHECKED}></td>
+            <td>{LANG_SKIP}&nbsp;</td>
+            <td class="{CLASS_NAME_30}"><input name="radRetNonStatInf" type="radio" class="checkbox" id="radRetNonStatInf3" value="3" {DAT_RNS3_CHECKED}></td>
+            <td class="{CLASS_NAME_30}">null&nbsp;</td>
+            <td>&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('contact','retain_nostatus_information','3','Info')" ></td>
+		  </tr>
+        </table>       
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td>{LANG_ACTIVE}</td>
+      <td colspan="2"><input name="chbActive" type="checkbox" class="checkbox" id="chbActive" value="1" {ACT_CHECKED} {ACT_DISABLED}>
+	    <input name="hidActive" type="hidden" id="hidActive" value="{ACTIVE}">
+        <input name="modus" type="hidden" id="modus" value="{MODUS}">
+        <input name="hidId" type="hidden" id="hidId" value="{DAT_ID}">
+        <input name="hidLimit" type="hidden" id="hidLimit" value="{LIMIT}"></td>
+      <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+      <td width="160">&nbsp;</td>
+      <td width="220">&nbsp;</td>
+      <td width="50">&nbsp;</td>
+      <td width="160">&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td colspan="2"><input name="subForm" type="button" id="subForm1" value="{LANG_SAVE}" onClick="LockButton()">&nbsp;
+      <input name="subAbort" type="button" id="subAbort1" onClick="abort()" value="{LANG_ABORT}"></td>
+      <td>*&nbsp;{LANG_REQUIRED}</td>
+      <td colspan="2"><span class="dbmessage">{WARNING}&nbsp;</span></td>
+      </tr>
+  </table>
+	</div>
+	<div id="tab2">  
+ 	<br>
+  <table cellpadding="0" cellspacing="2" border="0"  class="inserttable">
+    <tr class="{CLASS_NAME_30}">
+      <td colspan="5" style="padding-bottom:5px"><b>{LANG_FREE_VARIABLE_DEFINITIONS}</b></td>
+    </tr>
+    <tr class="{CLASS_NAME_30}">
+      <td colspan="5" style="padding-bottom:2px">
+      	<table cellpadding="0" cellspacing="0" border="0">
+        	<tr>
+            	<td width="235" style="padding-left:5px"><i>{LANG_VARIABLE_NAME}</i></td>
+                <td width="260"><i>{LANG_VARIABLE_VALUE}</i></td>
+            </tr>
+      	</table>
+      </td>
+    </tr>
+    <tr class="{CLASS_NAME_30}">
+      <td colspan="5" style="padding-bottom:10px"><iframe id="variableframe" frameborder="0" src="{BASE_PATH}admin/variabledefinitions.php?dataId={DAT_ID}&amp;linktab=tbl_lnkContacttemplateToVariabledefinition" width="540" height="150" style="border:1px solid #000000"></iframe></td>
+    </tr>
+    <tr class="{CLASS_NAME_30}">
+      <td colspan="5">
+      	<table cellpadding="0" cellspacing="1" border="0"  class="inserttable">
+          <tr>
+          	<td width="150">{LANG_VARIABLE_NAME}</td>
+            <td width="300"><input type="text" name="txtVariablename" id="txtVariablename" style="width:250px">&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('common','free_variables_name','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>{LANG_VARIABLE_VALUE}</td>
+            <td><input type="text" name="txtVariablevalue" id="txtVariablevalue" style="width:250px">&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('common','free_variables_value','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" ></td>
+            <td><input type="button" name="butVariableDefinition" value="{LANG_INSERT}" onClick="insertDefintionVar()"></td>
+          </tr>
+        </table>      </td>
+      </tr>
+  	<tr class="{CLASS_NAME_30}">
+      <td colspan="5">&nbsp;</td>
+    </tr>
+  	<tr>
+      <td colspan="5"style="padding-bottom:5px;"><strong>{LANG_ADDITIONAL_TEMPLATES}</strong></td>
+    </tr>
+<!--    <tr>
+      <td style="padding-bottom:2px;padding-left:5px"><i>{LANG_TEMPLATE_NAME}</i></td>
+      <td colspan="4" style="padding-bottom:2px;padding-left:5px">
+		<table cellpadding="0" cellspacing="0" border="0" class="{CLASS_NAME_30}">
+          <tr>
+          	<td><input name="radTemplate" type="radio" class="checkbox" id="radTemplate0" value="0" {DAT_TPL0_CHECKED}></td>
+            <td>+&nbsp;</td>
+            <td><input name="radTemplate" type="radio" class="checkbox" id="radTemplate1" value="1" {DAT_TPL1_CHECKED}></td>
+            <td>null&nbsp;</td>
+            <td><input name="radTemplate" type="radio" class="checkbox" id="radTemplate2" value="2" {DAT_TPL2_CHECKED}></td>
+            <td>{LANG_STANDARD}&nbsp;</td>
+            <td>&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('host','use_template_tploption','2','Info')" ></td>
+		  </tr>
+        </table>      </td>
+      </tr>-->
+  	<tr>
+      <td colspan="5" style="padding-bottom:10px;"><iframe id="templframe" frameborder="0" src="{BASE_PATH}admin/templatedefinitions.php?dataId={DAT_ID}&amp;type=contacttemplate" width="445" height="120" style="border:1px solid #000000"></iframe></td>
+    </tr>
+ 	<tr>
+      <td>{LANG_TEMPLATE_NAME}</td>
+      <td><select name="selTemplate" style="width:205px">
+<!-- BEGIN template -->
+          <option value="{DAT_TEMPLATE_ID}">{DAT_TEMPLATE}</option>
+<!-- END template -->
+      </select>&nbsp;<img src="{IMAGE_PATH}tip.gif" alt="{LANG_HELP}" title="{LANG_HELP}" width="18" height="18" onclick="dialoginit('contact','templateadd','all','Info')" style="vertical-align:text-bottom; padding-bottom:2px!" >      </td>
+	  <td><input type="button" name="butTemplDefinition"  value="{LANG_INSERT}" onClick="insertDefintion()"></td>
+	  <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+      <td width="130">&nbsp;</td>
+      <td width="250">&nbsp;</td>
+      <td width="50">&nbsp;</td>
+      <td width="160">&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td colspan="2"><input name="subForm" type="button" id="subForm2" value="{LANG_SAVE}" onClick="LockButton()">&nbsp;
+      <input name="subAbort" type="button" id="subAbort2" onClick="abort()" value="{LANG_ABORT}"></td>
+      <td>*&nbsp;{LANG_REQUIRED}</td>
+      <td colspan="2"><span class="dbmessage">{WARNING}&nbsp;</span></td>
+      </tr>
+  </table>
+	</div>
+</div>
+</div>
+</form>
+<script type="text/javascript" language="javascript">
+<!--
+(function() {
+    var tabView = new YAHOO.widget.TabView('contacts');
+})();
+//-->
+</script>
+{CHECK_MUST_DATA}
+<br>
+<div id="mutdialoggroup">
+    <div id="mutdialoggroupcontent" class="bd"></div>
+</div>
+<div id="mutdialoghostcmd">
+    <div id="mutdialoghostcmdcontent" class="bd"></div>
+</div>
+<div id="mutdialogservcmd">
+    <div id="mutdialogservcmdcontent" class="bd"></div>
+</div>
+<div id="msgcontainer"></div>
+<div id="infodialog">
+    <div id="dialogcontent" class="bd"></div>
+</div>
+<!-- END datainsert -->

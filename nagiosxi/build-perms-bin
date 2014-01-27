@@ -1,0 +1,23 @@
+#!/bin/sh -e
+
+scriptsdir=/usr/local/nagiosxi/scripts
+
+# Make config perm reset utility
+echo "Building latest perms binary..."
+(
+	cd ./nagiosxi/basedir/scripts
+
+	# Build new binary
+	rm -f reset_config_perms
+	cc reset_config_perms.c -o reset_config_perms
+	
+	# Copy binary and script to destination
+	cp reset_config_perms "$scriptsdir"
+	cp reset_config_perms.sh "$scriptsdir"
+
+	# Make sure binary and script are setuid root
+	chown "root:$nagiosgroup" "$scriptsdir/reset_config_perms"
+	chown "root:$nagiosgroup" "$scriptsdir/reset_config_perms.sh"
+	chmod u+s "$scriptsdir/reset_config_perms"
+	chmod u+s "$scriptsdir/reset_config_perms.sh"
+)

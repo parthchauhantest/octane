@@ -1,0 +1,42 @@
+#!/bin/sh -e
+
+. ../../xi-sys.cfg
+
+echo "NDOUTILS-POST"
+
+# Post-install modifications
+
+# New init file
+cp -f mods/ndo2db.init /etc/init.d/ndo2db
+
+# Copy configs
+cp -f mods/cfg/ndo2db.cfg /usr/local/nagios/etc
+cp -f mods/cfg/ndomod.cfg /usr/local/nagios/etc
+
+# Change some settings in /etc/sysctl.conf, add them if they're not there 
+if [ "`grep kernel.msg /etc/sysctl.conf`" == "" ] ; then
+	echo "kernel.msgmnb = 131072000" >> /etc/sysctl.conf
+	echo "kernel.msgmax = 131072000" >> /etc/sysctl.conf
+	echo "kernel.shmmax = 4294967295" >> /etc/sysctl.conf
+	echo "kernel.shmall = 268435456" >> /etc/sysctl.conf	
+else
+	sed -i 	-e '/^kernel\.msgmnb/ s/.*/kernel.msgmnb = 131072000/' \
+			-e '/^kernel\.msgmax/ s/.*/kernel.msgmax = 131072000/' \
+			-e '/^kernel\.shmmax/ s/.*/kernel.shmmax = 4294967295/' \
+			-e '/^kernel\.shmall/ s/.*/kernel.shmall = 268435456/' \
+			/etc/sysctl.conf
+fi
+
+# Apply settings to sysctl.conf
+sysctl -e -p /etc/sysctl.conf
+	
+# See if database already exists
+echo "NOTE: If prompted, enter the MySQL root password"
+if mysql nagios -u root -p"$mysqlpass" -e 'SELECT COUNT(*) FROM nagios_hosts' &>/dev/null; then
+	echo "NDOUtils database already exists - skipping creation..."
+else
+	# Run SQL to create database and add user
+	mysql -u root -p"$mysqlpass" < mods/create_db.sql
+	mysql -u root -p"$mysqlpass" nagios < mods/mysql.sql
+fi
+

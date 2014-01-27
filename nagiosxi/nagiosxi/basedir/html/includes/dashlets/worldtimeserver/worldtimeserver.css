@@ -1,0 +1,16 @@
+.worldtimeserver_outboardclass{
+	}
+
+.worldtimeserver_inboardclass{
+	padding: 5px;
+	}
+
+.worldtimeserver_dashlet_previewclass{
+	}
+	
+.worldtimeserver_clockname{
+	font-weight: bold;
+	font-size:10pt;
+	text-align: center;
+	margin-top: 15px;
+	}

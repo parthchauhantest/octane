@@ -1,0 +1,32 @@
+NDOUtils Mods
+==============
+
+Logentries
+===========
+ALTER TABLE `nagios_logentries` ADD INDEX ( `logentry_time` ) ;
+ALTER TABLE `nagios_logentries` ADD INDEX ( `logentry_data` ) ;
+ALTER TABLE `nagios_logentries` ADD INDEX ( `instance_id` ) ;
+
+
+State History
+=============
+ALTER TABLE `nagios_statehistory` ADD INDEX ( `state_time` )  ;
+ALTER TABLE `nagios_statehistory` ADD INDEX ( `object_id` )  ;
+
+
+Notifications
+=============
+ALTER TABLE `nagios_notifications` ADD INDEX ( `start_time` ) ;
+ALTER TABLE `nagios_notifications` ADD INDEX ( `object_id` )  ;
+ALTER TABLE `nagios_notifications` ADD INDEX ( `instance_id` )  ;
+
+
+Contact Notifications
+=====================
+ALTER TABLE `nagios_contactnotifications` ADD INDEX ( `notification_id` )  ;
+ALTER TABLE `nagios_contactnotifications` ADD INDEX ( `contact_object_id` )  ;
+
+
+Contact Notification Methods
+============================
+ALTER TABLE `nagios_contactnotificationmethods` ADD INDEX ( `contactnotification_id` )  ;

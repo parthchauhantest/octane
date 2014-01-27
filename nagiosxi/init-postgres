@@ -1,0 +1,50 @@
+#!/bin/sh -e
+
+##########################################
+# INITIALIZE POSTGRES
+##########################################
+
+# See if user already initialized PostgresQL
+if [ -f installed.postgresql ]; then
+	echo "PostgresQL already initialized - skipping."
+	exit 0
+fi
+
+# Check that postgres is installed
+if [ ! -x /etc/init.d/postgresql ]; then
+	echo "ERROR: PostgresQL not installed - exiting." >&2
+	exit 1
+fi
+echo "PostgresQL installed OK - continuing..."
+
+echo "Initializing PostgresQL..."
+
+# Initialize Postgres (does not work on CentOS)
+service postgresql initdb &>/dev/null || true
+
+# Start Postgres (needed for CentOS, as initdb doesnt work)
+echo "Starting PostgresQL..."
+if ! service postgresql start; then
+	echo "ERROR: Could not start PostgresQL - exiting." >&2
+	exit 1
+fi
+
+# Copy over access configuration file to use trust based authentication
+echo "Copying PostgresQL trust-based authentication configuration..."
+cp -f nagiosxi/pg_hba.conf /var/lib/pgsql/data/pg_hba.conf
+
+echo "Restarting PostgresQL..."
+if ! service postgresql restart; then
+	echo "ERROR: Could not restart PostgresQL - exiting." >&2
+	exit 1
+fi
+
+echo "Checking PostgresQL status..."
+if ! service postgresql status &>/dev/null; then
+	echo "ERROR: PostgresQL not running - exiting." >&2
+	exit 1
+fi
+
+echo "PostgresQL initialized OK"
+touch installed.postgresql
+

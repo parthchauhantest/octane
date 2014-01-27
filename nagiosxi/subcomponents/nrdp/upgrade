@@ -1,0 +1,12 @@
+#!/bin/sh -e
+
+. ../../xi-sys.cfg
+
+echo "Updating NRDP.."
+
+# copy updated files
+cp -f mods/nagioscorepassivecheck.inc.php /usr/local/nrdp/server/plugins/nagioscorepassivecheck/nagioscorepassivecheck.inc.php
+cp -f mods/send_nrdp.php /usr/local/nrdp/client/send_nrdp.php
+
+# Set perms
+chown -R "$nagiosuser:$nagiosgroup" /usr/local/nrdp

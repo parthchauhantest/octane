@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Usage: run_fping [address] [address] ...
+
+fping=/usr/sbin/fping
+
+$fping -a -r 1 -g $@ 2> /dev/null
+
+#echo "CMD=$cmd"
+
+#`$cmd`
+

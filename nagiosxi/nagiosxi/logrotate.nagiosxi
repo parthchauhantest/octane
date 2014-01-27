@@ -1,0 +1,5 @@
+/usr/local/nagiosxi/var/*log {
+    missingok
+    notifempty
+}
+

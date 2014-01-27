@@ -1,0 +1,10 @@
+--- nagioscore-3.4.1/common/macros.c    2011-12-12 08:28:08.685269000 -0600
++++ nagioscore-3.4.1/common/macros.c    2012-04-27 12:12:21.628900951 -0500
+@@ -2713,6 +2713,7 @@
+        add_macrox_name(LASTHOSTSTATEID);
+        add_macrox_name(LASTSERVICESTATE);
+        add_macrox_name(LASTSERVICESTATEID);
++       add_macrox_name(NOTIFICATIONISESCALATED);
+
+        return OK;
+        }

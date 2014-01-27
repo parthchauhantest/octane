@@ -1,0 +1,49 @@
+#!/bin/sh -e
+
+. ../../xi-sys.cfg
+
+echo "PNP-POST"
+
+# Post-install modifications
+
+
+# Copy our PDF for use as a background
+#cp -f mods/background.pdf /usr/local/nagios/etc/pnp
+
+# Copy sample configs
+cp /usr/local/nagios/etc/pnp/rra.cfg-sample /usr/local/nagios/etc/pnp/rra.cfg
+cp /usr/local/nagios/etc/pnp/process_perfdata.cfg-sample /usr/local/nagios/etc/pnp/process_perfdata.cfg
+
+# New init file
+cp -f mods/npcd.init /etc/init.d/npcd
+
+# Copy modified configs
+cp -r mods/cfg/*.cfg /usr/local/nagios/etc/pnp
+cp -r mods/cfg/config.php /usr/local/nagios/etc/pnp
+
+# Copy custom templates
+cp -r mods/templates/* /usr/local/nagios/share/pnp/templates
+
+# Copy custom images
+#cp -f ../../nagiosxi/basedir/html/includes/components/coreui/images/notify.gif /usr/local/nagios/share/pnp/images
+
+# Copy custom language file
+cp -r mods/lang/*.php /usr/local/nagios/share/pnp/lang
+
+# Copy custom stylesheets
+#cp -r mods/include/* /usr/local/nagios/share/pnp/include
+
+# Mod PNP to include our js code
+#src='\/nagiosxi\/includes\/js\/jquery\/jquery-current.js'>\\\n<script type='text\/javascript' src='\/nagiosxi\/includes\/components\/pnp\/js\/pnp.js'><\/script>/g"  /usr/local/nagios/share/pnp/include/function.inc.php
+
+# Updates for PNP 0.6 script -MG 4/26/11
+if [ ! -d /usr/local/nagios/var/stats ]; then
+	mkdir /usr/local/nagios/var/stats
+fi
+chown "$nagiosuser:$nagiosgroup" /usr/local/nagios/var/stats
+
+# Copy over new PNP 0.6 patched script - MG 4/26/11
+rm -f /usr/local/nagios/libexec/process_perfdata.pl
+cp mods/process_perfdata.pl /usr/local/nagios/libexec/
+chown "$nagiosuser:$nagiosgroup" /usr/local/nagios/libexec/process_perfdata.pl
+

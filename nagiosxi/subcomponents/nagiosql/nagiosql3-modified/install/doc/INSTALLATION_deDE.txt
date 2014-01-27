@@ -1,0 +1,104 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// NagiosQL
+//
+///////////////////////////////////////////////////////////////////////////////
+//
+// (c) 2008, 2009 by Martin Willisegger
+//
+// Project  : NagiosQL
+// Component: Installations HowTo
+// Website  : http://www.nagiosql.org
+// Date     : $LastChangedDate: 2010-03-08 16:56:21 -0600 (Mon, 08 Mar 2010) $
+// Author   : $LastChangedBy: egalstad $
+// Version  : 3.0.3
+// Revision : $LastChangedRevision: 59 $
+// SVN-ID   : $Id: INSTALLATION_deDE.txt 59 2010-03-08 22:56:21Z egalstad $
+//
+///////////////////////////////////////////////////////////////////////////////
+
+====================
+= Vorraussetzungen =
+====================
+  1. Webserver z.B. Apache 1.x oder neuer
+  2. PHP 4.3 oder neuer
+  3. MySQL 4.1 oder neuer
+  4. Nagios 2 oder neuer
+  5. PEAR Module: HTML_Template_IT 1.1 oder neuer (Im Appendix 1. mehr zur Installation der PEAR Module)
+  6. PHP Extension: gettext
+  7. PHP Extension: mysql
+  8. PHP Extension: ftp
+  9. Javascript im Webbrowser zugelassen
+
+===================
+= Neuinstallation =
+===================
+
+  1. Download und entpacken von NagiosQL3 in einem Apache zugaenglichen Verzeichnis.
+  2. Eine leere Datei "ENABLE_INSTALLER" im "install" Unterverzeichnis erstellen.
+  3. Der Installationsassistent wird automatisch durch Eingabe der index.php oder der install/index.php gestartet.
+  4. Die gewuenschte Sprache auswaehlen (siehe Appendix 2.)
+  5. Weiter mit dem Punkt: "Neue Installation".
+  6. Zum Installieren von NagiosQL den Anweisungen folgen.
+  7. Nach der Installation den Ordner "install" aus dem Nagiosql Verzeichnis loeschen.
+
+==================
+= AKTUALISIERUNG =
+==================
+
+  1. Aktualisierungen von NagiosQL 1.x sind leider nicht moeglich, bitte einfach eine neue Installation starten und dann die Nagios Konfiguration durch den Import einbinden.
+  2. Aktualisierungen von NagiosQL 2.x oder früheren 3.x Versionen
+    a. Download und entpacken von NagiosQL3 in einem Apache zugaenglichen Verzeichnis (Achtung: NICHT die NagiosQL2 Files ueberschreiben!)
+    b. Eine leere Datei "ENABLE_INSTALLER" im "install" Unterverzeichnis erstellen.
+    c. Der Installationsassistent wird durch den Aufruf von install/index.php gestartet
+    d. Die gewuenschte Sprache waehlen (siehe auch Appendix 2.)
+    e. Weiter mit "Aktualisierung"
+      f. Den Anweisungen fuer die "Aktualisierung" der vorhandenen NagiosQL Version folgen. (Bitte beachten: NagiosQL2 Konfigurationen werden nicht übernommen, bitte notieren und ggf manuell einpflegen)
+      g. Nach der Installation den Ordner "install" aus dem NagiosQL Verzeichnis loeschen.
+
+=================
+= Konfiguration =
+=================
+  1. NagiosQL
+      a. Loggen Sie sich in Ihre neue NagiosQL Installation ein.
+      b. Ueberpruefen Sie die automatisch gesetzten Einstellungen unter: Administration => Einstellungen
+      c. Konfigurieren Sie die individuellen Nagios Einstellungen unter: Administration => Domains
+  2. Nagios
+    a. Ueberpruefen Sie, dass der Webserver Benutzer die Berechtigungen besitzt, die Nagios Ordner zu lesen und ggf. zu schreiben. Zum Testen "nagios -v" als Webserver Benutzer ausfuehren.
+       Tip: Den Webserver Benutzer der Gruppe Nagios zufuegen und der Gruppe die noetigen Rechte geben.
+    b. Aendern Sie alle "cfg_dir" und "cfg_file" Definitionen in der "nagios.cfg" wie folgt:
+          cfg_file=<BASISORDNER WIE IN DER DOMAINKONFIGURATION>/contactgroups.cfg
+          cfg_file=<BASISORDNER WIE IN DER DOMAINKONFIGURATION>/contacttemplates.cfg
+          cfg_file=<BASISORDNER WIE IN DER DOMAINKONFIGURATION>/contacts.cfg
+          cfg_file=<BASISORDNER WIE IN DER DOMAINKONFIGURATION>/timeperiods.cfg
+
+          cfg_file=<BASISORDNER WIE IN DER DOMAINKONFIGURATION>/hostgroups.cfg
+          cfg_file=<BASISORDNER WIE IN DER DOMAINKONFIGURATION>/servicegroups.cfg
+
+          cfg_file=<BASISORDNER WIE IN DER DOMAINKONFIGURATION>/servicedependencies.cfg
+          cfg_file=<BASISORDNER WIE IN DER DOMAINKONFIGURATION>/hostdependencies.cfg
+
+          cfg_file=<BASISORDNER WIE IN DER DOMAINKONFIGURATION>/serviceescalations.cfg
+          cfg_file=<BASISORDNER WIE IN DER DOMAINKONFIGURATION>/hostescalations.cfg
+
+          cfg_file=<BASISORDNER WIE IN DER DOMAINKONFIGURATION>/hostextinfo.cfg
+          cfg_file=<BASISORDNER WIE IN DER DOMAINKONFIGURATION>/serviceextinfo.cfg
+
+          cfg_file=<BASISORDNER WIE IN DER DOMAINKONFIGURATION>/hosttemplates.cfg
+          cfg_file=<BASISORDNER WIE IN DER DOMAINKONFIGURATION>/servicetemplates.cfg
+
+          cfg_dir=<BASISORDNER WIE IN DER DOMAINKONFIGURATION>/hosts
+          cfg_dir=<BASISORDNER WIE IN DER DOMAINKONFIGURATION>/services
+
+================
+=== Probleme ===
+================
+Zur Zeit gibt es keine bekannten Probleme. Support erreicht man über das Forum (http://forum.nagiosql.org) oder für Programmfehler den Bugtracker (http://bugs.nagigosql.org).
+
+================
+=== APPENDIX ===
+================
+  1. Installation Pear Module
+    Pear Module können sehr einfach installiert werden. Fuer HTML_Template_IT reicht z.B. der folgende Aufruf:
+      $ pear install HTML_Template_IT
+  2. Zum Umstellen der Sprache muss das gewuenschte Encoding in den locales verfuegbar sein, z.B. de_DE.utf8. Das laesst sich an der Console ueber den Aufruf von "locale -a" herausfinden.

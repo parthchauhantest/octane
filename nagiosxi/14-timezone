@@ -1,0 +1,25 @@
+#!/bin/sh -e
+
+. ./xi-sys.cfg
+
+# Was previous step completed?
+if [ ! -f installed.mrtg ]; then
+	echo "MRTG was not configured - run previous script" >&2
+	exit 1
+fi
+
+# Was this step already completed?
+if [ -f installed.timezone ]; then
+	echo "PHP timezone already configured - skipping."
+	exit 0
+fi
+
+# Grab timezone from OS configuration
+. /etc/sysconfig/clock
+
+# Set timezone (only if it hasn't been changed yet)
+sed -i "s/^;date\.timezone =$/date.timezone = $ZONE/" "$phpini" || true
+
+echo "PHP timezone configured OK"
+touch installed.timezone
+

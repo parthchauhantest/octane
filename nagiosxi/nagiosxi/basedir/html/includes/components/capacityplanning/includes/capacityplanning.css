@@ -1,0 +1,65 @@
+.spacedSpan {
+    
+    margin-right:10%;
+    
+}
+
+.spacedLabel {
+    
+    margin-right:10px;
+    
+}
+
+.hidden {
+    
+}
+
+#resulttable {
+    
+    width:675px;
+    
+}
+
+.date {
+    
+    width:40px;
+    
+}
+
+.info {
+ 
+    width:40px;
+    
+}
+
+.value {
+    
+    width:80px;
+    
+}
+
+#tableholder {
+    
+    margin:0 auto;
+    width:675px;
+    
+}
+
+#capacityplanningrenderdiv {
+/*
+    height:300px;
+*/
+    width:675px;
+    margin:0 auto;
+    }
+
+.cap-height {
+  /*  height:180px; */
+    overflow:auto;
+    }
+
+#graphtablediv {
+    padding:15px;
+    height:auto;
+    overflow:auto;
+    }

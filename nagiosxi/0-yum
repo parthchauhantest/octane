@@ -1,0 +1,159 @@
+#!/bin/sh -e
+
+. ./xi-sys.cfg
+
+# Check if user already configured yum
+if [ -f installed.yum ]; then
+	echo "Yum already configured - exiting."
+	exit 0
+fi
+echo "Configuring Yum..."
+
+case "$dist" in
+	el5 | el6)
+		:
+		;;
+	*)
+		echo "$dist is not currently supported. Please use CentOS or RHEL versions 5 or 6 instead." >&2
+		exit 1
+esac
+
+# Check that the Red Hat installation is valid
+if [ -x /usr/sbin/rhn_check ] && ! /usr/sbin/rhn_check 2>/dev/null; then
+	echo "Your Red Hat Installation is not registered or does not have proper entitlements." >&2
+	echo "Please register or enable entitlements at rhn.redhat.com." >&2
+	exit 1
+# Check for the proper "Channels" - added conditional to make sure it's not CentOS 6  -MG 
+elif [ "$dist" = el6 ] && ! rpm -q centos-release && ! rhn-channel -l | grep -q rhel-.\*-server-optional-6 ; then
+	echo "ERROR: Please add the 'Optional' channel to your Red Hat systems subscriptions." >&2
+	echo "       You can do so in the Redhat Network web interface or using the rhn-channel command." >&2
+	exit 1
+fi
+
+# Make sure everything needed is still present, and we should be working 
+# with a current system anyway
+if [ "$1" != noupdate ]; then
+	echo "Updating system..."
+	yum -y update
+fi
+
+##########################################
+# ENABLE 64-bit INSTALLS
+##########################################
+
+if [ "$dist $arch" = "el5 x86_64" ]; then
+	if [ "$INTERACTIVE" != False ]; then
+		cat <<-EOF
+			****************************************************************
+			WARNING: This script will remove existing RPMs installed on this
+			         system, which may result in existing applications being
+			         removed!
+			****************************************************************
+		EOF
+		read -p "Do you want to continue? [y/N]: " res
+		echo "RESP: $res"
+		if [ "$res" != "y" ]; then
+			echo "Exiting"
+			exit 0
+		fi
+	fi
+
+	echo "64-bit system detected, modifying yum"
+	cat >>/etc/yum.conf <<-EOF
+		
+		# Modifications by Nagios XI installer
+		multilib_policy=best
+		exclude=*.i?86
+	EOF
+	# 32-bit librsvg2 must be removed before 32-bit gtk2 to avoid armageddon
+	if rpm -q librsvg2.i386 >/dev/null; then
+		yum -y remove librsvg2.i386
+	fi
+	yum -y remove \*.i?86
+fi
+
+##########################################
+# INSTALL YUM REPOS
+##########################################
+
+# See if we need to install RPMForge...
+if ! rpm -q rpmforge-release &>/dev/null; then
+
+	echo "Enabling RPMForge repo..."
+	#URL=$(curl -s http://repoforge.org/use/ | grep -o "http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-[0-9.-]\+.$dist.rf.$arch.rpm")
+	#Moved to local copy 4/24/2012 -MG
+	PKG="packages/rpmforge-release-0.5.2-2.el$ver.rf.$arch.rpm"
+	##Add logging so we can trace this failure in the future -MG
+	echo "Installing RPMForge PKG: $PKG"
+	#PKG=$(basename "$URL")
+	#curl -L -O "$URL"
+	rpm -Uvh "$PKG"
+	rm "$PKG"
+	unset PKG
+
+	yum check-update || true
+
+fi
+
+# Check to make sure RPM was installed
+if rpm -q rpmforge-release &>/dev/null; then
+	echo "rpmforge-release RPM installed OK"
+else
+	echo "ERROR: rpmforge-release RPM was not installed - exiting." >&2
+	exit 1
+fi
+
+
+# See if we need to install EPEL...
+if ! rpm -q epel-release &>/dev/null; then
+
+	echo "Enabling EPEL repo..."
+	# WIKI page no longer returns download link, now using local copies of the repo rpms. - MG 4/24/2012
+#	URL=$(curl -s http://fedoraproject.org/wiki/EPEL | grep -o "http://\(download\|dl\).fedoraproject.org/pub/epel/$ver/i386/epel-release-[0-9.-]\+.noarch.rpm")
+	
+	if [ $ver -eq 5 ]; then
+		EPELVER="5-4"
+	else
+		EPELVER="6-5"
+	fi
+		
+	PKG="./packages/epel-release-$EPELVER.noarch.rpm"
+	##Add logging so we can trace this failure in the future -MG
+	echo "Installing EPEL PKG: $PKG"
+#	PKG=$(basename "$URL")
+	#curl -L -O "$URL"
+	rpm -Uvh "$PKG"
+	rm "$PKG"
+	unset URL PKG
+
+	yum check-update || true
+
+fi
+
+# Check to make sure RPM was installed
+if rpm -q epel-release &>/dev/null; then
+	echo "epel-release RPM installed OK"
+else
+	echo "ERROR: epel-release RPM was not installed - exiting." >&2
+	exit 1
+fi
+
+# See if we need to install CentOS 6 Continuous Release...
+if [ "$dist" = el6 ] && rpm -q centos-release &>/dev/null && ! rpm -q centos-release-cr &>/dev/null; then
+
+	echo "Enabling CentOS 6 Continuous Release repo..."
+	yum -y install centos-release-cr
+	yum check-update || true
+
+	# Check to make sure RPM was installed
+	if rpm -q centos-release-cr &>/dev/null; then
+		echo "centos-release-cr RPM installed OK"
+	else
+		echo "ERROR: centos-release-cr RPM was not installed - exiting." >&2
+		exit 1
+	fi
+fi
+
+echo "Yum configured OK"
+touch installed.yum
+

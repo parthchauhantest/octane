@@ -1,0 +1,20 @@
+Nagios XI Installation Log
+==========================
+DATE: Fri Dec 20 20:18:00 IST 2013
+
+DISTRO INFO:
+Ubuntu
+12.04
+x86_64
+
+THIS IS A NEW INSTALL!
+
+INSTALLING:
+full=2012R2.7
+major=2012
+minor=R2.7
+releasedate=2013-11-26
+release=316
+
+Configuring Yum...
+ubuntu12.04 is not currently supported. Please use CentOS or RHEL versions 5 or 6 instead.

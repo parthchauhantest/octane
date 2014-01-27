@@ -1,0 +1,39 @@
+#!/bin/sh -e
+# $Id$
+# This file boot straps NagiosXI install with all the yum packages.
+
+. ./xi-sys.cfg
+
+# Check whether we have sufficient privileges
+if [ $(id -u) -ne 0 ]; then
+	echo "This script needs to be run as root/superuser." >&2
+	exit 1
+fi
+
+# Was previous step completed?
+if [ ! -f installed.yum ]; then
+	echo "Yum was not properly prepared - run previous script" >&2
+	exit 1
+fi
+
+# Are prereqs already installed?
+if [ -f installed.prereqs ]; then
+	echo "Prereqs already installed - skipping..."
+	echo "Note: If you want to update the RPMs installed on this system, run 'yum update'"
+	exit 0
+fi
+
+##########################################
+# INSTALL REQUIRED PACKAGES
+##########################################
+
+echo "Installing prerequisites..."
+yum -y --nogpgcheck localinstall $(readlink -e ./packages/php-pear-HTML-Template-IT-1.3.0-2.el5.noarch.rpm) $(readlink -e ./nagiosxi-deps-$xiver-1.noarch.rpm)
+if ! rpm -q nagiosxi-deps &>/dev/null; then
+	echo "ERROR: Prerequisites failed to install." >&2
+	exit 1
+fi
+
+echo "Prerequisites installed OK"
+touch installed.prereqs
+

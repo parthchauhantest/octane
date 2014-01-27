@@ -1,0 +1,40 @@
+#!/bin/sh -e
+
+. ../../xi-sys.cfg
+
+pkgname="nrdp-1.1"
+
+echo "Installing NRDP..."
+
+# Make directory
+if [ ! -d /usr/local/nrdp ]; then
+	mkdir /usr/local/nrdp
+fi
+
+# Copy files
+cp -r "$pkgname"/* /usr/local/nrdp
+
+# Custom config file
+cp -f mods/config.inc.php /usr/local/nrdp/server
+
+# Set perms
+chown -R "$nagiosuser:$nagiosgroup" /usr/local/nrdp
+chmod ug+rwx /usr/local/nrdp/server/config.inc.php
+
+# Copy Apache conf
+cp "$pkgname/nrdp.conf" "$httpdconfdir"
+
+# Restart Apache
+service httpd restart
+
+# Do a simple sanity check to make sure some key files exist...
+for f in /usr/local/nrdp/server/index.php ; do
+	if [ ! -f "$f" ]; then
+		echo "ERROR: NRDP install appears to have failed - exiting.  Missing file = $f"
+		exit 1
+	fi
+done
+
+# Things are okay
+echo "NRDP installed OK"
+

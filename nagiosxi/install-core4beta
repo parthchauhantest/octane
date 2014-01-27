@@ -1,0 +1,11 @@
+#!/bin/sh -e
+
+		(
+            cd core4beta
+            ./core4beta.sh
+        )
+
+
+echo "Core 4 Beta installed OK"
+touch installed.core4beta
+

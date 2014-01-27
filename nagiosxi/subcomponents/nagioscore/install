@@ -1,0 +1,44 @@
+#!/bin/sh -e
+
+. ../../xi-sys.cfg
+
+pkgname="nagios-3.4.1"
+
+echo "Installing Nagios Core..."
+
+# Delete the old directory
+rm -rf nagios
+rm -rf "$pkgname"
+
+# Extract archive
+tar -xzf "$pkgname.tar.gz"
+ln -s nagios "$pkgname"
+
+# Apply our patches
+./apply-patches "$pkgname"
+
+# Make and install Nagios
+(
+	cd "./$pkgname"
+	./configure --with-command-group="$nagioscmdgroup" --disable-embedded-perl
+	make all
+	make install
+	make install-init
+	#make install-config
+	make install-commandmode
+)
+
+# Post-install modifications
+./post-install
+
+# Do a simple sanity check to make sure some key files exist...
+for f in /usr/local/nagios/bin/nagios /usr/local/nagios/etc/nagios.cfg /usr/local/nagios/etc/cgi.cfg /usr/local/nagios/etc/import/xicommands.cfg ; do
+	if [ ! -f "$f" ]; then
+		echo "ERROR: Nagios Core install appears to have failed - exiting.  Missing file = $f"
+		exit 1
+	fi
+done
+
+# Things are okay
+echo "Nagios Core installed OK"
+

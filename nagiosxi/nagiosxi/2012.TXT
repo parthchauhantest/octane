@@ -1,0 +1,63 @@
+=======================
+NAGIOS XI 2012 FEATURES
+=======================
+
+- New tools menu allows you to define links to utilities you use frequently
+- Scheduled reporting enables automatic email delivery of reports
+- New Business Process Intelligence (BPI)
+- Heartbeat monitoring allows you to track critical passive-only alerts
+- Custom host and service actions allow you to quickly resolve issues and integrate alerts with other systems
+- Support for SMS messages provides out-of-band (OOB) alerts over the cellphone network through an optional GSM modem
+- Remote access to the server console makes it a snap to perform upgrades and maintenance
+- Operations screen provides a heads-up overview of network status for NOC staff
+- Audit log provides a record of monitoring changes and security notices for compliance requirements
+
+
+
+DONE
+====
+- Tools
+- Scheduled Reporting + page scheduling
+- BPI
+- Audit Log
+- Heartbeat monitoring (docs + wizard inclusion)
+- Executive summary report
+- Capacity planning report
+- Bulk notification messages modification tool
+- Bulk host/service rename tool
+
+
+INCLUDE (COMPONENTS)
+====================
+- BPI
+- iSMS
+- Bandwith report
+- Opscreen
+- Custom page parts
+- Scheduled reporting
+- Autodiscovery (re-run install.sh to fix jobs directory ownership!)
+
+
+INCLUDE (WIZARDS)
+=================
+- DHCP
+- Windows Workstation / Server
+- Windows WMI + SNMP
+- Linux SNMP
+- Databases
+- Autodiscovery
+
+
+TODO
+====
+- Ajaxterm subcomponent installation (SSL.conf)
+- Wizard installation/update script (upgrades/installs)
+- Component installation/update script (upgrades/installs)
+- NSCPush (Yancy)
+- Windows wizard agent installer (NSCPush dependent)
+
+
+FUTURE
+======
+- Event console
+- Per-user host/service limits (customer-only addon)

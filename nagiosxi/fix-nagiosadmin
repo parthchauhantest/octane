@@ -1,0 +1,11 @@
+#!/bin/sh -e
+
+# Nagios Core object definition fixes
+cp subcomponents/nagioscore/mods/cfg/fixes/nagiosadmin.cfg /usr/local/nagios/etc/import
+
+# Reconfigure Nagios
+(
+	cd ./nagiosxi/basedir/scripts
+	./reconfigure_nagios.sh
+)
+

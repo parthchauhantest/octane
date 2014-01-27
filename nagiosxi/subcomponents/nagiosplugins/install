@@ -1,0 +1,31 @@
+#!/bin/sh -e
+
+pkgname="nagios-plugins-1.4.13"
+
+echo "Installing Nagios Plugins..."
+
+# Delete the old directory
+rm -rf "$pkgname"
+
+# Extract archive
+tar -xzf "$pkgname.tar.gz"
+
+(
+	cd "./$pkgname"
+	time ./configure
+	time make clean
+	time make
+	time make install
+)
+
+# Do a simple sanity check to make sure some key files exist...
+for f in /usr/local/nagios/libexec/check_ping ; do
+	if [ ! -f "$f" ]; then
+		echo "ERROR: Nagios Plugins install appears to have failed - exiting.  Missing file = $f"
+		exit 1
+	fi
+done
+
+# Things are okay
+echo "Nagios Plugins installed OK"
+

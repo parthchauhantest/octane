@@ -1,0 +1,32 @@
+#!/bin/sh -e
+
+# Was previous step completed?
+if [ ! -f installed.crontabs ]; then
+	echo "Crontabs were not configured - run previous script" >&2
+	exit 1
+fi
+
+# Was this step already completed?
+if [ -f installed.chkconfig ]; then
+	echo "Daemons already configured - skipping."
+	exit 0
+fi
+
+for svc in nagiosxi nagios npcd ndo2db; do
+	chkconfig --add "$svc"
+done
+
+for svc in nagiosxi nagios npcd ndo2db mysqld postgresql httpd; do
+	chkconfig --level    35 "$svc" on
+	chkconfig --level 01246 "$svc" off
+done
+
+#####################################
+## MISC DAEMONS THAT NEEDS TO BE RUNNING
+#####################################
+
+/sbin/chkconfig crond on
+
+echo "Daemons configured to start OK"
+touch installed.chkconfig
+
